@@ -17,7 +17,7 @@ namespace ProgressTracker.Services
             this.context = context;
         }
 
-        public void Edit(User user)
+        public void Update(User user)
         {
             context.User.Update(user);
         }
@@ -61,6 +61,7 @@ namespace ProgressTracker.Services
         public void Register(User user)
         {
             user.IsActive = false;
+            user.Password = Authentication.GetEncodedPassword(user.Password);
             context.User.Add(user);
         }
 
@@ -70,7 +71,7 @@ namespace ProgressTracker.Services
             if (removeUser != null)
             {
                 removeUser.IsActive = false;
-                Edit(removeUser);
+                Update(removeUser);
             }
         }
 

@@ -6,12 +6,12 @@ using ProgressTracker.Models;
 
 namespace ProgressTracker.Services
 {
-    public interface IJobService
+    public interface IProjectService
     {
-        IEnumerable<Job> GetAll();
-        Task<Job> GetOne(int id);
-        void Create(Job job);
-        void Update(Job job);
+        IEnumerable<Project> GetAll();
+        Task<Project> GetOne(int id);
+        void Create(Project project);
+        void Update(Project project);
         void Remove(int id);
         bool Exists(int id);
         Task SaveChanges();

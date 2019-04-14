@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace ProgressTracker.Services
 {
-    public interface IUserService
+    public interface IObjectiveService
     {
-        Task<User> GetOne(int id);
-        Task<User> GetOne(string email);
-        Task<User> Login(string email, string password);
-        void Register(User user);
-        void Update(User user);
+        IEnumerable<Objective> GetAll();
+        Task<Objective> GetOne(int id);
+        void Create(Objective objective);
+        void Update(Objective objective);
         void Remove(int id);
         bool Exists(int id);
-        bool Exists(string email);
         Task SaveChanges();
     }
 }

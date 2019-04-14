@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using SNGCommon.Authentication;
 
 namespace ProgressTracker.Models
 {
@@ -22,7 +24,7 @@ namespace ProgressTracker.Models
                 Name = "Tester",
                 Description = "This is a test user",
                 Email = "test@test.com",
-                Password = "test",
+                Password = Authentication.GetEncodedPassword("test"),
                 IsActive = true
             };
             context.User.Add(user);
@@ -52,14 +54,14 @@ namespace ProgressTracker.Models
             context.Objective.Add(objective);
             context.SaveChanges();
 
-            Task task = new Task
+            Job job = new Job
             {
                 Description = "First Task",
                 Objective = objective,
                 IsCompleted = false,
                 IsActive = true
             };
-            context.Task.Add(task);
+            context.Job.Add(job);
             context.SaveChanges();
         }
     }

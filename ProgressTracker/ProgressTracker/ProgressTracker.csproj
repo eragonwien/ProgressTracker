@@ -5,6 +5,13 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Contents\**" />
+    <Content Remove="Contents\**" />
+    <EmbeddedResource Remove="Contents\**" />
+    <None Remove="Contents\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

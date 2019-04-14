@@ -21,7 +21,7 @@ namespace ProgressTracker.Services
             context.Job.Add(job);
         }
 
-        public void Edit(Job job)
+        public void Update(Job job)
         {
             context.Job.Update(job);
         }
@@ -36,9 +36,9 @@ namespace ProgressTracker.Services
             return context.Job.Where(j => j.Id == id && j.IsActive).SingleOrDefaultAsync();
         }
 
-        public Task<List<Job>> GetAll()
+        public IEnumerable<Job> GetAll()
         {
-            return context.Job.Where(j => j.IsActive).ToListAsync();
+            return context.Job.Where(j => j.IsActive);
         }
 
         public void Remove(int id)
@@ -47,7 +47,7 @@ namespace ProgressTracker.Services
             if (removeJob != null)
             {
                 removeJob.IsActive = false;
-                Edit(removeJob);
+                Update(removeJob);
             }
         }
 
