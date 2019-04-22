@@ -1,50 +1,50 @@
 use [PROGRESSTRACKER];
 go
 
-drop table if exists [Job], [Objective], [Project], [User];
+drop table if exists [PTTask], [PTObjective], [PTProject], [PTUser];
 go
 
-CREATE TABLE [User] (
+CREATE TABLE [PTUser] (
     [Id] int NOT NULL IDENTITY,
     [Email] nvarchar(50) UNIQUE NOT NULL,
     [Password] nvarchar(max),
 	[Name] nvarchar(50),
     [Description] nvarchar(100),
     [IsActive] bit NOT NULL DEFAULT 0,
-    CONSTRAINT [PK_User] PRIMARY KEY ([Id])
+    CONSTRAINT [PK_PTUser] PRIMARY KEY ([Id])
 );
 go
 
-CREATE TABLE [Project] (
+CREATE TABLE [PTProject] (
     [Id] int NOT NULL IDENTITY,
-	[UserId] int NOT NULL,
+	[PTUserId] int NOT NULL,
 	[Name] nvarchar(50),
     [Description] nvarchar(100),
 	[Status] nvarchar(20),
     [IsActive] bit NOT NULL DEFAULT 0,
-    CONSTRAINT [PK_Project] PRIMARY KEY ([Id]),
-	CONSTRAINT [FK_Project_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+    CONSTRAINT [PK_PTProject] PRIMARY KEY ([Id]),
+	CONSTRAINT [FK_PTProject_PTUser_UserId] FOREIGN KEY ([PTUserId]) REFERENCES [PTUser] ([Id])
 );
 go
 
-CREATE TABLE [Objective] (
+CREATE TABLE [PTObjective] (
     [Id] int NOT NULL IDENTITY,
-	[ProjectId] int NOT NULL,
+	[PTProjectId] int NOT NULL,
     [Description] nvarchar(50),
 	[Status] nvarchar(20),
     [IsActive] bit NOT NULL DEFAULT 0,
-    CONSTRAINT [PK_Objective] PRIMARY KEY ([Id]),
-	CONSTRAINT [FK_Objective_Project_ProjectId] FOREIGN KEY ([ProjectId]) REFERENCES [Project] ([Id])
+    CONSTRAINT [PK_PTObjective] PRIMARY KEY ([Id]),
+	CONSTRAINT [FK_PTObjective_PTProject_PTProjectId] FOREIGN KEY ([PTProjectId]) REFERENCES [PTProject] ([Id])
 );
 go
 
-CREATE TABLE [Job] (
+CREATE TABLE [PTTask] (
     [Id] int NOT NULL IDENTITY,
-	[ObjectiveId] int NOT NULL,
+	[PTObjectiveId] int NOT NULL,
     [Description] nvarchar(50),
 	[IsCompleted] bit NOT NULL DEFAULT 0,
     [IsActive] bit NOT NULL DEFAULT 0,
-    CONSTRAINT [PK_Job] PRIMARY KEY ([Id]),
-	CONSTRAINT [FK_Job_Objective_ObjectiveId] FOREIGN KEY ([ObjectiveId]) REFERENCES [Objective] ([Id])
+    CONSTRAINT [PK_PTTask] PRIMARY KEY ([Id]),
+	CONSTRAINT [FK_PTTask_PTObjective_PTObjectiveId] FOREIGN KEY ([PTObjectiveId]) REFERENCES [PTObjective] ([Id])
 );
 go

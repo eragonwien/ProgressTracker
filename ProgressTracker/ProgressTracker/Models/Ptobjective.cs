@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace ProgressTracker.Models
 {
-    public partial class Objective
+    public partial class Ptobjective
     {
-        public Objective()
+        public Ptobjective()
         {
-            Job = new HashSet<Job>();
+            Pttask = new HashSet<Pttask>();
         }
 
         public int Id { get; set; }
-        public int ProjectId { get; set; }
+        public int PtprojectId { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual Project Project { get; set; }
-        public virtual ICollection<Job> Job { get; set; }
+        public virtual Ptproject Ptproject { get; set; }
+        public virtual ICollection<Pttask> Pttask { get; set; }
     }
 }

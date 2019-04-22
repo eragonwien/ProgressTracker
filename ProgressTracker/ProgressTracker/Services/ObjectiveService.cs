@@ -16,29 +16,29 @@ namespace ProgressTracker.Services
             this.context = context;
         }
 
-        public void Create(Objective objective)
+        public void Create(Ptobjective objective)
         {
-            context.Objective.Add(objective);
+            context.Ptobjective.Add(objective);
         }
 
         public bool Exists(int id)
         {
-            return context.Objective.Any(o => o.Id == id && o.IsActive);
+            return context.Ptobjective.Any(o => o.Id == id && o.IsActive);
         }
 
-        public IEnumerable<Objective> GetAll()
+        public IEnumerable<Ptobjective> GetAll()
         {
-            return context.Objective.Where(o => o.IsActive);
+            return context.Ptobjective.Where(o => o.IsActive);
         }
 
-        public Task<Objective> GetOne(int id)
+        public Task<Ptobjective> GetOne(int id)
         {
-            return context.Objective.SingleOrDefaultAsync(o => o.Id == id && o.IsActive);
+            return context.Ptobjective.SingleOrDefaultAsync(o => o.Id == id && o.IsActive);
         }
 
         public void Remove(int id)
         {
-            Objective removeObjective = GetOne(id).Result;
+            Ptobjective removeObjective = GetOne(id).Result;
             if (removeObjective != null)
             {
                 removeObjective.IsActive = false;
@@ -51,9 +51,9 @@ namespace ProgressTracker.Services
             return context.SaveChangesAsync();
         }
 
-        public void Update(Objective objective)
+        public void Update(Ptobjective objective)
         {
-            context.Objective.Update(objective);
+            context.Ptobjective.Update(objective);
         }
     }
 }

@@ -8,11 +8,11 @@ namespace ProgressTracker.Services
 {
     public interface IUserService
     {
-        Task<User> GetOne(int id);
-        Task<User> GetOne(string email);
-        Task<User> Login(string email, string password);
-        void Register(User user);
-        void Update(User user);
+        Task<Ptuser> GetOne(int id);
+        Task<Ptuser> GetOne(string email);
+        Task<Ptuser> Login(string email, string password);
+        void Register(Ptuser user);
+        void Update(Ptuser user);
         void Remove(int id);
         bool Exists(int id);
         bool Exists(string email);

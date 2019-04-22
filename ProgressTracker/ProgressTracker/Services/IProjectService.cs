@@ -8,10 +8,10 @@ namespace ProgressTracker.Services
 {
     public interface IProjectService
     {
-        IEnumerable<Project> GetAll();
-        Task<Project> GetOne(int id);
-        void Create(Project project);
-        void Update(Project project);
+        IEnumerable<Ptproject> GetAll();
+        Task<Ptproject> GetOne(int id);
+        void Create(Ptproject project);
+        void Update(Ptproject project);
         void Remove(int id);
         bool Exists(int id);
         Task SaveChanges();

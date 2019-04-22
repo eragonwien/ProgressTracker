@@ -16,29 +16,29 @@ namespace ProgressTracker.Services
             this.context = context;
         }
 
-        public void Create(Project project)
+        public void Create(Ptproject project)
         {
-            context.Project.Add(project);
+            context.Ptproject.Add(project);
         }
 
-        public void Update(Project project)
+        public void Update(Ptproject project)
         {
-            context.Project.Update(project);
+            context.Ptproject.Update(project);
         }
 
         public bool Exists(int id)
         {
-            return context.Project.Any(p => p.Id == id && p.IsActive);
+            return context.Ptproject.Any(p => p.Id == id && p.IsActive);
         }
 
-        public IEnumerable<Project> GetAll()
+        public IEnumerable<Ptproject> GetAll()
         {
-            return context.Project.Where(p => p.IsActive);
+            return context.Ptproject.Where(p => p.IsActive);
         }
 
-        public Task<Project> GetOne(int id)
+        public Task<Ptproject> GetOne(int id)
         {
-            return context.Project.SingleOrDefaultAsync(p => p.Id == id && p.IsActive);
+            return context.Ptproject.SingleOrDefaultAsync(p => p.Id == id && p.IsActive);
         }
 
         public void Remove(int id)

@@ -1,0 +1,38 @@
+﻿@page
+@using SNGCommon.Resources
+@model ProgressTracker.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div id="login">
+    <div asp-validation-summary="ModelOnly" class="red-text"></div>
+    <form method="post">
+        <div class="card">
+            <div class="card-content">
+                <p class="title">Login</p>
+                <div class="field">
+                    <label asp-for="Email"></label>
+                    <div class="control">
+                        <input asp-for="Email" class="input">
+                    </div>
+                    <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="Password"></label>
+                    <div class="control">
+                        <input asp-for="Password" class="input">
+                    </div>
+                    <span asp-validation-for="Password" class="help is-danger"></span>
+                </div>
+                <div class="field is-grouped">
+                    <button class="button is-primary is-fullwidth">@Translation.Login</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+

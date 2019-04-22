@@ -9,7 +9,7 @@ namespace ProgressTracker.Models
     {
         public static void Initialize(PROGRESSTRACKERContext context)
         {
-            if (context.Project.Any())
+            if (context.Ptproject.Any())
             {
                 return;
             }
@@ -19,7 +19,7 @@ namespace ProgressTracker.Models
 
         private static void CreateTestUser(PROGRESSTRACKERContext context)
         {
-            User user = new User
+            Ptuser user = new Ptuser
             {
                 Name = "Tester",
                 Description = "This is a test user",
@@ -27,41 +27,41 @@ namespace ProgressTracker.Models
                 Password = Authentication.GetEncodedPassword("test"),
                 IsActive = true
             };
-            context.User.Add(user);
+            context.Ptuser.Add(user);
             context.SaveChanges();
         }
 
         private static void CreateTestProject(PROGRESSTRACKERContext context)
         {
-            Project project = new Project
+            Ptproject project = new Ptproject
             {
                 Name = "Test Project",
                 Description = "This is a test project",
-                User = context.User.First(),
+                Ptuser = context.Ptuser.First(),
                 Status = Status.None.ToString(),
                 IsActive = true
             };
-            context.Project.Add(project);
+            context.Ptproject.Add(project);
             context.SaveChanges();
 
-            Objective objective = new Objective
+            Ptobjective objective = new Ptobjective
             {
                 Description = "First objective",
                 Status = Status.None.ToString(),
-                Project = project,
+                Ptproject = project,
                 IsActive = true
             };
-            context.Objective.Add(objective);
+            context.Ptobjective.Add(objective);
             context.SaveChanges();
 
-            Job job = new Job
+            Pttask job = new Pttask
             {
                 Description = "First Task",
-                Objective = objective,
+                Ptobjective = objective,
                 IsCompleted = false,
                 IsActive = true
             };
-            context.Job.Add(job);
+            context.Pttask.Add(job);
             context.SaveChanges();
         }
     }

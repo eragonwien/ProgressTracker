@@ -17,32 +17,32 @@ namespace ProgressTracker.Services
             this.context = context;
         }
 
-        public void Update(User user)
+        public void Update(Ptuser user)
         {
-            context.User.Update(user);
+            context.Ptuser.Update(user);
         }
 
         public bool Exists(int id)
         {
-            return context.User.Any(u => u.Id == id && u.IsActive);
+            return context.Ptuser.Any(u => u.Id == id && u.IsActive);
         }
 
         public bool Exists(string email)
         {
-            return context.User.Any(u => u.Email == email && u.IsActive);
+            return context.Ptuser.Any(u => u.Email == email && u.IsActive);
         }
 
-        public Task<User> GetOne(int id)
+        public Task<Ptuser> GetOne(int id)
         {
-            return context.User.SingleOrDefaultAsync(u => u.Id == id && u.IsActive);
+            return context.Ptuser.SingleOrDefaultAsync(u => u.Id == id && u.IsActive);
         }
 
-        public Task<User> GetOne(string email)
+        public Task<Ptuser> GetOne(string email)
         {
-            return context.User.SingleOrDefaultAsync(u => u.Email == email && u.IsActive);
+            return context.Ptuser.SingleOrDefaultAsync(u => u.Email == email && u.IsActive);
         }
 
-        public Task<User> Login(string email, string password)
+        public Task<Ptuser> Login(string email, string password)
         {
             var user = GetOne(email);
             if (user.Result == null)
@@ -58,16 +58,16 @@ namespace ProgressTracker.Services
             return user;
         }
 
-        public void Register(User user)
+        public void Register(Ptuser user)
         {
             user.IsActive = false;
             user.Password = Authentication.GetEncodedPassword(user.Password);
-            context.User.Add(user);
+            context.Ptuser.Add(user);
         }
 
         public void Remove(int id)
         {
-            User removeUser = context.User.SingleOrDefault(u => u.Id == id && u.IsActive);
+            Ptuser removeUser = context.Ptuser.SingleOrDefault(u => u.Id == id && u.IsActive);
             if (removeUser != null)
             {
                 removeUser.IsActive = false;

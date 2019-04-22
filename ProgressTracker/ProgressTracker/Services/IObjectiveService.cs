@@ -8,10 +8,10 @@ namespace ProgressTracker.Services
 {
     public interface IObjectiveService
     {
-        IEnumerable<Objective> GetAll();
-        Task<Objective> GetOne(int id);
-        void Create(Objective objective);
-        void Update(Objective objective);
+        IEnumerable<Ptobjective> GetAll();
+        Task<Ptobjective> GetOne(int id);
+        void Create(Ptobjective objective);
+        void Update(Ptobjective objective);
         void Remove(int id);
         bool Exists(int id);
         Task SaveChanges();

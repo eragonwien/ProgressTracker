@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ProgressTracker.Models
 {
-    public partial class User
+    public partial class Ptuser
     {
-        public User()
+        public Ptuser()
         {
-            Project = new HashSet<Project>();
+            Ptproject = new HashSet<Ptproject>();
         }
 
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace ProgressTracker.Models
         public string Description { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual ICollection<Project> Project { get; set; }
+        public virtual ICollection<Ptproject> Ptproject { get; set; }
     }
 }
