@@ -4,8 +4,9 @@
     string title = Context.User.Identity.IsAuthenticated ? Context.User.Identity.Name : string.Empty;
     bool authenticated = Context.User.Identity.IsAuthenticated;
     string returnUrl = ViewBag.ReturnUrl;
+    string currentPage = Context.Request.Path;
 }
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         @if (!string.IsNullOrWhiteSpace(returnUrl))
         {
@@ -16,7 +17,6 @@
             </a>
         }
         <a class="navbar-item" href="/">@title</a>
-
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -26,27 +26,45 @@
 
     <div class="navbar-menu" id="navbar-menu">
         <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    @if (authenticated)
-                    {
-                        <a class="button is-light" asp-page="Logout">
-                            <span class="icon">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </span>
-                            <span>@Translation.Logout</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="button is-primary" asp-page="Login">
-                            <span class="icon">
-                                <i class="fas fa-sign-in-alt"></i>
-                            </span>
-                            <span>@Translation.Login</span>
-                        </a>
-                    }
-                </div>
+            @if (!currentPage.StartsWith("/Project"))
+            {
+                <a class="navbar-item" asp-page="project" asp-page-handler="create">
+                    <span class="icon">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span>@Translation.CreateNewProject</span>
+                </a>
+            }
+            @if (!currentPage.StartsWith("/Objective"))
+            {
+                <a class="navbar-item" asp-page="objective" asp-page-handler="create" asp-route-returnurl="@Context.Request.Path">
+                    <span class="icon">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span>@Translation.CreateNewObjective</span>
+                </a>
+            }
+        </div>
+        <div class="navbar-item">
+            <div class="buttons">
+                @if (authenticated)
+                {
+                    <a class="button is-light" asp-page="Logout">
+                        <span class="icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </span>
+                        <span>@Translation.Logout</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="button is-primary" asp-page="Login">
+                        <span class="icon">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </span>
+                        <span>@Translation.Login</span>
+                    </a>
+                }
             </div>
         </div>
     </div>

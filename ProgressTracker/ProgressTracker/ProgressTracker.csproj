@@ -39,7 +39,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="wwwroot\lib\jquery-ajax-unobtrucsive\" />
-    <Folder Include="wwwroot\lib\fontawesome\" />
+    <Folder Include="wwwroot\lib\lineicons\" />
   </ItemGroup>
 
 </Project>

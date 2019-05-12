@@ -34,6 +34,7 @@ namespace ProgressTracker.Services
         public IEnumerable<Ptproject> GetAll(int userId)
         {
             return context.Ptproject
+                .Include(p => p.Ptobjective)
                 .Where(p => p.IsActive && (p.PtuserId == userId ));
         }
 

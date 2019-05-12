@@ -12,7 +12,9 @@ namespace ProgressTracker.Models
     {
         public string Message { get; set; }
         [ViewData]
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public string ReturnUrl { get; set; }
+        [ViewData]
+        public bool IsCreate { get; set; }
     }
 }

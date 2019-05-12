@@ -84,3 +84,11 @@ html, body {
     user-select: none;
 }
 
+.invisible-button {
+    background: none;
+    color: inherit;
+    font: inherit;
+    border: none;
+    outline: inherit;
+}
+

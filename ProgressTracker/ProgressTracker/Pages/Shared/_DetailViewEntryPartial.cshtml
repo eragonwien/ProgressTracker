@@ -2,16 +2,18 @@
 @using Microsoft.AspNetCore.Http.Extensions;
 @using SNGCommon.Resources
 <div class="box modal-container objective-container">
-    <article class="media">
-        <form method="post" data-id="@Model.Id" class="media-left">
-            <input asp-for="IsCompleted" onclick="onCheckboxChanged(this)" hidden />
-            <span class="icon has-text-danger icon-checked @(!Model.IsCompleted ? "is-hidden" : "")" onclick="onClickCheckboxIcon(this)">
+    <form method="post" class="media">
+        <input type="hidden" asp-for="Id" />
+        <div class="media-left is-flex objective-checkbox">
+            <input asp-for="IsCompleted" onchange="onCheckboxChanged(this)" hidden />
+            <input type="submit" asp-page="objective" asp-page-handler="status" class="ajax-submit" hidden />
+            <span class="icon has-text-danger icon-checked @(!Model.IsCompleted ? "is-hidden" : string.Empty)" onclick="onClickCheckboxIcon(this)">
                 <i class="fas fa-check"></i>
             </span>
-            <span class="icon has-text-danger icon-unchecked @(Model.IsCompleted ? "is-hidden" : "")" onclick="onClickCheckboxIcon(this)">
+            <span class="icon has-text-danger icon-unchecked @(Model.IsCompleted ? "is-hidden" : string.Empty)" onclick="onClickCheckboxIcon(this)">
                 <i class="far fa-square"></i>
             </span>
-        </form>
+        </div>
         <div class="media-content objective-description @(Model.IsCompleted ? "is-checked" : string.Empty)" onclick="onClickObjectiveDescription(this)">
             <div class="content">
                 <div class="field">
@@ -23,11 +25,11 @@
         </div>
 
         <div class="media-right">
-            <button type="button" class="button is-rounded save-button" onclick="onClickSaveObjectiveDescription(this)">
-                <span class="icon has-text-success">
+            <button type="button" asp-page="objective" asp-page-handler="description" class="button is-success is-rounded save-button ajax-submit" onclick="onClickSaveObjectiveDescription(this)">
+                <span class="icon">
                     <i class="fas fa-save"></i>
                 </span>
             </button>
         </div>
-    </article>
+    </form>
 </div>

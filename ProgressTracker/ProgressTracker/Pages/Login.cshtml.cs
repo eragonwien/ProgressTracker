@@ -14,7 +14,7 @@ using SNGCommon.Resources;
 
 namespace ProgressTracker.Pages
 {
-    public class LoginModel : BasePageModel
+    public class LoginModel : PageModel
     {
         private readonly IUserService userService;
 

@@ -22,8 +22,8 @@ function onDeleteButtonClick() {
 function onCheckboxChanged(checkbox) {
     var isChecked = checkbox.checked;
     var container = $(checkbox).closest('.media');
-    var boxChecked = $(container).find('.icon.icon-checked');
-    var boxUnchecked = $(container).find('.icon.icon-unchecked');
+    var boxChecked = $(container).find('.objective-checkbox .icon.icon-checked');
+    var boxUnchecked = $(container).find('.objective-checkbox .icon.icon-unchecked');
     var description = $(container).find('.objective-description');
     if (isChecked) {
         boxChecked.removeClass('is-hidden');
@@ -35,15 +35,11 @@ function onCheckboxChanged(checkbox) {
         boxUnchecked.removeClass('is-hidden');
         description.removeClass('is-checked');
     }
-    var form = $(checkbox).closest('form');
-    var id = form.data('id');
-    var url = '/Objective/' + id + '?handler=status';
-    ajax('post', url, form.serialize());
+    $(checkbox).siblings('input[type=submit]').trigger('click');
 }
 
 function onClickCheckboxIcon(icon) {
-    var container = $(icon).closest('.media');
-    var checkbox = $(container).find('input:checkbox:first');
+    var checkbox = $(icon).siblings('input:checkbox:first');
     checkbox.trigger('click');
 }
 
@@ -74,10 +70,10 @@ function setAntiForgeryToken(xhr) {
     xhr.setRequestHeader('XSRF-TOKEN', $("input:hidden[name='__RequestVerificationToken']").val());
 }
 
-$('.ajax-form').submit(function (e) {
+$('.ajax-submit').click(function (e) {
     e.preventDefault();
-    var form = $(this);
-    var url = form.attr('action');
+    var form = $(this).closest('form');
+    var url = $(this).attr('formaction');
     ajax('post', url, form.serialize());
 });
 
@@ -100,6 +96,4 @@ function onClickObjectiveDescription(description) {
 function onClickSaveObjectiveDescription(saveButton) {
     var container = $(saveButton).closest('.objective-container');
     container.removeClass('edit');
-
-
 }

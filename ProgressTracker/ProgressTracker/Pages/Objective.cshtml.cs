@@ -26,26 +26,32 @@ namespace ProgressTracker.Pages
 
         public async Task OnGetAsync()
         {
+            IsCreate = false;
             Objective = await oService.GetOne(Id);
             ReturnUrl = Request.Headers["Referer"].ToString();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public void OnGetCreate()
+        {
+            IsCreate = true;
+            ReturnUrl = "/";
+        }
+
+        public async Task OnPostDescriptionAsync()
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return Page();
+                    return;
                 }
                 oService.Patch(Objective, nameof(Objective.Description));
                 await oService.SaveChanges();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                throw ex;
             }
-            return Page();
         }
 
         public async Task OnPostStatusAsync()

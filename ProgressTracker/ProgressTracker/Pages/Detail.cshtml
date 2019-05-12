@@ -7,9 +7,12 @@
     DetailNavbarViewModel navbarViewModel = new DetailNavbarViewModel { Title = Model.Project.Name };
 }
 <partial name="Shared/_DetailViewNavbarPartial" model="navbarViewModel" />
-<div class="section">
-    @foreach (var objective in Model.Project.Ptobjective)
-    {
-        <partial name="Shared/_DetailViewEntryPartial" model="objective" />
-    }
+<div class="container">
+    <div class="section">
+        @foreach (var objective in Model.Project.Ptobjective)
+        {
+            <partial name="Shared/_DetailViewEntryPartial" model="objective" />
+        }
+    </div>
 </div>
+
