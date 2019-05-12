@@ -25,6 +25,12 @@
           <AssociatedConnUserName />
           <FullPath>CREATE.sql</FullPath>
         </FileNode>
+        <FileNode Name="SELECT.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:DESKTOP-A6CA4U0:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>DESKTOP-A6CA4U0</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SELECT.sql</FullPath>
+        </FileNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Sonstiges" Type="3" Sorted="true">

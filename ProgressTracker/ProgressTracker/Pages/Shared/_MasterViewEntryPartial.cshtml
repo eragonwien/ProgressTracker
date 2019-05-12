@@ -1,0 +1,30 @@
+﻿@model ProgressTracker.Models.Ptproject
+@using SNGCommon.Resources
+
+<a asp-page="Detail" asp-route-id="@Model.Id" asp-route-returnurl="@Context.Request.Path">
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <strong>@Model.Name</strong>
+                    <p class="media-content-text">@Model.Description</p>
+                </div>
+            </div>
+            <div class="media-right">
+                @if (Model.Ptobjective.Count == 0)
+                {
+                    <span class="tag is-success is-rounded">@Translation.New.ToLower()</span>
+                }
+                else
+                {
+                    <span class="tag is-danger is-rounded">@Model.Ptobjective.Count</span>
+                }
+            </div>
+        </article>
+    </div>
+</a>

@@ -33,7 +33,6 @@ namespace ProgressTracker
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IObjectiveService, ObjectiveService>();
-            services.AddScoped<ITaskService, TaskService>();
 
             // Authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
@@ -43,7 +42,7 @@ namespace ProgressTracker
                 option.LoginPath = "/Login";
                 option.LogoutPath = "/Logout";
             });
-
+            services.AddAntiforgery(s => s.HeaderName = "XSRF-TOKEN");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

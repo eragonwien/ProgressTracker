@@ -31,14 +31,17 @@ namespace ProgressTracker.Services
             return context.Ptproject.Any(p => p.Id == id && p.IsActive);
         }
 
-        public IEnumerable<Ptproject> GetAll()
+        public IEnumerable<Ptproject> GetAll(int userId)
         {
-            return context.Ptproject.Where(p => p.IsActive);
+            return context.Ptproject
+                .Where(p => p.IsActive && (p.PtuserId == userId ));
         }
 
         public Task<Ptproject> GetOne(int id)
         {
-            return context.Ptproject.SingleOrDefaultAsync(p => p.Id == id && p.IsActive);
+            return context.Ptproject
+                .Include(p => p.Ptobjective)
+                .SingleOrDefaultAsync(p => p.Id == id && p.IsActive);
         }
 
         public void Remove(int id)

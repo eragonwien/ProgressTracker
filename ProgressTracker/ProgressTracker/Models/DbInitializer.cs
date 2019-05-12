@@ -47,21 +47,11 @@ namespace ProgressTracker.Models
             Ptobjective objective = new Ptobjective
             {
                 Description = "First objective",
-                Status = Status.None.ToString(),
-                Ptproject = project,
-                IsActive = true
-            };
-            context.Ptobjective.Add(objective);
-            context.SaveChanges();
-
-            Pttask job = new Pttask
-            {
-                Description = "First Task",
-                Ptobjective = objective,
+                PtprojectId = project.Id,
                 IsCompleted = false,
                 IsActive = true
             };
-            context.Pttask.Add(job);
+            context.Ptobjective.Add(objective);
             context.SaveChanges();
         }
     }

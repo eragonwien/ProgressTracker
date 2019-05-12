@@ -1,0 +1,15 @@
+﻿@page "{id}"
+@using ProgressTracker.Models
+@model ProgressTracker.Pages.DetailModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    DetailNavbarViewModel navbarViewModel = new DetailNavbarViewModel { Title = Model.Project.Name };
+}
+<partial name="Shared/_DetailViewNavbarPartial" model="navbarViewModel" />
+<div class="section">
+    @foreach (var objective in Model.Project.Ptobjective)
+    {
+        <partial name="Shared/_DetailViewEntryPartial" model="objective" />
+    }
+</div>

@@ -57,3 +57,30 @@ html, body {
     box-shadow: 0 1px 0 0 red;
 }
 
+.media-content .media-content-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.objective-description.is-checked {
+    @extend .has-text-grey;
+    text-decoration-line: line-through;
+}
+
+.objective-container:not(.edit) {
+    .save-button {
+        display: none;
+    }
+    input {
+        @extend .readonly;
+    }
+}
+
+.readonly {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+

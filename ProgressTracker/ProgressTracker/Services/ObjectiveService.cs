@@ -36,6 +36,19 @@ namespace ProgressTracker.Services
             return context.Ptobjective.SingleOrDefaultAsync(o => o.Id == id && o.IsActive);
         }
 
+        public void Patch(Ptobjective objective, params string[] columns)
+        {
+            if (columns == null || columns.Count() == 0)
+            {
+                return;
+            }
+            context.Ptobjective.Attach(objective);
+            foreach (var column in columns)
+            {
+                context.Entry(objective).Property(column).IsModified = true;
+            }
+        }
+
         public void Remove(int id)
         {
             Ptobjective removeObjective = GetOne(id).Result;

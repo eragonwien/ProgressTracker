@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,21 +11,22 @@ using ProgressTracker.Services;
 namespace ProgressTracker.Pages
 {
     [Authorize]
-    public class IndexModel : BasePageModel
+    public class DetailModel : BasePageModel
     {
         private readonly IProjectService projectService;
-        public int UserId { get; set; }
-        public IEnumerable<Ptproject> Projects { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int Id { get; set; }
+        public Ptproject Project { get; set; }
 
-        public IndexModel(IProjectService projectService)
+        public DetailModel(IProjectService projectService)
         {
             this.projectService = projectService;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            UserId = UserId > 0 ? UserId : Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            Projects = projectService.GetAll(UserId);
+            Project = await projectService.GetOne(Id);
+            ReturnUrl = Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : null;
         }
     }
 }

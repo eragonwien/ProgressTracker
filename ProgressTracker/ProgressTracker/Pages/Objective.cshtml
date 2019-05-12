@@ -1,0 +1,9 @@
+﻿@page "{id}"
+@model ProgressTracker.Pages.ObjectiveModel
+@using ProgressTracker.Models
+@{
+    ViewData["Title"] = "Objective";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    DetailNavbarViewModel navbarViewModel = new DetailNavbarViewModel { Title = Model.Objective.Description, IsEditing = true };
+}
+<partial name="Shared/_DetailViewNavbarPartial" model="navbarViewModel" />

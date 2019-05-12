@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace ProgressTracker.Models
 {
-    public class NavbarViewModel
+    public class DetailNavbarViewModel
     {
         public string Title { get; set; }
-        public bool Authenticated { get; set; }
+        public string Subtitle { get; set; }
+        public bool IsEditing { get; set; }
     }
 }

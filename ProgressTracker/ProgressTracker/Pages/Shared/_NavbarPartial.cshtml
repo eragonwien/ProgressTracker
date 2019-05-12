@@ -1,42 +1,52 @@
 ﻿@using SNGCommon.Resources
+
 @{
-    string title = ViewData["Title"].ToString();
+    string title = Context.User.Identity.IsAuthenticated ? Context.User.Identity.Name : string.Empty;
     bool authenticated = Context.User.Identity.IsAuthenticated;
+    string returnUrl = ViewBag.ReturnUrl;
 }
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-            Home
-        </a>
+        @if (!string.IsNullOrWhiteSpace(returnUrl))
+        {
+            <a class="navbar-item" href="@returnUrl">
+                <span class="icon">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+            </a>
+        }
+        <a class="navbar-item" href="/">@title</a>
 
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
 
-    <div class="navbar-end">
-        <div class="navbar-item">
-            <div class="buttons">
-                @if (authenticated)
-                {
-                    <a class="button is-light" href="Logout">
-                        <span class="icon">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </span>
-                        <span>@Translation.Logout</span>
-                    </a>
-                }
-                else
-                {
-                    <a class="button is-primary" href="Login">
-                        <span class="icon">
-                            <i class="fas fa-sign-in-alt"></i>
-                        </span>
-                        <span>@Translation.Login</span>
-                    </a>
-                }
+    <div class="navbar-menu" id="navbar-menu">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    @if (authenticated)
+                    {
+                        <a class="button is-light" asp-page="Logout">
+                            <span class="icon">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </span>
+                            <span>@Translation.Logout</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="button is-primary" asp-page="Login">
+                            <span class="icon">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </span>
+                            <span>@Translation.Login</span>
+                        </a>
+                    }
+                </div>
             </div>
         </div>
     </div>

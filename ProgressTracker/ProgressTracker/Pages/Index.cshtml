@@ -1,8 +1,16 @@
 ﻿@page
 @using ProgressTracker.Models;
+@using SNGCommon.Resources
 @model IndexModel
 @{
-    ViewData["Title"] = "Projekte";
+    ViewData["Title"] = Translation.TitleIndexPage;
 }
 
-
+<div class="container is-fluid">
+    <div class="section">
+        @foreach (var project in Model.Projects)
+        {
+            <partial name="Shared/_MasterViewEntryPartial" model="project" />
+        }
+    </div>
+</div>

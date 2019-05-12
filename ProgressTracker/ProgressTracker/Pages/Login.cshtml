@@ -5,8 +5,10 @@
     ViewData["Title"] = "Login";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-<div id="login">
-    <div asp-validation-summary="ModelOnly" class="red-text"></div>
+<div id="login" class="section">
+    <div asp-validation-summary="ModelOnly" class="notification is-danger">
+        <button class="delete"></button>
+    </div>
     <form method="post">
         <div class="card">
             <div class="card-content">
@@ -26,7 +28,7 @@
                     <span asp-validation-for="Password" class="help is-danger"></span>
                 </div>
                 <div class="field is-grouped">
-                    <button class="button is-primary is-fullwidth">@Translation.Login</button>
+                    <button type="submit" class="button is-primary is-fullwidth">@Translation.Login</button>
                 </div>
             </div>
         </div>

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProgressTracker.Models
 {
     public partial class Ptobjective
     {
-        public Ptobjective()
-        {
-            Pttask = new HashSet<Pttask>();
-        }
-
+        [HiddenInput]
         public int Id { get; set; }
+        [Required]
         public int PtprojectId { get; set; }
+        [Required]
+        [MinLength(3)]
         public string Description { get; set; }
-        public string Status { get; set; }
+        public bool IsCompleted { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Ptproject Ptproject { get; set; }
-        public virtual ICollection<Pttask> Pttask { get; set; }
     }
 }

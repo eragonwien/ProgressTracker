@@ -1,0 +1,25 @@
+﻿@model ProgressTracker.Models.DetailNavbarViewModel
+<section class="hero is-primary is-small">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a asp-page="Index" class="navbar-item"></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
+    <div class="hero-body">
+        <div class="container has-text-left">
+            <h1 class="title">
+                @Model.Title
+            </h1>
+            <h2 class="subtitle">
+                @Model.Subtitle
+            </h2>
+        </div>
+    </div>
+</section>

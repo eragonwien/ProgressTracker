@@ -11,5 +11,8 @@ namespace ProgressTracker.Models
     public class BasePageModel : PageModel
     {
         public string Message { get; set; }
+        [ViewData]
+        [BindProperty]
+        public string ReturnUrl { get; set; }
     }
 }

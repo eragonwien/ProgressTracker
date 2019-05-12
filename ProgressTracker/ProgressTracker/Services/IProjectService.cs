@@ -8,7 +8,7 @@ namespace ProgressTracker.Services
 {
     public interface IProjectService
     {
-        IEnumerable<Ptproject> GetAll();
+        IEnumerable<Ptproject> GetAll(int userId);
         Task<Ptproject> GetOne(int id);
         void Create(Ptproject project);
         void Update(Ptproject project);

@@ -12,6 +12,7 @@ namespace ProgressTracker.Services
         Task<Ptobjective> GetOne(int id);
         void Create(Ptobjective objective);
         void Update(Ptobjective objective);
+        void Patch(Ptobjective objective, params string[] columns);
         void Remove(int id);
         bool Exists(int id);
         Task SaveChanges();
