@@ -5,12 +5,10 @@
 @{
     ViewData["Title"] = "Project";
     Layout = "~/Pages/Shared/_Layout.cshtml";
-    DetailNavbarViewModel navbarViewModel = new DetailNavbarViewModel { Title = Model.Project != null ? Model.Project.Name : string.Empty };
 
 }
-<partial name="Shared/_DetailViewNavbarPartial" model="navbarViewModel" />
 @if (Model.IsCreate)
 {
-    <partial name="Shared/_ProjectCreatePartial" />
+    <partial name="Shared/_ProjectCreatePartial" model="Model.Project" />
 }
 
