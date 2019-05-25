@@ -11,22 +11,20 @@ using ProgressTracker.Services;
 
 namespace ProgressTracker.Pages
 {
-    [Authorize]
-    public class IndexModel : BasePageModel
-    {
-        private readonly IProjectService projectService;
-        public int UserId { get; set; }
-        public IEnumerable<ProjectViewModel> Projects { get; set; }
+   [Authorize]
+   public class IndexModel : BasePageModel
+   {
+      private readonly IProjectService projectService;
+      public IEnumerable<ProjectViewModel> Projects { get; set; }
 
-        public IndexModel(IProjectService projectService)
-        {
-            this.projectService = projectService;
-        }
+      public IndexModel(IProjectService projectService)
+      {
+         this.projectService = projectService;
+      }
 
-        public void OnGet()
-        {
-            UserId = UserId > 0 ? UserId : Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            Projects = projectService.GetAll(UserId).Select(p => new ProjectViewModel(p));
-        }
-    }
+      public void OnGet()
+      {
+         Projects = projectService.GetAll(UserId).Select(p => new ProjectViewModel(p));
+      }
+   }
 }

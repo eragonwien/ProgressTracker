@@ -11,95 +11,99 @@ $family-sans-serif: "Nunito", sans-serif;
 @import "../lib/materialize/materialize";
 
 html, body {
-    height: 100%;
+   height: 100%;
 }
 
 // Sidenav Fix
 header, main, footer {
-    padding-left: 300px;
+   padding-left: 300px;
 }
 
 @media only screen and (max-width : 992px) {
-    header, main, footer {
-        padding-left: 0;
-    }
+   header, main, footer {
+      padding-left: 0;
+   }
 }
-     
+
 
 .split-container {
-    height: 100%;
-    position: fixed;
-    /*z-index: 1;*/
-    /*top: 0;*/
-    overflow: hidden;
-    /*padding-top: 20px;*/
+   height: 100%;
+   position: fixed;
+   /*z-index: 1;*/
+   /*top: 0;*/
+   overflow: hidden;
+   /*padding-top: 20px;*/
 }
 
 .master-container {
-    width: 25%;
-    left: 0;
-    background-color: lightgray;
+   width: 25%;
+   left: 0;
+   background-color: lightgray;
 }
 
 .detail-container {
-    width: 75%;
-    right: 0;
+   width: 75%;
+   right: 0;
 }
 
 #login {
-    max-width: 500px;
-    margin: 100px auto;
+   max-width: 500px;
+   margin: 100px auto;
 }
 
 .has-sidenav-fixed {
-    @media (min-width: 1024px) {
-        margin-left: 300px;
-    }
+   @media (min-width: 1024px) {
+      margin-left: 300px;
+   }
 }
 
 /* valid color */
 .input-field input.valid {
-    border-bottom: 1px solid green;
-    box-shadow: 0 1px 0 0 green;
+   border-bottom: 1px solid green;
+   box-shadow: 0 1px 0 0 green;
 }
 
 /* invalid color */
 .input-field input.input-validation-error {
-    border-bottom: 1px solid red;
-    box-shadow: 0 1px 0 0 red;
+   border-bottom: 1px solid red;
+   box-shadow: 0 1px 0 0 red;
 }
 
 .media-content .media-content-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 .objective-description.is-checked {
-    text-decoration-line: line-through;
+   text-decoration-line: line-through;
 }
 
 .objective-container:not(.edit) {
-    .save-button {
-        display: none;
-    }
-    input {
-        @extend .readonly;
-    }
+   .save-button {
+      display: none;
+   }
+
+   input {
+      @extend .readonly;
+   }
 }
 
 .readonly {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
 }
 
 .invisible-button {
-    background: none;
-    color: inherit;
-    font: inherit;
-    border: none;
-    outline: inherit;
+   background: none;
+   color: inherit;
+   font: inherit;
+   border: none;
+   outline: inherit;
 }
 
+.line-through {
+   text-decoration: line-through;
+}

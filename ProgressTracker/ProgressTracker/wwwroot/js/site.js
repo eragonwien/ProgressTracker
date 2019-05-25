@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
    initMaterialize();
-   focusFirstField();
+   //focusFirstField();
 });
 
 function initMaterialize() {
@@ -25,6 +25,7 @@ function loadToast() {
 
 function onCheckboxChanged(checkbox) {
    $(checkbox).closest('form').find('#submit-checkbox-change-button').trigger('click');
+   $(checkbox).closest('form').find('label span').toggleClass('line-through', $(checkbox).is(':checked'));
 }
 
 function reloadPage() {

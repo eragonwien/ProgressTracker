@@ -1,14 +1,9 @@
-﻿@model ProgressTracker.Models.Ptproject
+﻿@model ProgressTracker.Models.Ptobjective
 @using SNGCommon.Resources
-
 <form method="post">
    <input type="hidden" asp-for="Id" />
+   <input type="hidden" asp-for="PtprojectId" />
    <div class="modal-content">
-      <div class="input-field">
-         <input asp-for="Name" class="validate" />
-         <label asp-for="Name"></label>
-         <span asp-validation-for="Name" class="helper-text red-text"></span>
-      </div>
       <div class="input-field">
          <input asp-for="Description" class="validate" />
          <label asp-for="Description"></label>
@@ -16,7 +11,7 @@
       </div>
    </div>
    <div class="modal-footer">
-      <button type="submit" asp-page="project" asp-page-handler="edit" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
+      <button type="submit" asp-page="objective" asp-page-handler="add" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
          <i class="material-icons left">save</i>
          <span class="white-text">@Translation.SaveChanges</span>
       </button>

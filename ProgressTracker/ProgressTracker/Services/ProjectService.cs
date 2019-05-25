@@ -18,6 +18,11 @@ namespace ProgressTracker.Services
 
       public void Create(Ptproject project)
       {
+         if (project.PtuserId <= 0)
+         {
+            throw new Exception("Projekt Benutzer Id ist leer");
+         }
+         project.IsActive = true;
          context.Ptproject.Add(project);
       }
 
@@ -30,12 +35,27 @@ namespace ProgressTracker.Services
          context.Ptproject.Attach(project);
          foreach (var column in columns)
          {
-            context.Entry(project).Property(column).IsModified = true;
+            if (project.GetType().GetProperty(column).GetValue(project) != null)
+            {
+               context.Entry(project).Property(column).IsModified = true;
+            }
          }
       }
 
       public void Update(Ptproject project)
       {
+         if (project.Id <= 0)
+         {
+            throw new Exception("Ungültige Projekt Id");
+         }
+         if (project.PtuserId <= 0)
+         {
+            throw new Exception("Ungültige Projekt Benutzer Id");
+         }
+         if (string.IsNullOrEmpty(project.Name))
+         {
+            throw new Exception("Projekt Name darf nicht leer sein");
+         }
          context.Ptproject.Update(project);
       }
 
@@ -64,7 +84,7 @@ namespace ProgressTracker.Services
          if (removeProject != null)
          {
             removeProject.IsActive = false;
-            Update(removeProject);
+            Patch(removeProject, nameof(Ptproject.IsActive));
          }
       }
 

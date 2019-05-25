@@ -7,8 +7,4 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 
 }
-@if (Model.IsCreate)
-{
-    <partial name="Shared/_ProjectCreatePartial" model="Model.Project" />
-}
-
+<partial name="Shared/_IndexProjectAddPartial" model="Model.Project" />

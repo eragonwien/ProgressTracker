@@ -15,11 +15,11 @@
                 <p class="title">Login</p>
                 <div class="input-field">
                     <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
-                    <span asp-validation-for="Email" class="help is-danger"></span>
+                    <span asp-validation-for="Email" class="helper-text red-text"></span>
                 </div>
                 <div class="input-field">
                     <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
-                    <span asp-validation-for="Password" class="help is-danger"></span>
+                    <span asp-validation-for="Password" class="helper-text red-text"></span>
                 </div>
                 <button type="submit" class="btn waves-effect waves-light">@Translation.Login</button>
             </div>

@@ -1,14 +1,18 @@
 ﻿@model ProgressTracker.Models.Ptproject
 @using SNGCommon.Resources
-
-@{
-
+@{ 
+   string message = string.Format("Delete <b>{0}</b> ?", Model.Name);
 }
-
-<div class="modal-content">
-   <h4>Modal Delete</h4>
-   <p>A bunch of text</p>
-</div>
-<div class="modal-footer">
-   <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-</div>
+<form method="post">
+   <input type="hidden" asp-for="Id" />
+   <input type="hidden" asp-for="PtuserId" />
+   <div class="modal-content">
+      <p>@Html.Raw(message)</p>
+   </div>
+   <div class="modal-footer">
+      <button type="submit" asp-page="project" asp-page-handler="delete" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
+         <i class="material-icons left">save</i>
+         <span class="white-text">@Translation.SaveChanges</span>
+      </button>
+   </div>
+</form>

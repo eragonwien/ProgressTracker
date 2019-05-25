@@ -16,7 +16,7 @@
             string editModalId = string.Format("edit-modal-p{0}", projectViewModel.Project.Id);
             string deleteModalId = string.Format("delete-modal-p{0}", projectViewModel.Project.Id);
             bool isActive = projectViewModel.Project.Id == activeProjectId;
-            <li class="@(isActive ? "active" : "")">
+            <li class="index-project-entry @(isActive ? "active" : "")">
                <div class="collapsible-header">
                   @projectViewModel.Project.Description
                </div>
@@ -37,14 +37,14 @@
                   <ul class="collection">
                      @foreach (Ptobjective objective in projectViewModel.Project.Ptobjective)
                      {
-                        <li class="collection-item">
+                        <li class="index-objective-entry collection-item">
                            <partial name="Shared/_IndexObjectivePartial" model="objective" />
                         </li>
                      }
                   </ul>
                </div>
                <div id="@addModalId" class="modal bottom-sheet">
-                  <partial name="_IndexProjectAddPartial" model="projectViewModel.Project" />
+                  <partial name="_IndexProjectAddObjectivePartial" model="new Ptobjective { PtprojectId = projectViewModel.Project.Id }" />
                </div>
                <div id="@editModalId" class="modal bottom-sheet">
                   <partial name="_IndexProjectEditPartial" model="projectViewModel.Project" />

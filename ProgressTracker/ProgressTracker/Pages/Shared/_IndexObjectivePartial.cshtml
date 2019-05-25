@@ -8,7 +8,7 @@
       <input type="hidden" asp-for="Id" />
       <label>
          <input type="checkbox" asp-for="IsCompleted" onchange="onCheckboxChanged(this)" />
-         <span>@Model.Description</span>
+         <span class="black-text @(Model.IsCompleted ? "line-through" : "")">@Model.Description</span>
       </label>
       <input type="submit" asp-page="objective" asp-page-handler="status" class="ajax-submit" id="submit-checkbox-change-button" hidden />
       <a href="#@modalId" class="secondary-content waves-effect waves-light btn-flat modal-trigger"><i class="material-icons">edit</i></a>
@@ -20,12 +20,13 @@
          <input type="hidden" asp-for="PtprojectId" />
          <div class="modal-content">
             <div class="input-field">
-               <input asp-for="Description" />
+               <input asp-for="Description" class="validate" />
                <label asp-for="Description"></label>
+               <span asp-validation-for="Description" class="helper-text red-text"></span>
             </div>
          </div>
          <div class="modal-footer">
-            <button type="submit" asp-page="objective" asp-page-handler="description" asp-route-returnurl="@Context.Request.Path" class="modal-close btn black waves-effect waves-light">
+            <button type="submit" asp-page="objective" asp-page-handler="description" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
                <i class="material-icons left">save</i>
                <span class="white-text">@Translation.SaveChanges</span>
             </button>

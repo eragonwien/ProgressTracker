@@ -2,49 +2,53 @@
 @using System.Security.Claims;
 
 @{
-    var identity = Context.User.Identity as ClaimsIdentity;
-    string username = identity?.Name;
-    string email = identity?.FindFirst(ClaimTypes.Email)?.Value?.ToString();
-    string title = ViewData["Title"]?.ToString();
-    bool authenticated = Context.User.Identity.IsAuthenticated;
-    string returnUrl = ViewBag.ReturnUrl;
-    string currentPage = Context.Request.Path;
+   var identity = Context.User.Identity as ClaimsIdentity;
+   string username = identity?.Name;
+   string email = identity?.FindFirst(ClaimTypes.Email)?.Value?.ToString();
+   string title = ViewData["Title"]?.ToString();
+   bool authenticated = Context.User.Identity.IsAuthenticated;
+   string returnUrl = ViewBag.ReturnUrl;
+   string currentPage = Context.Request.Path;
 }
 <nav role="navigation" aria-label="main navigation">
-    <div class="nav-wrapper black">
-        <a href="" class="brand-logo center">@title</a>
-        <a href="#" data-target="sidenav" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
-        <ul class="left">
-            @if (!string.IsNullOrEmpty(returnUrl))
-            {
-                <li>
-                    <a href="@returnUrl" class="waves-effect waves-light">
-                        <i class="material-icons">arrow_back</i>
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>
+   <div class="nav-wrapper black">
+      <a href="" class="brand-logo center">@title</a>
+      <a href="#" data-target="sidenav" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+      <ul class="left">
+         @if (!string.IsNullOrEmpty(returnUrl))
+         {
+            <li>
+               <a href="@returnUrl" class="waves-effect waves-light">
+                  <i class="material-icons">arrow_back</i>
+               </a>
+            </li>
+         }
+      </ul>
+   </div>
 </nav>
 <ul id="sidenav" class="sidenav sidenav-fixed">
-    <li>
-        <div class="user-view">
-            <div class="background black"></div>
-            <a href=""><span class="name white-text">@username</span></a>
-            <a href=""><span class="email white-text">@email</span></a>
-            @if (!authenticated)
-            {
-                <span class="white-text">Progress Tracker</span>
-            }
-        </div>
-    </li>
-    @if (authenticated)
-    {
-        <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons">exit_to_app</i>@Translation.Logout</a></li>
-    }
-    else
-    {
-        <li><a asp-page="login"><i class="material-icons">person</i>@Translation.Login</a></li>
-    }
-    <li><div class="divider"></div></li>
+   <li>
+      <div class="user-view">
+         <div class="background black"></div>
+         <a href=""><span class="name white-text">@username</span></a>
+         <a href=""><span class="email white-text">@email</span></a>
+         @if (!authenticated)
+         {
+            <span class="white-text">Progress Tracker</span>
+         }
+      </div>
+   </li>
+   @if (authenticated)
+   {
+      <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons">exit_to_app</i>@Translation.Logout</a></li>
+   }
+   else
+   {
+      <li><a asp-page="login"><i class="material-icons">person</i>@Translation.Login</a></li>
+   }
+   <li><div class="divider"></div></li>
+   @if (authenticated)
+   {
+      <li><a class="waves-effect waves-light" asp-page="project" asp-page-handler="add" asp-route-returnurl="/"><i class="material-icons">add</i>@Translation.CreateNewProject</a></li>
+   }
 </ul>

@@ -24,10 +24,25 @@ namespace ProgressTracker.Pages
          this.projectService = projectService;
       }
 
-      public void OnGetCreate()
+      public void OnGetAddAsync()
       {
-         IsCreate = true;
-         ReturnUrl = "/";
+         Project = new Ptproject() { PtuserId = UserId };
+      }
+
+      public async Task<IActionResult> OnPostAddAsync()
+      {
+         try
+         {
+            projectService.Create(Project);
+            await projectService.SaveChanges();
+            ActiveProjectId = Project.Id;
+            Message = Translation.Completed;
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+         return Redirect(ReturnUrl);
       }
 
       public async Task<IActionResult> OnPostEditAsync()
@@ -37,6 +52,23 @@ namespace ProgressTracker.Pages
             projectService.Patch(Project, nameof(Project.Name), nameof(Project.Description));
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
+            Message = Translation.Completed;
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+         ReturnUrl = Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : "/";
+         return Redirect(ReturnUrl);
+      }
+
+      public async Task<IActionResult> OnPostDeleteAsync()
+      {
+         try
+         {
+            projectService.Remove(Project.Id);
+            await projectService.SaveChanges();
+            ActiveProjectId = 0;
             Message = Translation.Completed;
          }
          catch (Exception ex)

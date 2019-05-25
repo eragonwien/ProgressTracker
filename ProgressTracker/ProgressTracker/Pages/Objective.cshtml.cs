@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
+using SNGCommon.Resources;
 
 namespace ProgressTracker.Pages
 {
    public class ObjectiveModel : BasePageModel
    {
-      private readonly IObjectiveService oService;
+      private readonly IObjectiveService objectiveService;
 
       public ObjectiveModel(IObjectiveService objectiveService)
       {
-         this.oService = objectiveService;
+         this.objectiveService = objectiveService;
       }
 
       [BindProperty]
@@ -27,14 +28,8 @@ namespace ProgressTracker.Pages
       public async Task OnGetAsync()
       {
          IsCreate = false;
-         Objective = await oService.GetOne(Id);
+         Objective = await objectiveService.GetOne(Id);
          ReturnUrl = Request.Headers["Referer"].ToString();
-      }
-
-      public void OnGetCreate()
-      {
-         IsCreate = true;
-         ReturnUrl = "/";
       }
 
       public async Task<IActionResult> OnPostDescriptionAsync()
@@ -43,8 +38,8 @@ namespace ProgressTracker.Pages
          {
             if (ModelState.IsValid)
             {
-               oService.Patch(Objective, nameof(Objective.Description));
-               await oService.SaveChanges();
+               objectiveService.Patch(Objective, nameof(Objective.Description));
+               await objectiveService.SaveChanges();
                ActiveProjectId = Objective.PtprojectId;
             }
          }
@@ -59,8 +54,8 @@ namespace ProgressTracker.Pages
       {
          try
          {
-            oService.Patch(Objective, nameof(Objective.IsCompleted));
-            await oService.SaveChanges();
+            objectiveService.Patch(Objective, nameof(Objective.IsCompleted));
+            await objectiveService.SaveChanges();
          }
          catch (Exception ex)
          {
@@ -70,8 +65,25 @@ namespace ProgressTracker.Pages
 
       public async Task OnPostDeleteAsync()
       {
-         oService.Remove(Objective.Id);
-         await oService.SaveChanges();
+         objectiveService.Remove(Objective.Id);
+         await objectiveService.SaveChanges();
+      }
+
+      public async Task<IActionResult> OnPostAddAsync()
+      {
+         try
+         {
+            objectiveService.Create(Objective);
+            await objectiveService.SaveChanges();
+            ActiveProjectId = Objective.PtprojectId;
+            Message = Translation.Completed;
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+         ReturnUrl = Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : "/";
+         return Redirect(ReturnUrl);
       }
    }
 }

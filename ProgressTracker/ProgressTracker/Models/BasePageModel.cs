@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProgressTracker.Models
@@ -25,5 +26,12 @@ namespace ProgressTracker.Models
       [TempData]
       public string Message { get; set; }
 
+      public int UserId
+      {
+         get
+         {
+            return int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId) ? userId : -1;
+         }
+      }
    }
 }

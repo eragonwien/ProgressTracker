@@ -1,14 +1,27 @@
 ﻿@model ProgressTracker.Models.Ptproject
 @using SNGCommon.Resources
-
-@{
-
+@{ 
+   string returnUrl = ViewBag.ReturnUrl;
 }
-
-<div class="modal-content">
-   <h4>Modal Add</h4>
-   <p>A bunch of text</p>
-</div>
-<div class="modal-footer">
-   <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-</div>
+<form method="post">
+   <input type="hidden" asp-for="Id" />
+   <input type="hidden" asp-for="PtuserId" />
+   <div class="modal-content">
+      <div class="input-field">
+         <input asp-for="Name" class="validate" />
+         <label asp-for="Name"></label>
+         <span asp-validation-for="Name" class="helper-text red-text"></span>
+      </div>
+      <div class="input-field">
+         <input asp-for="Description" class="validate" />
+         <label asp-for="Description"></label>
+         <span asp-validation-for="Description" class="helper-text red-text"></span>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="submit" asp-page="project" asp-page-handler="add" asp-route-returnurl="@returnUrl" class="btn black waves-effect waves-light">
+         <i class="material-icons left">save</i>
+         <span class="white-text">@Translation.SaveChanges</span>
+      </button>
+   </div>
+</form>
