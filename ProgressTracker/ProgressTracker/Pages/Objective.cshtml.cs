@@ -9,68 +9,69 @@ using ProgressTracker.Services;
 
 namespace ProgressTracker.Pages
 {
-    public class ObjectiveModel : BasePageModel
-    {
-        private readonly IObjectiveService oService;
+   public class ObjectiveModel : BasePageModel
+   {
+      private readonly IObjectiveService oService;
 
-        public ObjectiveModel(IObjectiveService objectiveService)
-        {
-            this.oService = objectiveService;
-        }
+      public ObjectiveModel(IObjectiveService objectiveService)
+      {
+         this.oService = objectiveService;
+      }
 
-        [BindProperty]
-        public Ptobjective Objective { get; set; }
+      [BindProperty]
+      public Ptobjective Objective { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
+      [BindProperty(SupportsGet = true)]
+      public int Id { get; set; }
 
-        public async Task OnGetAsync()
-        {
-            IsCreate = false;
-            Objective = await oService.GetOne(Id);
-            ReturnUrl = Request.Headers["Referer"].ToString();
-        }
+      public async Task OnGetAsync()
+      {
+         IsCreate = false;
+         Objective = await oService.GetOne(Id);
+         ReturnUrl = Request.Headers["Referer"].ToString();
+      }
 
-        public void OnGetCreate()
-        {
-            IsCreate = true;
-            ReturnUrl = "/";
-        }
+      public void OnGetCreate()
+      {
+         IsCreate = true;
+         ReturnUrl = "/";
+      }
 
-        public async Task OnPostDescriptionAsync()
-        {
-            try
+      public async Task<IActionResult> OnPostDescriptionAsync()
+      {
+         try
+         {
+            if (ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return;
-                }
-                oService.Patch(Objective, nameof(Objective.Description));
-                await oService.SaveChanges();
+               oService.Patch(Objective, nameof(Objective.Description));
+               await oService.SaveChanges();
+               ActiveProjectId = Objective.PtprojectId;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+         return Redirect(ReturnUrl);
+      }
 
-        public async Task OnPostStatusAsync()
-        {
-            try
-            {
-                oService.Patch(Objective, nameof(Objective.IsCompleted));
-                await oService.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task OnPostDeleteAsync()
-        {
-            oService.Remove(Objective.Id);
+      public async Task OnPostStatusAsync()
+      {
+         try
+         {
+            oService.Patch(Objective, nameof(Objective.IsCompleted));
             await oService.SaveChanges();
-        }
-    }
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+      }
+
+      public async Task OnPostDeleteAsync()
+      {
+         oService.Remove(Objective.Id);
+         await oService.SaveChanges();
+      }
+   }
 }

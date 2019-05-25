@@ -13,23 +13,15 @@
         <div class="card">
             <div class="card-content">
                 <p class="title">Login</p>
-                <div class="field">
-                    <label asp-for="Email"></label>
-                    <div class="control">
-                        <input asp-for="Email" class="input">
-                    </div>
+                <div class="input-field">
+                    <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
                     <span asp-validation-for="Email" class="help is-danger"></span>
                 </div>
-                <div class="field">
-                    <label asp-for="Password"></label>
-                    <div class="control">
-                        <input asp-for="Password" class="input">
-                    </div>
+                <div class="input-field">
+                    <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
                     <span asp-validation-for="Password" class="help is-danger"></span>
                 </div>
-                <div class="field is-grouped">
-                    <button type="submit" class="button is-primary is-fullwidth">@Translation.Login</button>
-                </div>
+                <button type="submit" class="btn waves-effect waves-light">@Translation.Login</button>
             </div>
         </div>
     </form>

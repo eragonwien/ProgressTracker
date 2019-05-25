@@ -1,0 +1,8 @@
+﻿@{ 
+   string message = TempData["Message"]?.ToString();
+}
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+   <div id="toast" hidden>@message</div>
+}

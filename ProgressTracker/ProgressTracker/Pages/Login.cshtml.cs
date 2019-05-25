@@ -14,67 +14,67 @@ using SNGCommon.Resources;
 
 namespace ProgressTracker.Pages
 {
-    public class LoginModel : PageModel
-    {
-        private readonly IUserService userService;
+   public class LoginModel : BasePageModel
+   {
+      private readonly IUserService userService;
 
-        [BindProperty]
-        [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyEmail), ErrorMessageResourceType = typeof(Translation))]
-        [EmailAddress(ErrorMessageResourceName = nameof(Translation.ValidationInvalidEmail), ErrorMessageResourceType = typeof(Translation))]
-        public string Email { get; set; }
+      [BindProperty]
+      [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyEmail), ErrorMessageResourceType = typeof(Translation))]
+      [EmailAddress(ErrorMessageResourceName = nameof(Translation.ValidationInvalidEmail), ErrorMessageResourceType = typeof(Translation))]
+      public string Email { get; set; }
 
-        [BindProperty]
-        [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyPassword), ErrorMessageResourceType = typeof(Translation))]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-        public string Language { get; set; } = "en";
+      [BindProperty]
+      [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyPassword), ErrorMessageResourceType = typeof(Translation))]
+      [DataType(DataType.Password)]
+      public string Password { get; set; }
+      public string Language { get; set; } = "en";
 
-        public LoginModel(IUserService userService)
-        {
-            this.userService = userService;
-        }
+      public LoginModel(IUserService userService)
+      {
+         this.userService = userService;
+      }
 
-        public void OnGet()
-        {
+      public void OnGet()
+      {
 
-        }
+      }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+      public async Task<IActionResult> OnPostAsync()
+      {
+         if (!ModelState.IsValid)
+         {
+            return Page();
+         }
 
-            try
-            {
-                var user = await userService.Login(Email, Password);
+         try
+         {
+            var user = await userService.Login(Email, Password);
 
-                // Login erfolgreich
-                var claims = new List<Claim>
+            // Login erfolgreich
+            var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 };
 
-                var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(userIdentity);
-                var authProperties = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTime.Now.AddDays(Settings.COOKIE_MAX_AGE_DAYS)
-                };
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
-
-                return RedirectToPage("/Index");
-            }
-            catch (Exception ex)
+            var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(userIdentity);
+            var authProperties = new AuthenticationProperties
             {
-                ModelState.AddModelError("", ex.Message);
-                return Page();
-            }
-        }
-    }
+               IsPersistent = true,
+               ExpiresUtc = DateTime.Now.AddDays(Settings.COOKIE_MAX_AGE_DAYS)
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
+
+            return RedirectToPage("/Index");
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+            return Page();
+         }
+      }
+   }
 }

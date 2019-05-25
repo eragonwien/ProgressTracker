@@ -2,17 +2,29 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-// BULMA Overrides --- BEGIN
+// SASS Overrides --- BEGIN
 
 $family-sans-serif: "Nunito", sans-serif;
 
-// BULMA Overrides --- END
+// SASS Overrides --- END
 
-@import "./bulma/bulma.sass";
+@import "../lib/materialize/materialize";
 
 html, body {
     height: 100%;
 }
+
+// Sidenav Fix
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+     
 
 .split-container {
     height: 100%;
@@ -64,7 +76,6 @@ html, body {
 }
 
 .objective-description.is-checked {
-    @extend .has-text-grey;
     text-decoration-line: line-through;
 }
 

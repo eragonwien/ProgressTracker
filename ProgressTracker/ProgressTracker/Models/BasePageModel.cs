@@ -8,13 +8,22 @@ using System.Threading.Tasks;
 
 namespace ProgressTracker.Models
 {
-    public class BasePageModel : PageModel
-    {
-        public string Message { get; set; }
-        [ViewData]
-        [BindProperty(SupportsGet = true)]
-        public string ReturnUrl { get; set; }
-        [ViewData]
-        public bool IsCreate { get; set; }
-    }
+   public class BasePageModel : PageModel
+   {
+      private string returnUrl;
+      [ViewData]
+      [BindProperty(SupportsGet = true)]
+      public string ReturnUrl
+      {
+         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : "/"; }
+         set { returnUrl = value; }
+      }
+      [ViewData]
+      public bool IsCreate { get; set; }
+      [TempData]
+      public int ActiveProjectId { get; set; }
+      [TempData]
+      public string Message { get; set; }
+
+   }
 }

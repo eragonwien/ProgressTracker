@@ -6,14 +6,15 @@ using ProgressTracker.Models;
 
 namespace ProgressTracker.Services
 {
-    public interface IProjectService
-    {
-        IEnumerable<Ptproject> GetAll(int userId);
-        Task<Ptproject> GetOne(int id);
-        void Create(Ptproject project);
-        void Update(Ptproject project);
-        void Remove(int id);
-        bool Exists(int id);
-        Task SaveChanges();
-    }
+   public interface IProjectService
+   {
+      IEnumerable<Ptproject> GetAll(int userId);
+      Task<Ptproject> GetOne(int id);
+      void Create(Ptproject project);
+      void Patch(Ptproject project, params string[] columns);
+      void Update(Ptproject project);
+      void Remove(int id);
+      bool Exists(int id);
+      Task SaveChanges();
+   }
 }

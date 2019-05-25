@@ -1,71 +1,50 @@
 ﻿@using SNGCommon.Resources
+@using System.Security.Claims;
 
 @{
-    string title = Context.User.Identity.IsAuthenticated ? Context.User.Identity.Name : string.Empty;
+    var identity = Context.User.Identity as ClaimsIdentity;
+    string username = identity?.Name;
+    string email = identity?.FindFirst(ClaimTypes.Email)?.Value?.ToString();
+    string title = ViewData["Title"]?.ToString();
     bool authenticated = Context.User.Identity.IsAuthenticated;
     string returnUrl = ViewBag.ReturnUrl;
     string currentPage = Context.Request.Path;
 }
-<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        @if (!string.IsNullOrWhiteSpace(returnUrl))
-        {
-            <a class="navbar-item" href="@returnUrl">
-                <span class="icon">
-                    <i class="fas fa-arrow-left"></i>
-                </span>
-            </a>
-        }
-        <a class="navbar-item" href="/">@title</a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-
-    <div class="navbar-menu" id="navbar-menu">
-        <div class="navbar-end">
-            @if (!currentPage.StartsWith("/Project"))
+<nav role="navigation" aria-label="main navigation">
+    <div class="nav-wrapper black">
+        <a href="" class="brand-logo center">@title</a>
+        <a href="#" data-target="sidenav" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+        <ul class="left">
+            @if (!string.IsNullOrEmpty(returnUrl))
             {
-                <a class="navbar-item" asp-page="project" asp-page-handler="create">
-                    <span class="icon">
-                        <i class="fas fa-plus"></i>
-                    </span>
-                    <span>@Translation.CreateNewProject</span>
-                </a>
-            }
-            @if (!currentPage.StartsWith("/Objective"))
-            {
-                <a class="navbar-item" asp-page="objective" asp-page-handler="create" asp-route-returnurl="@Context.Request.Path">
-                    <span class="icon">
-                        <i class="fas fa-plus"></i>
-                    </span>
-                    <span>@Translation.CreateNewObjective</span>
-                </a>
-            }
-        </div>
-        <div class="navbar-item">
-            <div class="buttons">
-                @if (authenticated)
-                {
-                    <a class="button is-light" asp-page="Logout">
-                        <span class="icon">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </span>
-                        <span>@Translation.Logout</span>
+                <li>
+                    <a href="@returnUrl" class="waves-effect waves-light">
+                        <i class="material-icons">arrow_back</i>
                     </a>
-                }
-                else
-                {
-                    <a class="button is-primary" asp-page="Login">
-                        <span class="icon">
-                            <i class="fas fa-sign-in-alt"></i>
-                        </span>
-                        <span>@Translation.Login</span>
-                    </a>
-                }
-            </div>
-        </div>
+                </li>
+            }
+        </ul>
     </div>
 </nav>
+<ul id="sidenav" class="sidenav sidenav-fixed">
+    <li>
+        <div class="user-view">
+            <div class="background black"></div>
+            <a href=""><span class="name white-text">@username</span></a>
+            <a href=""><span class="email white-text">@email</span></a>
+            @if (!authenticated)
+            {
+                <span class="white-text">Progress Tracker</span>
+            }
+        </div>
+    </li>
+    @if (authenticated)
+    {
+        <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons">exit_to_app</i>@Translation.Logout</a></li>
+    }
+    else
+    {
+        <li><a asp-page="login"><i class="material-icons">person</i>@Translation.Login</a></li>
+    }
+    <li><div class="divider"></div></li>
+</ul>

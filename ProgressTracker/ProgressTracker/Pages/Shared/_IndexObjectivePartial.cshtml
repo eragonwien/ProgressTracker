@@ -1,0 +1,35 @@
+﻿@model ProgressTracker.Models.Ptobjective
+@using SNGCommon.Resources
+@{
+   string modalId = string.Format("modal-p{0}-o{1}", Model.PtprojectId, Model.Id);
+}
+<div>
+   <form method="post">
+      <input type="hidden" asp-for="Id" />
+      <label>
+         <input type="checkbox" asp-for="IsCompleted" onchange="onCheckboxChanged(this)" />
+         <span>@Model.Description</span>
+      </label>
+      <input type="submit" asp-page="objective" asp-page-handler="status" class="ajax-submit" id="submit-checkbox-change-button" hidden />
+      <a href="#@modalId" class="secondary-content waves-effect waves-light btn-flat modal-trigger"><i class="material-icons">edit</i></a>
+   </form>
+
+   <div id="@modalId" class="modal bottom-sheet">
+      <form method="post">
+         <input type="hidden" asp-for="Id" />
+         <input type="hidden" asp-for="PtprojectId" />
+         <div class="modal-content">
+            <div class="input-field">
+               <input asp-for="Description" />
+               <label asp-for="Description"></label>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="submit" asp-page="objective" asp-page-handler="description" asp-route-returnurl="@Context.Request.Path" class="modal-close btn black waves-effect waves-light">
+               <i class="material-icons left">save</i>
+               <span class="white-text">@Translation.SaveChanges</span>
+            </button>
+         </div>
+      </form>
+   </div>
+</div>

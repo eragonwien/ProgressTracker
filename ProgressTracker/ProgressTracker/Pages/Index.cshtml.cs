@@ -16,7 +16,7 @@ namespace ProgressTracker.Pages
     {
         private readonly IProjectService projectService;
         public int UserId { get; set; }
-        public IEnumerable<Ptproject> Projects { get; set; }
+        public IEnumerable<ProjectViewModel> Projects { get; set; }
 
         public IndexModel(IProjectService projectService)
         {
@@ -26,7 +26,7 @@ namespace ProgressTracker.Pages
         public void OnGet()
         {
             UserId = UserId > 0 ? UserId : Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            Projects = projectService.GetAll(UserId);
+            Projects = projectService.GetAll(UserId).Select(p => new ProjectViewModel(p));
         }
     }
 }

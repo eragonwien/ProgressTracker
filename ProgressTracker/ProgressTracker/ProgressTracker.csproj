@@ -40,6 +40,7 @@
     <Folder Include="Resources\" />
     <Folder Include="wwwroot\lib\jquery-ajax-unobtrucsive\" />
     <Folder Include="wwwroot\lib\lineicons\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

@@ -1,19 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProgressTracker</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-    @*<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">*@
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>@ViewData["Title"] - ProgressTracker</title>
+   <link rel="stylesheet" href="~/css/site.css" />
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <partial name="Shared/_NavbarPartial" />
-    </header>
-    <main role="main">
-        @RenderBody()
-    </main>
-    <partial name="Shared/_ScriptsPartial" />
+   <header>
+      <partial name="Shared/_NavbarPartial" />
+   </header>
+   <main role="main">
+      @RenderBody()
+   </main>
+   <partial name="Shared/_ToastPartial" />
+   <partial name="Shared/_ScriptsPartial" />
 </body>
 </html>

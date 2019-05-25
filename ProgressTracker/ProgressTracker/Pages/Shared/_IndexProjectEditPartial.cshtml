@@ -1,0 +1,22 @@
+﻿@model ProgressTracker.Models.Ptproject
+@using SNGCommon.Resources
+
+<form method="post">
+   <input type="hidden" asp-for="Id" />
+   <div class="modal-content">
+      <div class="input-field">
+         <input asp-for="Name" />
+         <label asp-for="Name"></label>
+      </div>
+      <div class="input-field">
+         <input asp-for="Description" />
+         <label asp-for="Description"></label>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="submit" asp-page="project" asp-page-handler="edit" asp-route-returnurl="@Context.Request.Path" class="modal-close btn black waves-effect waves-light">
+         <i class="material-icons left">save</i>
+         <span class="white-text">@Translation.SaveChanges</span>
+      </button>
+   </div>
+</form>
