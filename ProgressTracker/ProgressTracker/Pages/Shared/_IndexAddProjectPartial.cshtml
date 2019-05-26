@@ -1,4 +1,19 @@
-﻿@page
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ProgressTracker.Models.Ptproject
+@using SNGCommon.Resources
+<form method="post">
+   <input type="hidden" asp-for="Id" />
+   <input type="hidden" asp-for="PtuserId" />
+   <div class="modal-content">
+      <div class="input-field">
+         <input asp-for="Name" class="validate" />
+         <label asp-for="Description"></label>
+         <span asp-validation-for="Description" class="helper-text red-text"></span>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="submit" asp-page="objective" asp-page-handler="add" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
+         <i class="material-icons left">save</i>
+         <span class="white-text">@Translation.SaveChanges</span>
+      </button>
+   </div>
+</form>

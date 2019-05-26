@@ -1,5 +1,6 @@
 ﻿@using SNGCommon.Resources
 @using System.Security.Claims;
+@using ProgressTracker.Models;
 
 @{
    var identity = Context.User.Identity as ClaimsIdentity;
@@ -40,15 +41,22 @@
    </li>
    @if (authenticated)
    {
-      <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons">exit_to_app</i>@Translation.Logout</a></li>
+      <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons left">exit_to_app</i>@Translation.Logout</a></li>
    }
    else
    {
-      <li><a asp-page="login"><i class="material-icons">person</i>@Translation.Login</a></li>
+      <li><a asp-page="login"><i class="material-icons left">person</i>@Translation.Login</a></li>
    }
    <li><div class="divider"></div></li>
    @if (authenticated)
    {
-      <li><a class="waves-effect waves-light" asp-page="project" asp-page-handler="add" asp-route-returnurl="/"><i class="material-icons">add</i>@Translation.CreateNewProject</a></li>
+      <li>
+         <a href="#modal-create-project" class="modal-trigger btn-flat waves-effect waves-light">
+            <i class="material-icons left">add</i>@Translation.CreateNewProject
+         </a>
+      </li>
    }
 </ul>
+<div id="modal-create-project" class="modal bottom-sheet">
+   <partial name="_IndexProjectAddPartial" model="new Ptproject()" />
+</div>
