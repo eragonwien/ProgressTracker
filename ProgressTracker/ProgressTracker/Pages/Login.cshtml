@@ -11,18 +11,19 @@
     </div>
     <form method="post">
         <div class="card">
-            <div class="card-content">
-                <p class="title">Login</p>
-                <div class="input-field">
-                    <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
-                    <span asp-validation-for="Email" class="helper-text red-text"></span>
-                </div>
-                <div class="input-field">
-                    <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
-                    <span asp-validation-for="Password" class="helper-text red-text"></span>
-                </div>
-                <button type="submit" class="btn waves-effect waves-light">@Translation.Login</button>
-            </div>
+           <div class="card-content">
+              <p class="title">Login</p>
+              <div class="input-field">
+                 <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
+                 <span asp-validation-for="Email" class="helper-text red-text"></span>
+              </div>
+              <div class="input-field">
+                 <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
+                 <span asp-validation-for="Password" class="helper-text red-text"></span>
+              </div>
+              <button type="submit" class="btn waves-effect waves-light">@Translation.Login</button>
+              <a asp-page-handler="googlelogin" class="btn waves-effect waves-light red">@Translation.Login Google</a>
+           </div>
         </div>
     </form>
 </div>

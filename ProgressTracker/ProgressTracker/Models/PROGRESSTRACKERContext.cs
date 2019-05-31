@@ -15,8 +15,8 @@ namespace ProgressTracker.Models
         {
         }
 
-        public virtual DbSet<Ptobjective> Ptobjective { get; set; }
         public virtual DbSet<Ptproject> Ptproject { get; set; }
+        public virtual DbSet<Pttask> Pttask { get; set; }
         public virtual DbSet<Ptuser> Ptuser { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,20 +28,6 @@ namespace ProgressTracker.Models
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
 
-            modelBuilder.Entity<Ptobjective>(entity =>
-            {
-                entity.ToTable("PTObjective");
-
-                entity.Property(e => e.Description).HasMaxLength(50);
-
-                entity.Property(e => e.PtprojectId).HasColumnName("PTProjectId");
-
-                entity.HasOne(d => d.Ptproject)
-                    .WithMany(p => p.Ptobjective)
-                    .HasForeignKey(d => d.PtprojectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-
             modelBuilder.Entity<Ptproject>(entity =>
             {
                 entity.ToTable("PTProject");
@@ -50,7 +36,7 @@ namespace ProgressTracker.Models
 
                 entity.Property(e => e.Name).HasMaxLength(50);
 
-                entity.Property(e => e.PtuserId).HasColumnName("PTUserId");
+                entity.Property(e => e.PtuserId).HasColumnName("PtuserId");
 
                 entity.Property(e => e.Status).HasMaxLength(20);
 
@@ -58,15 +44,29 @@ namespace ProgressTracker.Models
                     .WithMany(p => p.Ptproject)
                     .HasForeignKey(d => d.PtuserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PTProject_PTUser_UserId");
+                    .HasConstraintName("FK_PTProject_Ptuser_UserId");
+            });
+
+            modelBuilder.Entity<Pttask>(entity =>
+            {
+                entity.ToTable("PTTask");
+
+                entity.Property(e => e.Description).HasMaxLength(50);
+
+                entity.Property(e => e.PtprojectId).HasColumnName("PTProjectId");
+
+                entity.HasOne(d => d.Ptproject)
+                    .WithMany(p => p.Pttask)
+                    .HasForeignKey(d => d.PtprojectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Ptuser>(entity =>
             {
-                entity.ToTable("PTUser");
+                entity.ToTable("Ptuser");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__PTUser__A9D105343F6A2CEC")
+                    .HasName("UQ__Ptuser__A9D1053461FCCCE1")
                     .IsUnique();
 
                 entity.Property(e => e.Description).HasMaxLength(100);

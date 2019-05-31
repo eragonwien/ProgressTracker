@@ -10,17 +10,17 @@ using SNGCommon.Resources;
 
 namespace ProgressTracker.Pages
 {
-   public class ObjectiveModel : BasePageModel
+   public class TaskModel : BasePageModel
    {
-      private readonly IObjectiveService objectiveService;
+      private readonly ITaskService taskService;
 
-      public ObjectiveModel(IObjectiveService objectiveService)
+      public TaskModel(ITaskService taskService)
       {
-         this.objectiveService = objectiveService;
+         this.taskService = taskService;
       }
 
       [BindProperty]
-      public Ptobjective Objective { get; set; }
+      public Pttask task { get; set; }
 
       [BindProperty(SupportsGet = true)]
       public int Id { get; set; }
@@ -28,7 +28,7 @@ namespace ProgressTracker.Pages
       public async Task OnGetAsync()
       {
          IsCreate = false;
-         Objective = await objectiveService.GetOne(Id);
+         task = await taskService.GetOne(Id);
          ReturnUrl = Request.Headers["Referer"].ToString();
       }
 
@@ -38,9 +38,9 @@ namespace ProgressTracker.Pages
          {
             if (ModelState.IsValid)
             {
-               objectiveService.Patch(Objective, nameof(Objective.Description));
-               await objectiveService.SaveChanges();
-               ActiveProjectId = Objective.PtprojectId;
+               taskService.Patch(task, nameof(task.Description));
+               await taskService.SaveChanges();
+               ActiveProjectId = task.PtprojectId;
             }
          }
          catch (Exception ex)
@@ -54,8 +54,8 @@ namespace ProgressTracker.Pages
       {
          try
          {
-            objectiveService.Patch(Objective, nameof(Objective.IsCompleted));
-            await objectiveService.SaveChanges();
+            taskService.Patch(task, nameof(task.Completed));
+            await taskService.SaveChanges();
          }
          catch (Exception ex)
          {
@@ -65,17 +65,17 @@ namespace ProgressTracker.Pages
 
       public async Task OnPostDeleteAsync()
       {
-         objectiveService.Remove(Objective.Id);
-         await objectiveService.SaveChanges();
+         taskService.Remove(task.Id);
+         await taskService.SaveChanges();
       }
 
       public async Task<IActionResult> OnPostAddAsync()
       {
          try
          {
-            objectiveService.Create(Objective);
-            await objectiveService.SaveChanges();
-            ActiveProjectId = Objective.PtprojectId;
+            taskService.Create(task);
+            await taskService.SaveChanges();
+            ActiveProjectId = task.PtprojectId;
             Message = Translation.Completed;
          }
          catch (Exception ex)

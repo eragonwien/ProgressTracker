@@ -29,8 +29,8 @@ namespace ProgressTracker.Models
          decimal progress = -1;
          try
          {
-            int total = project.Ptobjective.Count;
-            int completed = project.Ptobjective.Count(o => o.IsCompleted);
+            int total = project.Pttask.Count;
+            int completed = project.Pttask.Count(o => o.Completed);
             progress = total != 0 ? completed / total : 0;
             Progress = progress >= 0 && progress <= 1 ? progress : Progress;
             UnresolvedCount = total - completed;

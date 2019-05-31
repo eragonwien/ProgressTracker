@@ -22,7 +22,7 @@ namespace ProgressTracker.Services
          {
             throw new Exception("Projekt Benutzer Id ist leer");
          }
-         project.IsActive = true;
+         project.Active = true;
          context.Ptproject.Add(project);
       }
 
@@ -61,21 +61,21 @@ namespace ProgressTracker.Services
 
       public bool Exists(int id)
       {
-         return context.Ptproject.Any(p => p.Id == id && p.IsActive);
+         return context.Ptproject.Any(p => p.Id == id && p.Active);
       }
 
       public IEnumerable<Ptproject> GetAll(int userId)
       {
          return context.Ptproject
-             .Include(p => p.Ptobjective)
-             .Where(p => p.IsActive && (p.PtuserId == userId));
+             .Include(p => p.Pttask)
+             .Where(p => p.Active && (p.PtuserId == userId));
       }
 
       public Task<Ptproject> GetOne(int id)
       {
          return context.Ptproject
-             .Include(p => p.Ptobjective)
-             .SingleOrDefaultAsync(p => p.Id == id && p.IsActive);
+             .Include(p => p.Pttask)
+             .SingleOrDefaultAsync(p => p.Id == id && p.Active);
       }
 
       public void Remove(int id)
@@ -83,8 +83,8 @@ namespace ProgressTracker.Services
          var removeProject = GetOne(id).Result;
          if (removeProject != null)
          {
-            removeProject.IsActive = false;
-            Patch(removeProject, nameof(Ptproject.IsActive));
+            removeProject.Active = false;
+            Patch(removeProject, nameof(Ptproject.Active));
          }
       }
 

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProgressTracker.Models;
@@ -48,33 +49,54 @@ namespace ProgressTracker.Pages
 
          try
          {
-            var user = await userService.Login(Email, Password);
-
-            // Login erfolgreich
-            var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                };
-
-            var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(userIdentity);
-            var authProperties = new AuthenticationProperties
-            {
-               IsPersistent = true,
-               ExpiresUtc = DateTime.Now.AddDays(Settings.COOKIE_MAX_AGE_DAYS)
-            };
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
-
-            return RedirectToPage("/Index");
+            var user = await userService.Authenticate(Email, Password);
+            await SignInAsync(user.Email, user.Name, user.Id);
+            return Redirect(ReturnUrl);
          }
          catch (Exception ex)
          {
             Message = ex.Message;
             return Page();
          }
+      }
+
+      public IActionResult OnGetGoogleLogin()
+      {
+         return new ChallengeResult(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = Url.Page("Login", "GoogleLoginRedirect") });
+      }
+
+      public async Task<IActionResult> OnGetGoogleLoginRedirectAsync()
+      {
+         var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+         if (!result.Succeeded)
+         {
+            return Page();
+         }
+
+         string email = result.Principal.FindFirstValue(ClaimTypes.Email);
+         if (!userService.Exists(email))
+         {
+            userService.Register(new Ptuser(email, result.Principal.FindFirstValue(ClaimTypes.Name), true), true);
+            await userService.SaveChanges();
+         }
+         var user = await userService.GetOne(email);
+
+         await SignInAsync(email, user.Name, user.Id, result.Properties);
+         return Redirect(ReturnUrl);
+      }
+
+      private async Task SignInAsync(string email, string name, int userId, AuthenticationProperties authProperties = null, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+      {
+         var userIdentity = new ClaimsIdentity(authenticationScheme);
+         userIdentity.AddClaim(new Claim(ClaimTypes.Email, email));
+         userIdentity.AddClaim(new Claim(ClaimTypes.Name, name));
+         userIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
+         var principal = new ClaimsPrincipal(userIdentity);
+
+         authProperties = authProperties ?? new AuthenticationProperties();
+         authProperties.IsPersistent = true;
+         authProperties.ExpiresUtc = DateTime.Now.AddDays(Settings.COOKIE_MAX_AGE_DAYS);
+         await HttpContext.SignInAsync(authenticationScheme, principal, authProperties);
       }
    }
 }
