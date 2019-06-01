@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ProgressTracker.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ProgressTracker.Models
       [BindProperty(SupportsGet = true)]
       public string ReturnUrl
       {
-         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : "/"; }
+         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : Settings.DEFAULT_RETURN_URL; }
          set { returnUrl = value; }
       }
       [ViewData]

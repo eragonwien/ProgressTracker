@@ -35,16 +35,16 @@
                      </div>
                   </div>
                   <ul class="collection">
-                     @foreach (Ptobjective objective in projectViewModel.Project.Ptobjective)
+                     @foreach (Pttask task in projectViewModel.Project.Pttask)
                      {
-                        <li class="index-objective-entry collection-item">
-                           <partial name="Shared/_IndexObjectivePartial" model="objective" />
+                        <li class="index-task-entry collection-item">
+                           <partial name="Shared/_IndexTaskPartial" model="task" />
                         </li>
                      }
                   </ul>
                </div>
                <div id="@addModalId" class="modal bottom-sheet">
-                  <partial name="_IndexProjectAddObjectivePartial" model="new Ptobjective { PtprojectId = projectViewModel.Project.Id }" />
+                  <partial name="_IndexProjectAddTaskPartial" model="new Pttask { PtprojectId = projectViewModel.Project.Id }" />
                </div>
                <div id="@editModalId" class="modal bottom-sheet">
                   <partial name="_IndexProjectEditPartial" model="projectViewModel.Project" />

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProgressTracker.Services
 {
-    public interface IObjectiveService
+    public interface ITaskService
     {
-        IEnumerable<Ptobjective> GetAll();
-        Task<Ptobjective> GetOne(int id);
-        void Create(Ptobjective objective);
-        void Update(Ptobjective objective);
-        void Patch(Ptobjective objective, params string[] columns);
+        IEnumerable<Pttask> GetAll();
+        Task<Pttask> GetOne(int id);
+        void Create(Pttask task);
+        void Update(Pttask task);
+        void Patch(Pttask task, params string[] columns);
         void Remove(int id);
         bool Exists(int id);
         Task SaveChanges();

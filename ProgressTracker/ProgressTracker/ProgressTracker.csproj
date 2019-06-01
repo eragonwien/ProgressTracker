@@ -5,6 +5,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <Authors>Hoang Son Nguyen</Authors>
     <Product />
+    <UserSecretsId>6beffef9-2c90-4962-a001-db96f6d4fcc9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

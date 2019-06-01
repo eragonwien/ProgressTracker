@@ -9,9 +9,9 @@
 <partial name="Shared/_DetailViewNavbarPartial" model="navbarViewModel" />
 <div class="container">
     <div class="section">
-        @foreach (var objective in Model.Project.Ptobjective)
+        @foreach (var task in Model.Project.Pttask)
         {
-            <partial name="Shared/_DetailViewEntryPartial" model="objective" />
+            <partial name="Shared/_DetailViewEntryPartial" model="task" />
         }
     </div>
 </div>

@@ -7,65 +7,65 @@ using ProgressTracker.Models;
 
 namespace ProgressTracker.Services
 {
-   public class ObjectiveService : IObjectiveService
+   public class TaskService : ITaskService
    {
       private readonly PROGRESSTRACKERContext context;
 
-      public ObjectiveService(PROGRESSTRACKERContext context)
+      public TaskService(PROGRESSTRACKERContext context)
       {
          this.context = context;
       }
 
-      public void Create(Ptobjective objective)
+      public void Create(Pttask task)
       {
-         if (objective.PtprojectId <= 0)
+         if (task.PtprojectId <= 0)
          {
             throw new Exception("Projekt Id fehlt");
          }
-         if (string.IsNullOrEmpty(objective.Description))
+         if (string.IsNullOrEmpty(task.Description))
          {
             throw new Exception("Project Beschreibung darf nicht leer sein");
          }
-         objective.IsActive = true;
-         objective.IsCompleted = false;
-         context.Ptobjective.Add(objective);
+         task.Active = true;
+         task.Completed = false;
+         context.Pttask.Add(task);
       }
 
       public bool Exists(int id)
       {
-         return context.Ptobjective.Any(o => o.Id == id && o.IsActive);
+         return context.Pttask.Any(o => o.Id == id && o.Active);
       }
 
-      public IEnumerable<Ptobjective> GetAll()
+      public IEnumerable<Pttask> GetAll()
       {
-         return context.Ptobjective.Where(o => o.IsActive);
+         return context.Pttask.Where(o => o.Active);
       }
 
-      public Task<Ptobjective> GetOne(int id)
+      public Task<Pttask> GetOne(int id)
       {
-         return context.Ptobjective.SingleOrDefaultAsync(o => o.Id == id && o.IsActive);
+         return context.Pttask.SingleOrDefaultAsync(o => o.Id == id && o.Active);
       }
 
-      public void Patch(Ptobjective objective, params string[] columns)
+      public void Patch(Pttask task, params string[] columns)
       {
          if (columns == null || columns.Count() == 0)
          {
             return;
          }
-         context.Ptobjective.Attach(objective);
+         context.Pttask.Attach(task);
          foreach (var column in columns)
          {
-            context.Entry(objective).Property(column).IsModified = true;
+            context.Entry(task).Property(column).IsModified = true;
          }
       }
 
       public void Remove(int id)
       {
-         Ptobjective removeObjective = GetOne(id).Result;
-         if (removeObjective != null)
+         Pttask removeTask = GetOne(id).Result;
+         if (removeTask != null)
          {
-            removeObjective.IsActive = false;
-            Update(removeObjective);
+            removeTask.Active = false;
+            Update(removeTask);
          }
       }
 
@@ -74,9 +74,9 @@ namespace ProgressTracker.Services
          return context.SaveChangesAsync();
       }
 
-      public void Update(Ptobjective objective)
+      public void Update(Pttask task)
       {
-         context.Ptobjective.Update(objective);
+         context.Pttask.Update(task);
       }
    }
 }

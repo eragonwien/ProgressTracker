@@ -16,13 +16,13 @@
                 </div>
             </div>
             <div class="media-right">
-                @if (Model.Ptobjective.Count == 0)
+                @if (Model.Pttask.Count == 0)
                 {
                     <span class="tag is-success is-rounded">@Translation.New.ToLower()</span>
                 }
                 else
                 {
-                    <span class="tag is-danger is-rounded">@Model.Ptobjective.Count</span>
+                    <span class="tag is-danger is-rounded">@Model.Pttask.Count</span>
                 }
             </div>
         </article>

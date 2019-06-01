@@ -75,11 +75,11 @@ header, main, footer {
    text-overflow: ellipsis;
 }
 
-.objective-description.is-checked {
+.task-description.is-checked {
    text-decoration-line: line-through;
 }
 
-.objective-container:not(.edit) {
+.task-container:not(.edit) {
    .save-button {
       display: none;
    }

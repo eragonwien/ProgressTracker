@@ -1,4 +1,4 @@
-﻿@model ProgressTracker.Models.Ptobjective
+﻿@model ProgressTracker.Models.Pttask
 @using SNGCommon.Resources
 <form method="post">
    <input type="hidden" asp-for="Id" />
@@ -11,7 +11,7 @@
       </div>
    </div>
    <div class="modal-footer">
-      <button type="submit" asp-page="objective" asp-page-handler="add" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
+      <button type="submit" asp-page="task" asp-page-handler="add" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
          <i class="material-icons left">save</i>
          <span class="white-text">@Translation.SaveChanges</span>
       </button>

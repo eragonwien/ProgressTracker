@@ -10,8 +10,8 @@ namespace ProgressTracker.Services
     {
         Task<Ptuser> GetOne(int id);
         Task<Ptuser> GetOne(string email);
-        Task<Ptuser> Login(string email, string password);
-        void Register(Ptuser user);
+        Task<Ptuser> Authenticate(string email, string password);
+        void Register(Ptuser user, bool isExternal = false);
         void Update(Ptuser user);
         void Remove(int id);
         bool Exists(int id);
