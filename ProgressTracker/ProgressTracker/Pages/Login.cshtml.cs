@@ -67,21 +67,20 @@ namespace ProgressTracker.Pages
 
       public async Task<IActionResult> OnGetGoogleLoginRedirectAsync()
       {
-         var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
-         if (!result.Succeeded)
+         if (!User.Identity.IsAuthenticated)
          {
             return Page();
          }
 
-         string email = result.Principal.FindFirstValue(ClaimTypes.Email);
+         string email = User.FindFirstValue(ClaimTypes.Email);
          if (!userService.Exists(email))
          {
-            userService.Register(new Ptuser(email, result.Principal.FindFirstValue(ClaimTypes.Name), true), true);
+            userService.Register(new Ptuser(email, User.FindFirstValue(ClaimTypes.Name), true), true);
             await userService.SaveChanges();
          }
          var user = await userService.GetOne(email);
 
-         await SignInAsync(email, user.Name, user.Id, result.Properties);
+         await SignInAsync(email, user.Name, user.Id);
          return Redirect(ReturnUrl);
       }
 
