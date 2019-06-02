@@ -17,7 +17,7 @@ namespace ProgressTracker.Models
       [BindProperty(SupportsGet = true)]
       public string ReturnUrl
       {
-         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : Settings.DEFAULT_RETURN_URL; }
+         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : Settings.DefaultReturnUrl; }
          set { returnUrl = value; }
       }
       [ViewData]

@@ -22,12 +22,14 @@ namespace ProgressTracker
 {
    public class Startup
    {
-      public Startup(IConfiguration configuration)
+      public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
       {
          Configuration = configuration;
+         HostingEnvironment = hostingEnvironment;
       }
 
-      public IConfiguration Configuration { get; }
+      public IConfiguration Configuration { get; private set; }
+      public IHostingEnvironment HostingEnvironment { get; private set; }
 
       // This method gets called by the runtime. Use this method to add services to the container.
       public void ConfigureServices(IServiceCollection services)
@@ -37,6 +39,9 @@ namespace ProgressTracker
          services.AddScoped<IUserService, UserService>();
          services.AddScoped<IProjectService, ProjectService>();
          services.AddScoped<ITaskService, TaskService>();
+
+         // AppSettings
+         services.Configure<GoogleAuthenticationSettings>(Configuration.GetSection(Settings.AppSettingGoogleAuthenticationSettings));
 
          // Authentication Default
          services
@@ -56,8 +61,8 @@ namespace ProgressTracker
             })
             .AddGoogle(options =>
             {
-               options.ClientId = Configuration["Authentication:Google:ClientId"];
-               options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+               options.ClientId = Configuration.GetSection(Settings.AppSettingGoogleAuthenticationSettings).GetSection(Settings.AppSettingClientId).Value;
+               options.ClientSecret = Configuration.GetSection(Settings.AppSettingGoogleAuthenticationSettings).GetSection(Settings.AppSettingClientSecret).Value;
             });
 
 

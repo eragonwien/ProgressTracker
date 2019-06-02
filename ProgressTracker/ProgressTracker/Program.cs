@@ -18,7 +18,7 @@ namespace ProgressTracker
    {
       public static void Main(string[] args)
       {
-         var logger = NLogBuilder.ConfigureNLog(Settings.NLOG_CONFIG_FILE).GetCurrentClassLogger();
+         var logger = NLogBuilder.ConfigureNLog(Settings.NlogConfigFileName).GetCurrentClassLogger();
          try
          {
             logger.Info("Program's Initialization starts");

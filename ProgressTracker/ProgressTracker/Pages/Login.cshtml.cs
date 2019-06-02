@@ -101,7 +101,7 @@ namespace ProgressTracker.Pages
 
          authProperties = authProperties ?? new AuthenticationProperties();
          authProperties.IsPersistent = true;
-         authProperties.ExpiresUtc = DateTime.Now.AddDays(Settings.COOKIE_MAX_AGE_DAYS);
+         authProperties.ExpiresUtc = DateTime.Now.AddDays(Settings.CookieMaxAgeInDays);
          await HttpContext.SignOutAsync();
          await HttpContext.SignInAsync(principal, authProperties);
       }

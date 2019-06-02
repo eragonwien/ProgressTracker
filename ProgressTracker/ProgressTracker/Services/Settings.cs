@@ -7,9 +7,12 @@ namespace ProgressTracker.Services
 {
    public static class Settings
    {
-      public const double COOKIE_MAX_AGE_DAYS = 16;
-      public const string DEFAULT_RETURN_URL = "/";
-      public const string MULTI_SCHEMES_POLICY = "MultiSchemes";
-      public const string NLOG_CONFIG_FILE = "nlog.config";
+      public const double CookieMaxAgeInDays = 16;
+      public const string DefaultReturnUrl = "/";
+      public const string MultiSchemesPolicy = "MultiSchemes";
+      public const string NlogConfigFileName = "nlog.config";
+      public const string AppSettingClientId = "ClientId";
+      public const string AppSettingClientSecret = "ClientSecret";
+      public const string AppSettingGoogleAuthenticationSettings = "GoogleAuthenticationSettings";
    }
 }
