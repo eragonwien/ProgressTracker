@@ -19,14 +19,18 @@
     <None Remove="wwwroot\lib\bulma\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="nlog.config" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="Moq" Version="4.10.1" />
-    <PackageReference Include="NLog" Version="4.6.2" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.1" />
+    <PackageReference Include="Moq" Version="4.11.0" />
+    <PackageReference Include="NLog" Version="4.6.4" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.2" />
   </ItemGroup>
 
 
@@ -41,6 +45,13 @@
     <Folder Include="Resources\" />
     <Folder Include="wwwroot\lib\jquery-ajax-unobtrucsive\" />
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

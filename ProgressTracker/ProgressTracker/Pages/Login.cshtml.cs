@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
 using SNGCommon.Resources;
@@ -19,6 +20,7 @@ namespace ProgressTracker.Pages
    public class LoginModel : BasePageModel
    {
       private readonly IUserService userService;
+      private readonly ILogger<LoginModel> log;
 
       [BindProperty]
       [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyEmail), ErrorMessageResourceType = typeof(Translation))]
@@ -31,9 +33,10 @@ namespace ProgressTracker.Pages
       public string Password { get; set; }
       public string Language { get; set; } = "en";
 
-      public LoginModel(IUserService userService)
+      public LoginModel(IUserService userService, ILogger<LoginModel> log)
       {
          this.userService = userService;
+         this.log = log;
       }
 
       public void OnGet()
