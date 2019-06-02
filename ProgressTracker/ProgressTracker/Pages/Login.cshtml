@@ -1,5 +1,6 @@
 ﻿@page
 @using SNGCommon.Resources
+@using Microsoft.AspNetCore.Authentication.Google;
 @model ProgressTracker.Pages.LoginModel
 @{
     ViewData["Title"] = "Login";
@@ -22,7 +23,7 @@
                  <span asp-validation-for="Password" class="helper-text red-text"></span>
               </div>
               <button type="submit" class="btn waves-effect waves-light">@Translation.Login</button>
-              <a asp-page-handler="googlelogin" class="btn waves-effect waves-light red">@Translation.Login Google</a>
+              <a asp-page-handler="external" asp-route-provider="@GoogleDefaults.AuthenticationScheme" class="btn waves-effect waves-light red">@Translation.Login Google</a>
            </div>
         </div>
     </form>

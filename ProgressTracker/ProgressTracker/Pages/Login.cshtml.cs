@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProgressTracker.Models;
@@ -60,12 +61,12 @@ namespace ProgressTracker.Pages
          }
       }
 
-      public IActionResult OnGetGoogleLogin()
+      public IActionResult OnGetExternal(string provider)
       {
-         return new ChallengeResult(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = Url.Page("Login", "GoogleLoginRedirect") });
+         return Challenge(new AuthenticationProperties { RedirectUri = Url.Page("Login", "LoginRedirect") }, provider);
       }
 
-      public async Task<IActionResult> OnGetGoogleLoginRedirectAsync()
+      public async Task<IActionResult> OnGetLoginRedirectAsync()
       {
          if (!User.Identity.IsAuthenticated)
          {
@@ -84,18 +85,22 @@ namespace ProgressTracker.Pages
          return Redirect(ReturnUrl);
       }
 
-      private async Task SignInAsync(string email, string name, int userId, AuthenticationProperties authProperties = null, string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+      private async Task SignInAsync(string email, string name, int userId, AuthenticationProperties authProperties = null, string authScheme = CookieAuthenticationDefaults.AuthenticationScheme)
       {
-         var userIdentity = new ClaimsIdentity(authenticationScheme);
-         userIdentity.AddClaim(new Claim(ClaimTypes.Email, email));
-         userIdentity.AddClaim(new Claim(ClaimTypes.Name, name));
-         userIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
+         List<Claim> claims = new List<Claim>
+         {
+            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.Name, name),
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+         };
+         var userIdentity = new ClaimsIdentity(claims, authScheme);
          var principal = new ClaimsPrincipal(userIdentity);
 
          authProperties = authProperties ?? new AuthenticationProperties();
          authProperties.IsPersistent = true;
          authProperties.ExpiresUtc = DateTime.Now.AddDays(Settings.COOKIE_MAX_AGE_DAYS);
-         await HttpContext.SignInAsync(authenticationScheme, principal, authProperties);
+         await HttpContext.SignOutAsync();
+         await HttpContext.SignInAsync(principal, authProperties);
       }
    }
 }
