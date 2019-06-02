@@ -1,8 +1,6 @@
 use [PROGRESSTRACKER];
-go
 
 drop table if exists [PTTask], [PTObjective], [PTProject], [PTUser];
-go
 
 CREATE TABLE [PTUser] (
     [Id] int NOT NULL IDENTITY,
@@ -14,7 +12,6 @@ CREATE TABLE [PTUser] (
     [Active] bit NOT NULL DEFAULT 0,
     CONSTRAINT [PK_PTUser] PRIMARY KEY ([Id])
 );
-go
 
 CREATE TABLE [PTProject] (
     [Id] int NOT NULL IDENTITY,
@@ -26,7 +23,6 @@ CREATE TABLE [PTProject] (
     CONSTRAINT [PK_PTProject] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_PTProject_PTUser_UserId] FOREIGN KEY ([PTUserId]) REFERENCES [PTUser] ([Id])
 );
-go
 
 CREATE TABLE [PTTask] (
     [Id] int NOT NULL IDENTITY,
@@ -37,4 +33,3 @@ CREATE TABLE [PTTask] (
     CONSTRAINT [PK_PTTask] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_PTTask_PTProject_PTProjectId] FOREIGN KEY ([PTProjectId]) REFERENCES [PTProject] ([Id])
 );
-go
