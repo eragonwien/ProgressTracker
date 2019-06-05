@@ -40,31 +40,16 @@ namespace ProgressTracker
          services.AddScoped<IProjectService, ProjectService>();
          services.AddScoped<ITaskService, TaskService>();
 
-         // AppSettings
-         services.Configure<GoogleAuthenticationSettings>(Configuration.GetSection(Settings.AppSettingGoogleAuthenticationSettings));
-
          // Authentication Default
          services
-            .AddAuthentication(options =>
-            {
-               options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-               options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-               options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-               options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
                options.SlidingExpiration = true;
                options.Cookie.HttpOnly = false;
                options.LoginPath = "/Login";
                options.LogoutPath = "/Logout";
-            })
-            .AddGoogle(options =>
-            {
-               options.ClientId = Configuration.GetSection(Settings.AppSettingGoogleAuthenticationSettings).GetSection(Settings.AppSettingClientId).Value;
-               options.ClientSecret = Configuration.GetSection(Settings.AppSettingGoogleAuthenticationSettings).GetSection(Settings.AppSettingClientSecret).Value;
             });
-
 
          services.AddAntiforgery(s => s.HeaderName = "XSRF-TOKEN");
          services

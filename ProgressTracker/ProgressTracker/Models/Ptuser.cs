@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using SNGCommon.Resources;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProgressTracker.Models
 {
@@ -22,7 +25,13 @@ namespace ProgressTracker.Models
       }
 
       public int Id { get; set; }
+
+      [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyEmail), ErrorMessageResourceType = typeof(Translation))]
+      [EmailAddress(ErrorMessageResourceName = nameof(Translation.ValidationInvalidEmail), ErrorMessageResourceType = typeof(Translation))]
       public string Email { get; set; }
+
+      [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyPassword), ErrorMessageResourceType = typeof(Translation))]
+      [DataType(DataType.Password)]
       public string Password { get; set; }
       public string Name { get; set; }
       public string Description { get; set; }

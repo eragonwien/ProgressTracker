@@ -1,0 +1,30 @@
+﻿@page
+@model ProgressTracker.Pages.RegisterModel
+@using SNGCommon.Resources
+@{
+   ViewData["Title"] = "Register";
+}
+
+<div id="login" class="section">
+   <div asp-validation-summary="ModelOnly" class="red-text"></div>
+   <form method="post">
+      <div class="card">
+         <div class="card-content">
+            <p class="title">@Translation.Register</p>
+            <div class="input-field">
+               <input asp-for="Ptuser.Name" class="validate" placeholder="@nameof(Model.Ptuser.Name)">
+               <span asp-validation-for="Ptuser.Name" class="helper-text red-text"></span>
+            </div>
+            <div class="input-field">
+               <input asp-for="Ptuser.Email" class="validate" placeholder="@nameof(Model.Ptuser.Email)">
+               <span asp-validation-for="Ptuser.Email" class="helper-text red-text"></span>
+            </div>
+            <div class="input-field">
+               <input asp-for="Ptuser.Password" class="validate" placeholder="@nameof(Model.Ptuser.Password)">
+               <span asp-validation-for="Ptuser.Password" class="helper-text red-text"></span>
+            </div>
+            <button type="submit" class="btn waves-effect waves-light">@Translation.Register</button>
+         </div>
+      </div>
+   </form>
+</div>

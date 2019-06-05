@@ -59,7 +59,7 @@ namespace ProgressTracker.Pages
          }
          catch (Exception ex)
          {
-            Message = ex.Message;
+            ModelState.AddModelError("", ex.Message);
             return Page();
          }
       }
