@@ -2,6 +2,8 @@
 @using ProgressTracker.Models;
 @using ProgressTracker.Services;
 @using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+
 @inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 
 @{
@@ -44,19 +46,19 @@
    </li>
    @if (authenticated)
    {
-      <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons left">exit_to_app</i>@localizer[TranslationSetting.Logout]</a></li>
+      <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons left">exit_to_app</i>@localizer[Translation.Logout]</a></li>
    }
    else
    {
-      <li><a asp-page="login"><i class="material-icons left">person</i>@localizer[TranslationSetting.Login]</a></li>
-      <li><a asp-page="register"><i class="material-icons left">add</i>@localizer[TranslationSetting.Register]</a></li>
+      <li><a asp-page="login"><i class="material-icons left">person</i>@localizer[Translation.Login]</a></li>
+      <li><a asp-page="register"><i class="material-icons left">add</i>@localizer[Translation.Register]</a></li>
    }
    <li><div class="divider"></div></li>
    @if (authenticated)
    {
       <li>
          <a href="#modal-create-project" class="modal-trigger btn-flat waves-effect waves-light">
-            <i class="material-icons left">add</i>@localizer[TranslationSetting.CreateNewList]
+            <i class="material-icons left">add</i>@localizer[Translation.CreateNewList]
          </a>
       </li>
    }

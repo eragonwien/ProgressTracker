@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
-using SNGCommon;
+using SNGCommon.Resources;
 
 namespace ProgressTracker.Pages
 {
@@ -39,7 +39,7 @@ namespace ProgressTracker.Pages
             projectService.Create(Project);
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = localizer[TranslationSetting.Completed];
+            Message = localizer[Translation.Completed];
          }
          catch (Exception ex)
          {
@@ -55,7 +55,7 @@ namespace ProgressTracker.Pages
             projectService.Patch(Project, nameof(Project.Name), nameof(Project.Description));
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = localizer[TranslationSetting.Completed];
+            Message = localizer[Translation.Completed];
          }
          catch (Exception ex)
          {
@@ -72,7 +72,7 @@ namespace ProgressTracker.Pages
             projectService.Remove(Project.Id);
             await projectService.SaveChanges();
             ActiveProjectId = 0;
-            Message = localizer[TranslationSetting.Completed];
+            Message = localizer[Translation.Completed];
          }
          catch (Exception ex)
          {

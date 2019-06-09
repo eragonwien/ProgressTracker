@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ProgressTracker.Services;
+using SNGCommon.Resources;
 
 namespace ProgressTracker.Models
 {
@@ -26,11 +27,11 @@ namespace ProgressTracker.Models
 
       public int Id { get; set; }
 
-      [Required(ErrorMessage = TranslationSetting.ValidationEmptyEmail)]
-      [EmailAddress(ErrorMessage = TranslationSetting.ValidationInvalidEmail)]
+      [Required(ErrorMessage = Translation.ValidationEmptyEmail)]
+      [EmailAddress(ErrorMessage = Translation.ValidationInvalidEmail)]
       public string Email { get; set; }
 
-      [Required(ErrorMessage = TranslationSetting.ValidationEmptyPassword)]
+      [Required(ErrorMessage = Translation.ValidationEmptyPassword)]
       [DataType(DataType.Password)]
       public string Password { get; set; }
       [DataType(DataType.Text)]

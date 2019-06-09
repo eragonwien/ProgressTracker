@@ -2,6 +2,7 @@
 @model ProgressTracker.Pages.LoginModel
 @using ProgressTracker.Services;
 @using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
 @inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @{
    ViewData["Title"] = "Login";
@@ -12,7 +13,7 @@
    <form method="post">
       <div class="card">
          <div class="card-content">
-            <p class="title">@localizer[TranslationSetting.Login]</p>
+            <p class="title">@localizer[Translation.Login]</p>
             <div class="input-field">
                <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
                <span asp-validation-for="Email" class="helper-text red-text"></span>
@@ -21,8 +22,8 @@
                <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
                <span asp-validation-for="Password" class="helper-text red-text"></span>
             </div>
-            <button type="submit" class="btn waves-effect waves-light">@localizer[TranslationSetting.Login]</button>
-            <a asp-page="Register" class="btn-flat waves-effect waves-light">@localizer[TranslationSetting.Register]</a>
+            <button type="submit" class="btn waves-effect waves-light">@localizer[Translation.Login]</button>
+            <a asp-page="Register" class="btn-flat waves-effect waves-light">@localizer[Translation.Register]</a>
          </div>
       </div>
    </form>

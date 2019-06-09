@@ -27,12 +27,12 @@ namespace ProgressTracker.Pages
       private readonly IStringLocalizer<Translation> localizer;
 
       [BindProperty]
-      [Required(ErrorMessage = TranslationSetting.ValidationEmptyEmail)]
-      [EmailAddress(ErrorMessage = TranslationSetting.ValidationInvalidEmail)]
+      [Required(ErrorMessage = Translation.ValidationEmptyEmail)]
+      [EmailAddress(ErrorMessage = Translation.ValidationInvalidEmail)]
       public string Email { get; set; }
 
       [BindProperty]
-      [Required(ErrorMessage = TranslationSetting.ValidationEmptyPassword)]
+      [Required(ErrorMessage = Translation.ValidationEmptyPassword)]
       [DataType(DataType.Password)]
       public string Password { get; set; }
       public string Language { get; set; } = Settings.Culture_EN;

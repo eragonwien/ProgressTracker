@@ -20,25 +20,4 @@ namespace ProgressTracker.Services
       public const string Culture_DE = "de";
       public const string LocalisationResourcePath = "Resources";
    }
-
-   public static class TranslationSetting
-   {
-      public const string Cancel = "Cancel";
-      public const string Completed = "Completed";
-      public const string CreateNewList = "CreateNewList";
-      public const string CreateNewTask = "CreateNewTask";
-      public const string Email = "Email";
-      public const string Login = "Login";
-      public const string Logout = "Logout";
-      public const string New = "New";
-      public const string Register = "Register";
-      public const string SaveChanges = "SaveChanges";
-      public const string ValdationUserNotFound = "ValdationUserNotFound";
-      public const string ValidationEmptyEmail = "ValidationEmptyEmail";
-      public const string ValidationEmptyPassword = "ValidationEmptyPassword";
-      public const string ValidationInvalidEmail = "ValidationInvalidEmail";
-      public const string ValidationPasswordMismatch = "ValidationPasswordMismatch";
-      public const string Working = "Working";
-
-   }
 }

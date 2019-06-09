@@ -1,6 +1,8 @@
 ﻿@model ProgressTracker.Models.Ptproject
 @using ProgressTracker.Services;
 @using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+
 @inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 
 <a asp-page="Detail" asp-route-id="@Model.Id" asp-route-returnurl="@Context.Request.Path">
@@ -20,7 +22,7 @@
          <div class="media-right">
             @if (Model.Pttask.Count == 0)
             {
-               <span class="tag is-success is-rounded">@localizer[TranslationSetting.New]</span>
+               <span class="tag is-success is-rounded">@localizer[Translation.New]</span>
             }
             else
             {
