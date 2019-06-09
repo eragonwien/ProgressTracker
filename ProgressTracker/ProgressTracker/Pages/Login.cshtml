@@ -1,29 +1,31 @@
 ﻿@page
-@using SNGCommon.Resources
 @model ProgressTracker.Pages.LoginModel
+@using ProgressTracker.Services;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @{
-    ViewData["Title"] = "Login";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+   ViewData["Title"] = "Login";
+   Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <div id="login" class="section">
-    <div asp-validation-summary="ModelOnly" class="red-text"></div>
-    <form method="post">
-        <div class="card">
-           <div class="card-content">
-              <p class="title">@Translation.Login</p>
-              <div class="input-field">
-                 <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
-                 <span asp-validation-for="Email" class="helper-text red-text"></span>
-              </div>
-              <div class="input-field">
-                 <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
-                 <span asp-validation-for="Password" class="helper-text red-text"></span>
-              </div>
-              <button type="submit" class="btn waves-effect waves-light">@Translation.Login</button>
-              <a asp-page="Register" class="btn-flat waves-effect waves-light">@Translation.Register</a>
-           </div>
-        </div>
-    </form>
+   <div asp-validation-summary="ModelOnly" class="red-text"></div>
+   <form method="post">
+      <div class="card">
+         <div class="card-content">
+            <p class="title">@localizer[TranslationSetting.Login]</p>
+            <div class="input-field">
+               <input asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
+               <span asp-validation-for="Email" class="helper-text red-text"></span>
+            </div>
+            <div class="input-field">
+               <input asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
+               <span asp-validation-for="Password" class="helper-text red-text"></span>
+            </div>
+            <button type="submit" class="btn waves-effect waves-light">@localizer[TranslationSetting.Login]</button>
+            <a asp-page="Register" class="btn-flat waves-effect waves-light">@localizer[TranslationSetting.Register]</a>
+         </div>
+      </div>
+   </form>
 </div>
 
 

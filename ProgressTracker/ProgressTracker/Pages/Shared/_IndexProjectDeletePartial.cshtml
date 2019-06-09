@@ -1,6 +1,8 @@
 ﻿@model ProgressTracker.Models.Ptproject
-@using SNGCommon.Resources
-@{ 
+@using ProgressTracker.Services;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
+@{
    string message = string.Format("Delete <b>{0}</b> ?", Model.Name);
 }
 <form method="post">
@@ -12,7 +14,7 @@
    <div class="modal-footer">
       <button type="submit" asp-page="project" asp-page-handler="delete" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
          <i class="material-icons left">save</i>
-         <span class="white-text">@Translation.SaveChanges</span>
+         <span class="white-text">@localizer[TranslationSetting.SaveChanges]</span>
       </button>
    </div>
 </form>

@@ -8,8 +8,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
@@ -21,22 +24,24 @@ namespace ProgressTracker.Pages
    {
       private readonly IUserService userService;
       private readonly ILogger<LoginModel> log;
+      private readonly IStringLocalizer<Translation> localizer;
 
       [BindProperty]
-      [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyEmail), ErrorMessageResourceType = typeof(Translation))]
-      [EmailAddress(ErrorMessageResourceName = nameof(Translation.ValidationInvalidEmail), ErrorMessageResourceType = typeof(Translation))]
+      [Required(ErrorMessage = TranslationSetting.ValidationEmptyEmail)]
+      [EmailAddress(ErrorMessage = TranslationSetting.ValidationInvalidEmail)]
       public string Email { get; set; }
 
       [BindProperty]
-      [Required(ErrorMessageResourceName = nameof(Translation.ValidationEmptyPassword), ErrorMessageResourceType = typeof(Translation))]
+      [Required(ErrorMessage = TranslationSetting.ValidationEmptyPassword)]
       [DataType(DataType.Password)]
       public string Password { get; set; }
-      public string Language { get; set; } = "en";
+      public string Language { get; set; } = Settings.Culture_EN;
 
-      public LoginModel(IUserService userService, ILogger<LoginModel> log)
+      public LoginModel(IUserService userService, ILogger<LoginModel> log, IStringLocalizer<Translation> localizer)
       {
          this.userService = userService;
          this.log = log;
+         this.localizer = localizer;
       }
 
       public void OnGet()
@@ -94,7 +99,7 @@ namespace ProgressTracker.Pages
          {
             new Claim(ClaimTypes.Email, email),
             new Claim(ClaimTypes.Name, name),
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
          };
          var userIdentity = new ClaimsIdentity(claims, authScheme);
          var principal = new ClaimsPrincipal(userIdentity);
@@ -102,8 +107,13 @@ namespace ProgressTracker.Pages
          authProperties = authProperties ?? new AuthenticationProperties();
          authProperties.IsPersistent = true;
          authProperties.ExpiresUtc = DateTime.Now.AddDays(Settings.CookieMaxAgeInDays);
+
          await HttpContext.SignOutAsync();
          await HttpContext.SignInAsync(principal, authProperties);
+
+         Response.Cookies.Append(
+            CookieRequestCultureProvider.DefaultCookieName, 
+            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(Language)), new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
       }
    }
 }

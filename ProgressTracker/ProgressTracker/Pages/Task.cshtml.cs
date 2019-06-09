@@ -4,19 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
-using SNGCommon.Resources;
+using SNGCommon;
 
 namespace ProgressTracker.Pages
 {
    public class TaskModel : BasePageModel
    {
       private readonly ITaskService taskService;
+      private readonly IStringLocalizer<TaskModel> localizer;
 
-      public TaskModel(ITaskService taskService)
+      public TaskModel(ITaskService taskService, IStringLocalizer<TaskModel> localizer)
       {
          this.taskService = taskService;
+         this.localizer = localizer;
       }
 
       [BindProperty]
@@ -76,7 +79,7 @@ namespace ProgressTracker.Pages
             taskService.Create(task);
             await taskService.SaveChanges();
             ActiveProjectId = task.PtprojectId;
-            Message = Translation.Completed;
+            Message = localizer[TranslationSetting.Completed];
          }
          catch (Exception ex)
          {

@@ -1,6 +1,8 @@
 ﻿@page
 @model ProgressTracker.Pages.RegisterModel
-@using SNGCommon.Resources
+@using ProgressTracker.Services;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @{
    ViewData["Title"] = "Register";
 }
@@ -10,7 +12,7 @@
    <form method="post">
       <div class="card">
          <div class="card-content">
-            <p class="title">@Translation.Register</p>
+            <p class="title">@localizer[TranslationSetting.Register]</p>
             <div class="input-field">
                <input asp-for="Ptuser.Name" class="validate" placeholder="@nameof(Model.Ptuser.Name)">
                <span asp-validation-for="Ptuser.Name" class="helper-text red-text"></span>
@@ -23,7 +25,7 @@
                <input asp-for="Ptuser.Password" class="validate" placeholder="@nameof(Model.Ptuser.Password)">
                <span asp-validation-for="Ptuser.Password" class="helper-text red-text"></span>
             </div>
-            <button type="submit" class="btn waves-effect waves-light">@Translation.Register</button>
+            <button type="submit" class="btn waves-effect waves-light">@localizer[TranslationSetting.Register]</button>
          </div>
       </div>
    </form>

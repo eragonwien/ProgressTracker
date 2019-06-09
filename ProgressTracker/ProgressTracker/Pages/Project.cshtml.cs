@@ -4,24 +4,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
-using SNGCommon.Resources;
+using SNGCommon;
 
 namespace ProgressTracker.Pages
 {
    public class ProjectModel : BasePageModel
    {
       private readonly IProjectService projectService;
+      private readonly IStringLocalizer<ProjectModel> localizer;
 
       [BindProperty(SupportsGet = true)]
       public int Id { get; set; }
 
       [BindProperty]
       public Ptproject Project { get; set; }
-      public ProjectModel(IProjectService projectService)
+      public ProjectModel(IProjectService projectService, IStringLocalizer<ProjectModel> localizer)
       {
          this.projectService = projectService;
+         this.localizer = localizer;
       }
 
       public void OnGetAddAsync()
@@ -36,7 +39,7 @@ namespace ProgressTracker.Pages
             projectService.Create(Project);
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = Translation.Completed;
+            Message = localizer[TranslationSetting.Completed];
          }
          catch (Exception ex)
          {
@@ -52,7 +55,7 @@ namespace ProgressTracker.Pages
             projectService.Patch(Project, nameof(Project.Name), nameof(Project.Description));
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = Translation.Completed;
+            Message = localizer[TranslationSetting.Completed];
          }
          catch (Exception ex)
          {
@@ -69,7 +72,7 @@ namespace ProgressTracker.Pages
             projectService.Remove(Project.Id);
             await projectService.SaveChanges();
             ActiveProjectId = 0;
-            Message = Translation.Completed;
+            Message = localizer[TranslationSetting.Completed];
          }
          catch (Exception ex)
          {

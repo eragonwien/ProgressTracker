@@ -1,5 +1,7 @@
 ﻿@model ProgressTracker.Models.Pttask
-@using SNGCommon.Resources
+@using ProgressTracker.Services;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @{
    string modalId = string.Format("modal-p{0}-o{1}", Model.PtprojectId, Model.Id);
 }
@@ -28,7 +30,7 @@
          <div class="modal-footer">
             <button type="submit" asp-page="task" asp-page-handler="description" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
                <i class="material-icons left">save</i>
-               <span class="white-text">@Translation.SaveChanges</span>
+               <span class="white-text">@localizer[TranslationSetting.SaveChanges]</span>
             </button>
          </div>
       </form>

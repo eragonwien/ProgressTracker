@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProgressTracker.Models;
 using SNGCommon.Authentication;
-using SNGCommon.Resources;
+using SNGCommon;
 
 namespace ProgressTracker.Services
 {
@@ -48,12 +48,12 @@ namespace ProgressTracker.Services
          var user = GetOne(email);
          if (user.Result == null)
          {
-            throw new Exception(Translation.ValidationUserNotFound);
+            throw new Exception("User not found");
          }
 
          if (!Authentication.IsPasswordValid(password, user.Result.Password))
          {
-            throw new Exception(Translation.ValidationPasswordMismatch);
+            throw new Exception("Password mismatch");
          }
 
          return user;

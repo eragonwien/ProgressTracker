@@ -1,9 +1,11 @@
 ﻿@page
 @using ProgressTracker.Models;
-@using SNGCommon.Resources
+@using ProgressTracker.Services;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @model IndexModel
 @{
-   ViewData["Title"] = Translation.TitleIndexPage;
+   ViewData["Title"] = "";
    int.TryParse(TempData["ActiveProjectId"]?.ToString(), out int activeProjectId);
 }
 

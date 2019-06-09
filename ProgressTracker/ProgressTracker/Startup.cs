@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,13 +11,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
+using SNGCommon.Middlewares;
+using SNGCommon;
 
 namespace ProgressTracker
 {
@@ -51,10 +56,22 @@ namespace ProgressTracker
                options.LogoutPath = "/Logout";
             });
 
+         List<CultureInfo> cultureInfos = new List<CultureInfo> { new CultureInfo(Settings.Culture_EN), new CultureInfo(Settings.Culture_DE) };
+         // Language
+         services.AddLocalization();
+         services.Configure<RequestLocalizationOptions>(options =>
+         {
+            options.DefaultRequestCulture = new RequestCulture(Settings.Culture_EN);
+            options.SupportedCultures = cultureInfos;
+            options.SupportedUICultures = cultureInfos;
+         });
+
          services.AddAntiforgery(s => s.HeaderName = "XSRF-TOKEN");
          services
             .AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            .AddViewLocalization()
+            .AddDataAnnotationsLocalization()
             .AddRazorPagesOptions(options =>
             {
                options.Conventions.AuthorizePage("/Index");
@@ -74,10 +91,12 @@ namespace ProgressTracker
          }
          else
          {
+            app.UseLogException();
             app.UseExceptionHandler("/Error");
             app.UseHsts();
          }
 
+         app.UseRequestLocalization();
          app.UseHttpsRedirection();
          app.UseStaticFiles();
          app.UseAuthentication();

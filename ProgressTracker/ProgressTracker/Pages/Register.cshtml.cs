@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ProgressTracker.Models;
 using ProgressTracker.Services;
-using SNGCommon.Resources;
+using SNGCommon;
 
 namespace ProgressTracker.Pages
 {
