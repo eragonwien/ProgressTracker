@@ -1,9 +1,28 @@
-﻿@page
+﻿@page "{id?}"
 @model ProgressTracker.Pages.ProjectModel
 @using ProgressTracker.Models
-@using SNGCommon
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @{
-    ViewData["Title"] = "Project";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
-
+   ViewData["Title"] = Model.Project.Name ?? localizer[Translation.Projects].ToString();
+   Layout = "~/Pages/Shared/_Layout.cshtml";
+   string editProjectModalId = string.Format("modal-p{0}-edit", Model.Project.Id);
+   string deleteProjectModalId = string.Format("modal-p{0}-delete", Model.Project.Id);
+   TopNavbarViewModel navbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated, Model.Id, null, editProjectModalId, deleteProjectModalId);
 }
+<partial name="_NavbarTopPartial" model="navbarViewModel" />
+<ul class="collection">
+   @foreach (var task in Model.Project.Pttask)
+   {
+      <li class="index-task-entry collection-item">
+         <partial name="Shared/_TaskEntryPartial" model="task" />
+      </li>
+   }
+</ul>
+<div id="@editProjectModalId" class="modal">
+   <partial name="_IndexProjectEditPartial" model="Model.Project" />
+</div>
+<div id="@editProjectModalId" class="modal">
+   <partial name="_IndexProjectDeletePartial" model="Model.Project" />
+</div>

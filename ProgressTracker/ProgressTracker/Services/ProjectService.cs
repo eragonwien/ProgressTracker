@@ -22,6 +22,7 @@ namespace ProgressTracker.Services
          {
             throw new Exception("Projekt Benutzer Id ist leer");
          }
+         project.Id = 0;
          project.Active = true;
          context.Ptproject.Add(project);
       }

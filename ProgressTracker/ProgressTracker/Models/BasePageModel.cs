@@ -26,6 +26,8 @@ namespace ProgressTracker.Models
       public int ActiveProjectId { get; set; }
       [TempData]
       public string Message { get; set; }
+      [BindProperty]
+      public bool BackButtonEnabled { get; set; } = false;
 
       public int UserId
       {

@@ -9,7 +9,27 @@ namespace ProgressTracker.Models
    {
       public string Title { get; set; }
       public string Subtitle { get; set; }
-      public bool IsEditing { get; set; }
+
+   }
+
+   public class TopNavbarViewModel
+   {
+      public int Id { get; set; }
+      public string Title { get; set; }
+      public string ReturnUrl { get; set; }
+      public string EditUrl { get; set; }
+      public string DeleteUrl { get; set; }
+      public bool IsAuthenticated { get; set; }
+
+      public TopNavbarViewModel(string title, bool isAuthenticated = false, int id = 0, string returnUrl = null, string editUrl = null, string deleteUrl = null)
+      {
+         Id = id;
+         Title = title;
+         ReturnUrl = returnUrl;
+         EditUrl = editUrl;
+         DeleteUrl = deleteUrl;
+         IsAuthenticated = isAuthenticated;
+      }
    }
 
    public class ProjectViewModel

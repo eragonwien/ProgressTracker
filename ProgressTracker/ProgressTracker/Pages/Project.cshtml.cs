@@ -21,10 +21,16 @@ namespace ProgressTracker.Pages
 
       [BindProperty]
       public Ptproject Project { get; set; }
+
       public ProjectModel(IProjectService projectService, IStringLocalizer<ProjectModel> localizer)
       {
          this.projectService = projectService;
          this.localizer = localizer;
+      }
+
+      public async Task OnGetAsync()
+      {
+         Project = await projectService.GetOne(Id);
       }
 
       public void OnGetAddAsync()

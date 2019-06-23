@@ -1,14 +1,14 @@
 ﻿@page
 @using ProgressTracker.Models;
-@using ProgressTracker.Services;
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @model IndexModel
 @{
    ViewData["Title"] = "";
    int.TryParse(TempData["ActiveProjectId"]?.ToString(), out int activeProjectId);
+   TopNavbarViewModel topNavbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated);
 }
-
+<partial name="_NavbarTopPartial" model="topNavbarViewModel" />
 <div class="container">
    <div class="section">
       <ul class="collapsible popout">
@@ -20,7 +20,7 @@
             bool isActive = projectViewModel.Project.Id == activeProjectId;
             <li class="index-project-entry @(isActive ? "active" : "")">
                <div class="collapsible-header">
-                  @projectViewModel.Project.Description
+                  @projectViewModel.Project.Name
                </div>
                <div class="collapsible-body">
                   <div class="row">
@@ -40,7 +40,7 @@
                      @foreach (Pttask task in projectViewModel.Project.Pttask)
                      {
                         <li class="index-task-entry collection-item">
-                           <partial name="Shared/_IndexTaskPartial" model="task" />
+                           <partial name="Shared/_TaskEntryPartial" model="task" />
                         </li>
                      }
                   </ul>

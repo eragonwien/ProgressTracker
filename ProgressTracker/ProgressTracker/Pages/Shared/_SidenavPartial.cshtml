@@ -1,37 +1,18 @@
 ﻿@using System.Security.Claims;
 @using ProgressTracker.Models;
-@using ProgressTracker.Services;
 @using Microsoft.AspNetCore.Mvc.Localization
 @using SNGCommon.Resources
-
 @inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
+@inject ProgressTracker.Services.IProjectService projectService
 
 @{
    var identity = Context.User.Identity as ClaimsIdentity;
    string username = identity?.Name;
    string email = identity?.FindFirst(ClaimTypes.Email)?.Value?.ToString();
    int.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
-   string title = ViewData["Title"]?.ToString();
    bool authenticated = Context.User.Identity.IsAuthenticated;
-   string returnUrl = ViewBag.ReturnUrl;
-   string currentPage = Context.Request.Path;
+   var projects = projectService.GetAll(userId);
 }
-<nav role="navigation" aria-label="main navigation">
-   <div class="nav-wrapper black">
-      <a href="" class="brand-logo center">@title</a>
-      <a href="#" data-target="sidenav" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
-      <ul class="left">
-         @if (!string.IsNullOrEmpty(returnUrl) && !returnUrl.Equals(Settings.DefaultReturnUrl))
-         {
-            <li>
-               <a href="@returnUrl" class="waves-effect waves-light">
-                  <i class="material-icons">arrow_back</i>
-               </a>
-            </li>
-         }
-      </ul>
-   </div>
-</nav>
 <ul id="sidenav" class="sidenav sidenav-fixed">
    <li>
       <div class="user-view">
@@ -50,19 +31,30 @@
    }
    else
    {
-      <li><a asp-page="login"><i class="material-icons left">person</i>@localizer[Translation.Login]</a></li>
-      <li><a asp-page="register"><i class="material-icons left">add</i>@localizer[Translation.Register]</a></li>
+      <li><a class="waves-effect" asp-page="login"><i class="material-icons left">person</i>@localizer[Translation.Login]</a></li>
+      <li><a class="waves-effect" asp-page="register"><i class="material-icons left">add</i>@localizer[Translation.Register]</a></li>
    }
    <li><div class="divider"></div></li>
    @if (authenticated)
    {
       <li>
-         <a href="#modal-create-project" class="modal-trigger btn-flat waves-effect waves-light">
+         <a href="#modal-create-project" class="modal-trigger waves-effect">
             <i class="material-icons left">add</i>@localizer[Translation.CreateNewList]
          </a>
       </li>
    }
+   @if (projects.Count() > 0)
+   {
+      <li><div class="divider"></div></li>
+      <li><a class="subheader text-uppercase">@localizer[Translation.Projects]</a></li>
+      foreach (var project in projects)
+      {
+         <li><a class="waves-effect" asp-page="project" asp-route-id="@project.Id">@project.Name</a></li>
+      }
+   }
+
+
 </ul>
-<div id="modal-create-project" class="modal bottom-sheet">
+<div id="modal-create-project" class="modal">
    <partial name="_IndexProjectAddPartial" model="new Ptproject { PtuserId = userId }" />
 </div>

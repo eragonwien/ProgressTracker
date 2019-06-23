@@ -22,9 +22,14 @@ namespace ProgressTracker.Pages
          this.projectService = projectService;
       }
 
-      public void OnGet()
+      public IActionResult OnGet()
       {
-         Projects = projectService.GetAll(UserId).Select(p => new ProjectViewModel(p));
+         var userProjects = projectService.GetAll(UserId);
+         if (userProjects.Count() > 0)
+         {
+            return Redirect(Url.Page("project", new { id = userProjects.First().Id }));
+         }
+         return Page();
       }
    }
 }

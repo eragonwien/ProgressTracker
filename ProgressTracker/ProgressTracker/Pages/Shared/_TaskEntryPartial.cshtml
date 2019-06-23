@@ -15,7 +15,7 @@
          <span class="black-text @(Model.Completed ? "line-through" : "")">@Model.Description</span>
       </label>
       <input type="submit" asp-page="task" asp-page-handler="status" class="ajax-submit" id="submit-checkbox-change-button" hidden />
-      <a href="#@modalId" class="secondary-content waves-effect waves-light btn-flat modal-trigger"><i class="material-icons">edit</i></a>
+      <a href="#@modalId" class="secondary-content modal-trigger black-text"><i class="material-icons">edit</i></a>
    </form>
 
    <div id="@modalId" class="modal bottom-sheet">
