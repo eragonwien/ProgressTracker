@@ -7,9 +7,10 @@
 @{
    ViewData["Title"] = Model.Project.Name ?? localizer[Translation.Projects].ToString();
    Layout = "~/Pages/Shared/_Layout.cshtml";
+   string addProjectModalId = string.Format("modal-p{0}-add", Model.Project.Id);
    string editProjectModalId = string.Format("modal-p{0}-edit", Model.Project.Id);
    string deleteProjectModalId = string.Format("modal-p{0}-delete", Model.Project.Id);
-   TopNavbarViewModel navbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated, Model.Id, Model.ReturnUrl, editProjectModalId, deleteProjectModalId);
+   TopNavbarViewModel navbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated, Model.ReturnUrl, addProjectModalId, editProjectModalId, deleteProjectModalId, Model.Project);
 }
 <partial name="_NavbarTopPartial" model="navbarViewModel" />
 <ul class="collection">
@@ -20,9 +21,4 @@
       </li>
    }
 </ul>
-<div id="@editProjectModalId" class="modal">
-   <partial name="_IndexProjectEditPartial" model="Model.Project" />
-</div>
-<div id="@editProjectModalId" class="modal">
-   <partial name="_IndexProjectDeletePartial" model="Model.Project" />
-</div>
+

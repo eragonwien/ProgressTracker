@@ -84,8 +84,7 @@ namespace ProgressTracker.Pages
          {
             Message = ex.Message;
          }
-         ReturnUrl = Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : "/";
-         return RedirectLocalUrl(ReturnUrl);
+         return Redirect("/");
       }
    }
 }

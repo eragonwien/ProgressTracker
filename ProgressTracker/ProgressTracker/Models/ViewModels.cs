@@ -14,21 +14,23 @@ namespace ProgressTracker.Models
 
    public class TopNavbarViewModel
    {
-      public int Id { get; set; }
       public string Title { get; set; }
       public string ReturnUrl { get; set; }
+      public string AddUrl { get; set; }
       public string EditUrl { get; set; }
       public string DeleteUrl { get; set; }
       public bool IsAuthenticated { get; set; }
+      public Ptproject Project { get; set; }
 
-      public TopNavbarViewModel(string title, bool isAuthenticated = false, int id = 0, string returnUrl = null, string editUrl = null, string deleteUrl = null)
+      public TopNavbarViewModel(string title, bool isAuthenticated = false, string returnUrl = null, string addUrl = null, string editUrl = null, string deleteUrl = null, Ptproject project = null)
       {
-         Id = id;
          Title = title;
          ReturnUrl = returnUrl;
+         AddUrl = addUrl;
          EditUrl = editUrl;
          DeleteUrl = deleteUrl;
          IsAuthenticated = isAuthenticated;
+         Project = project;
       }
    }
 

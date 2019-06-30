@@ -7,6 +7,7 @@ function initMaterialize() {
    $('.sidenav').sidenav();
    $('.collapsible').collapsible();
    $('.modal').modal();
+   $('.dropdown-trigger').dropdown();
    M.updateTextFields();
    loadToast();
 }

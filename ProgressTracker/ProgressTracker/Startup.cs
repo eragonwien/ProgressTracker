@@ -74,6 +74,7 @@ namespace ProgressTracker
             .AddDataAnnotationsLocalization()
             .AddRazorPagesOptions(options =>
             {
+               options.Conventions.AddPageRoute("/Projects", "");
                options.Conventions.AuthorizePage("/Index");
                options.Conventions.AllowAnonymousToPage("/Login");
                options.Conventions.AuthorizePage("/Login/LoginRedirect");

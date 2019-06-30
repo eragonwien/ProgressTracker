@@ -1,9 +1,13 @@
 ﻿@using ProgressTracker.Services
+@using ProgressTracker.Models
 @using SNGCommon.Common
 @model ProgressTracker.Models.TopNavbarViewModel
 <nav role="navigation" aria-label="main navigation">
    <div class="nav-wrapper black">
-      <a href="" data-target="sidenav" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+      @if (string.IsNullOrEmpty(Model.ReturnUrl))
+      {
+         <a href="" data-target="sidenav" class="sidenav-trigger left"><i class="material-icons">menu</i></a>
+      }
       <a href="" class="brand-logo center">@Model.Title</a>
       <ul class="left">
          @if (!string.IsNullOrEmpty(Model.ReturnUrl))
@@ -15,15 +19,56 @@
             </li>
          }
       </ul>
-      <ul class="right">
-         @if (!string.IsNullOrEmpty(Model.EditUrl))
+      <ul class="right hide-on-med-and-down">
+         @if (!string.IsNullOrEmpty(Model.AddUrl) && Model.Project != null)
+         {
+            <li><a href="#@Model.AddUrl" class="secondary-content modal-trigger white-text"><i class="material-icons">add</i></a></li>
+         }
+         @if (!string.IsNullOrEmpty(Model.EditUrl) && Model.Project != null)
          {
             <li><a href="#@Model.EditUrl" class="secondary-content modal-trigger white-text"><i class="material-icons">edit</i></a></li>
          }
-         @if (!string.IsNullOrEmpty(Model.DeleteUrl))
+         @if (!string.IsNullOrEmpty(Model.DeleteUrl) && Model.Project != null)
          {
             <li><a href="#@Model.DeleteUrl" class="secondary-content modal-trigger white-text"><i class="material-icons">delete</i></a></li>
          }
       </ul>
+      <ul class="right show-on-medium-and-down hide-on-large-only">
+         <li><a class="dropdown-trigger" href="#!" data-target="navbar-right-dropdown"><i class="material-icons">more_vert</i></a></li>
+      </ul>
    </div>
 </nav>
+@if (!string.IsNullOrEmpty(Model.AddUrl) && Model.Project != null)
+{
+   <div id="@Model.AddUrl" class="modal">
+      <partial name="_IndexProjectAddTaskPartial" model="new Pttask(Model.Project)" />
+   </div>
+}
+@if (!string.IsNullOrEmpty(Model.EditUrl) && Model.Project != null)
+{
+   <div id="@Model.EditUrl" class="modal">
+      <partial name="_IndexProjectEditPartial" model="Model.Project" />
+   </div>
+}
+@if (!string.IsNullOrEmpty(Model.DeleteUrl) && Model.Project != null)
+{
+   <div id="@Model.DeleteUrl" class="modal">
+      <partial name="_IndexProjectDeletePartial" model="Model.Project" />
+   </div>
+}
+
+<ul id="navbar-right-dropdown" class="dropdown-content">
+   @if (!string.IsNullOrEmpty(Model.AddUrl) && Model.Project != null)
+   {
+      <li><a href="#@Model.AddUrl" class="modal-trigger black-text"><i class="material-icons">add</i></a></li>
+   }
+   @if (!string.IsNullOrEmpty(Model.EditUrl) && Model.Project != null)
+   {
+      <li><a href="#@Model.EditUrl" class="modal-trigger black-text"><i class="material-icons">edit</i></a></li>
+   }
+   @if (!string.IsNullOrEmpty(Model.DeleteUrl) && Model.Project != null)
+   {
+      <li><a href="#@Model.DeleteUrl" class="modal-trigger black-text"><i class="material-icons">delete</i></a></li>
+   }
+</ul>
+

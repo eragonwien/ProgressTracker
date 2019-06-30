@@ -13,5 +13,14 @@ namespace ProgressTracker.Models
       public bool Active { get; set; }
 
       public virtual Ptproject Ptproject { get; set; }
+
+      public Pttask()
+      {
+      }
+
+      public Pttask(Ptproject ptproject)
+      {
+         PtprojectId = ptproject.Id;
+      }
    }
 }

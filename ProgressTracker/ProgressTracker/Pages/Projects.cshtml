@@ -6,7 +6,7 @@
 @model ProgressTracker.Pages.ProjectsModel
 @{
    ViewData["Title"] = localizer.GetString(Translation.Projects);
-   TopNavbarViewModel topNavbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated, 0, Model.ReturnUrl);
+   TopNavbarViewModel topNavbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated, Model.ReturnUrl);
 }
 <partial name="_NavbarTopPartial" model="topNavbarViewModel" />
 @if (Model.Projects != null)
