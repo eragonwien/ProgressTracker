@@ -7,6 +7,18 @@ using ProgressTracker.Models;
 
 namespace ProgressTracker.Services
 {
+   public interface IProjectService
+   {
+      IEnumerable<Ptproject> GetAll(int userId, bool active = true, bool inactive = false);
+      Task<Ptproject> GetOne(int id);
+      void Create(Ptproject project);
+      void Patch(Ptproject project, params string[] columns);
+      void Update(Ptproject project);
+      void Remove(int id);
+      bool Exists(int id);
+      Task SaveChanges();
+   }
+
    public class ProjectService : IProjectService
    {
       private readonly PROGRESSTRACKERContext context;
@@ -65,18 +77,18 @@ namespace ProgressTracker.Services
          return context.Ptproject.Any(p => p.Id == id && p.Active);
       }
 
-      public IEnumerable<Ptproject> GetAll(int userId)
+      public IEnumerable<Ptproject> GetAll(int userId, bool active, bool inactive)
       {
          return context.Ptproject
              .Include(p => p.Pttask)
-             .Where(p => p.Active && (p.PtuserId == userId));
+             .Where(p => (p.PtuserId == userId) && ((active && p.Active) || (inactive && !p.Active)));
       }
 
       public Task<Ptproject> GetOne(int id)
       {
          return context.Ptproject
              .Include(p => p.Pttask)
-             .SingleOrDefaultAsync(p => p.Id == id && p.Active);
+             .SingleOrDefaultAsync(p => p.Id == id);
       }
 
       public void Remove(int id)

@@ -39,7 +39,7 @@ namespace ProgressTracker.Pages
             {
                userService.Register(Ptuser);
                await userService.SaveChanges();
-               return Redirect(ReturnUrl);
+               return RedirectLocalUrl(ReturnUrl);
             }
             catch (Exception ex)
             {

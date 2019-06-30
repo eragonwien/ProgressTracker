@@ -1,0 +1,23 @@
+﻿@page
+@using ProgressTracker.Models;
+@using SNGCommon.Resources
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
+@model ProgressTracker.Pages.ProjectsModel
+@{
+   ViewData["Title"] = localizer.GetString(Translation.Projects);
+   TopNavbarViewModel topNavbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated);
+}
+<partial name="_NavbarTopPartial" model="topNavbarViewModel" />
+@if (Model.Projects != null)
+{
+   <div class="collection">
+      @foreach (ProjectViewModel projectModel in Model.Projects)
+      {
+         <a class="collection-item avatar" asp-page="project" asp-route-id="@projectModel.Project.Id" asp-route-returnurl="@HttpContext.Request.Path">
+            <i class="material-icons circle">folder</i>
+            <span class="title black-text">@projectModel.Project.Name</span>
+         </a>
+      }
+   </div>
+}

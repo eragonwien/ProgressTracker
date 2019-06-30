@@ -60,7 +60,7 @@ namespace ProgressTracker.Pages
          {
             var user = await userService.Authenticate(Email, Password);
             await SignInAsync(user.Email, user.Name, user.Id);
-            return Redirect(ReturnUrl);
+            return Url.IsLocalUrl(ReturnUrl) ? Redirect(ReturnUrl) : Redirect("/");
          }
          catch (Exception ex)
          {
@@ -90,7 +90,7 @@ namespace ProgressTracker.Pages
          var user = await userService.GetOne(email);
 
          await SignInAsync(email, user.Name, user.Id);
-         return Redirect(ReturnUrl);
+         return RedirectLocalUrl(ReturnUrl);
       }
 
       private async Task SignInAsync(string email, string name, int userId, AuthenticationProperties authProperties = null, string authScheme = CookieAuthenticationDefaults.AuthenticationScheme)

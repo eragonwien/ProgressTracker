@@ -4,59 +4,17 @@
 @inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @model IndexModel
 @{
-   ViewData["Title"] = "";
+   ViewData["Title"] = "Progress Tracker";
    int.TryParse(TempData["ActiveProjectId"]?.ToString(), out int activeProjectId);
    TopNavbarViewModel topNavbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated);
 }
 <partial name="_NavbarTopPartial" model="topNavbarViewModel" />
-<div class="container">
-   <div class="section">
-      <ul class="collapsible popout">
-         @foreach (ProjectViewModel projectViewModel in Model.Projects)
-         {
-            string addModalId = string.Format("add-modal-p{0}", projectViewModel.Project.Id);
-            string editModalId = string.Format("edit-modal-p{0}", projectViewModel.Project.Id);
-            string deleteModalId = string.Format("delete-modal-p{0}", projectViewModel.Project.Id);
-            bool isActive = projectViewModel.Project.Id == activeProjectId;
-            <li class="index-project-entry @(isActive ? "active" : "")">
-               <div class="collapsible-header">
-                  @projectViewModel.Project.Name
-               </div>
-               <div class="collapsible-body">
-                  <div class="row">
-                     <div class="right">
-                        <a href="#@addModalId" class="modal-trigger btn-flat waves-effect waves-light">
-                           <i class="material-icons">add</i>
-                        </a>
-                        <a href="#@editModalId" class="modal-trigger btn-flat waves-effect waves-light">
-                           <i class="material-icons">edit</i>
-                        </a>
-                        <a href="#@deleteModalId" class="modal-trigger btn-flat waves-effect waves-light">
-                           <i class="material-icons">delete</i>
-                        </a>
-                     </div>
-                  </div>
-                  <ul class="collection">
-                     @foreach (Pttask task in projectViewModel.Project.Pttask)
-                     {
-                        <li class="index-task-entry collection-item">
-                           <partial name="Shared/_TaskEntryPartial" model="task" />
-                        </li>
-                     }
-                  </ul>
-               </div>
-               <div id="@addModalId" class="modal bottom-sheet">
-                  <partial name="_IndexProjectAddTaskPartial" model="new Pttask { PtprojectId = projectViewModel.Project.Id }" />
-               </div>
-               <div id="@editModalId" class="modal bottom-sheet">
-                  <partial name="_IndexProjectEditPartial" model="projectViewModel.Project" />
-               </div>
-               <div id="@deleteModalId" class="modal bottom-sheet">
-                  <partial name="_IndexProjectDeletePartial" model="projectViewModel.Project" />
-               </div>
-            </li>
-
-         }
-      </ul>
-   </div>
+<div class="collection">
+   @foreach (ProjectViewModel projectModel in Model.Projects)
+   {
+      <a class="collection-item avatar" asp-page="project" asp-route-id="@projectModel.Project.Id" asp-route-returnurl="@HttpContext.Request.Path">
+         <i class="material-icons circle">folder</i>
+         <span class="title black-text">@projectModel.Project.Name</span>
+      </a>
+   }
 </div>

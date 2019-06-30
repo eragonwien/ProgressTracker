@@ -7,6 +7,18 @@ using ProgressTracker.Models;
 
 namespace ProgressTracker.Services
 {
+   public interface ITaskService
+   {
+      IEnumerable<Pttask> GetAll();
+      Task<Pttask> GetOne(int id);
+      void Create(Pttask task);
+      void Update(Pttask task);
+      void Patch(Pttask task, params string[] columns);
+      void Remove(int id);
+      bool Exists(int id);
+      Task SaveChanges();
+   }
+
    public class TaskService : ITaskService
    {
       private readonly PROGRESSTRACKERContext context;

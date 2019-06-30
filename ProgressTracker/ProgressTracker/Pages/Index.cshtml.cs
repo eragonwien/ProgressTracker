@@ -24,12 +24,7 @@ namespace ProgressTracker.Pages
 
       public IActionResult OnGet()
       {
-         var userProjects = projectService.GetAll(UserId);
-         if (userProjects.Count() > 0)
-         {
-            return Redirect(Url.Page("project", new { id = userProjects.First().Id }));
-         }
-         return Page();
+         return RedirectToPage("projects");
       }
    }
 }

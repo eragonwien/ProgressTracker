@@ -51,7 +51,7 @@ namespace ProgressTracker.Pages
          {
             Message = ex.Message;
          }
-         return Redirect(ReturnUrl);
+         return RedirectLocalUrl(ReturnUrl);
       }
 
       public async Task<IActionResult> OnPostEditAsync()
@@ -68,7 +68,7 @@ namespace ProgressTracker.Pages
             Message = ex.Message;
          }
          ReturnUrl = Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : "/";
-         return Redirect(ReturnUrl);
+         return RedirectLocalUrl(ReturnUrl);
       }
 
       public async Task<IActionResult> OnPostDeleteAsync()
@@ -85,7 +85,7 @@ namespace ProgressTracker.Pages
             Message = ex.Message;
          }
          ReturnUrl = Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : "/";
-         return Redirect(ReturnUrl);
+         return RedirectLocalUrl(ReturnUrl);
       }
    }
 }

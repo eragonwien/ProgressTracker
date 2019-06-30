@@ -17,7 +17,7 @@ namespace ProgressTracker.Models
       [BindProperty(SupportsGet = true)]
       public string ReturnUrl
       {
-         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : Settings.DefaultReturnUrl; }
+         get { return Url.IsLocalUrl(returnUrl) ? returnUrl : string.Empty; }
          set { returnUrl = value; }
       }
       [ViewData]
@@ -35,6 +35,11 @@ namespace ProgressTracker.Models
          {
             return int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId) ? userId : -1;
          }
+      }
+
+      internal RedirectResult RedirectLocalUrl(string url)
+      {
+         return Url.IsLocalUrl(url) ? Redirect(url) : Redirect("/");
       }
    }
 }
