@@ -14,16 +14,18 @@ namespace ProgressTracker.Pages
    public class TaskModel : BasePageModel
    {
       private readonly ITaskService taskService;
+      private readonly IProjectService projectService;
       private readonly IStringLocalizer<TaskModel> localizer;
 
-      public TaskModel(ITaskService taskService, IStringLocalizer<TaskModel> localizer)
+      public TaskModel(ITaskService taskService, IProjectService projectService, IStringLocalizer<TaskModel> localizer)
       {
          this.taskService = taskService;
+         this.projectService = projectService;
          this.localizer = localizer;
       }
 
       [BindProperty]
-      public Pttask task { get; set; }
+      public Pttask Task { get; set; }
 
       [BindProperty(SupportsGet = true)]
       public int Id { get; set; }
@@ -31,7 +33,7 @@ namespace ProgressTracker.Pages
       public async Task OnGetAsync()
       {
          IsCreate = false;
-         task = await taskService.GetOne(Id);
+         Task = await taskService.GetOne(Id);
          ReturnUrl = Request.Headers["Referer"].ToString();
       }
 
@@ -41,9 +43,9 @@ namespace ProgressTracker.Pages
          {
             if (ModelState.IsValid)
             {
-               taskService.Patch(task, nameof(task.Description));
+               taskService.Patch(Task, nameof(Task.Description));
                await taskService.SaveChanges();
-               ActiveProjectId = task.PtprojectId;
+               ActiveProjectId = Task.PtprojectId;
             }
          }
          catch (Exception ex)
@@ -57,7 +59,7 @@ namespace ProgressTracker.Pages
       {
          try
          {
-            taskService.Patch(task, nameof(task.Completed));
+            taskService.Patch(Task, nameof(Task.Completed));
             await taskService.SaveChanges();
          }
          catch (Exception ex)
@@ -68,7 +70,7 @@ namespace ProgressTracker.Pages
 
       public async Task OnPostDeleteAsync()
       {
-         taskService.Remove(task.Id);
+         taskService.Remove(Task.Id);
          await taskService.SaveChanges();
       }
 
@@ -76,9 +78,9 @@ namespace ProgressTracker.Pages
       {
          try
          {
-            taskService.Create(task);
+            taskService.Create(Task);
             await taskService.SaveChanges();
-            ActiveProjectId = task.PtprojectId;
+            ActiveProjectId = Task.PtprojectId;
             Message = localizer[Translation.Completed];
          }
          catch (Exception ex)

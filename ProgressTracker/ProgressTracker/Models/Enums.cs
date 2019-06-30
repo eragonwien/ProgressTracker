@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace ProgressTracker.Models
 {
-    public enum Status
+    public enum ProjectStatus
     {
         None,
         Saved,
         InProgress,
-        Completed,
-        Paused
+        Completed
     }
 }

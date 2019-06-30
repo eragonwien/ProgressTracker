@@ -38,11 +38,33 @@ namespace ProgressTracker.Models
       {
          Project = project;
          SetProgress(project);
+         SetStatus();
+      }
+
+      private void SetStatus()
+      {
+         if (Progress == 0)
+         {
+            Status = ProjectStatus.Saved;
+         }
+         else if (Progress > 0 && Progress < 1)
+         {
+            Status = ProjectStatus.InProgress;
+         }
+         else if (Progress == 1)
+         {
+            Status = ProjectStatus.Completed;
+         }
+         else
+         {
+            Status = ProjectStatus.None;
+         }
       }
 
       public Ptproject Project { get; set; }
       public decimal Progress { get; set; }
       public int UnresolvedCount { get; set; }
+      public ProjectStatus Status { get; set; }
 
       private void SetProgress(Ptproject project)
       {
@@ -51,8 +73,12 @@ namespace ProgressTracker.Models
          {
             int total = project.Pttask.Count;
             int completed = project.Pttask.Count(o => o.Completed);
-            progress = total != 0 ? completed / total : 0;
+            progress = total != 0 ? (decimal)completed / total : 0;
             Progress = progress >= 0 && progress <= 1 ? progress : Progress;
+            if (total == 0)
+            {
+               Progress = 0;
+            }
             UnresolvedCount = total - completed;
          }
          catch (Exception ex)

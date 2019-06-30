@@ -31,7 +31,7 @@ namespace ProgressTracker.Models
             Name = "Test Project",
             Description = "This is a test project",
             Ptuser = context.Ptuser.First(),
-            Status = Status.None.ToString(),
+            Status = ProjectStatus.None.ToString(),
             Active = true
          };
          context.Ptproject.Add(project);

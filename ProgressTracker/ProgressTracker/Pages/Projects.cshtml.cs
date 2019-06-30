@@ -20,7 +20,8 @@ namespace ProgressTracker.Pages
          Projects = projectService
             .GetAll(UserId)
             .Where(p => p.Active)
-            .Select(p => new ProjectViewModel(p));
+            .Select(p => new ProjectViewModel(p))
+            .Where(p => p.Status.Equals(ProjectStatus.InProgress) || p.Status.Equals(ProjectStatus.Saved));
       }
 
       public void OnGetClosed()
@@ -28,7 +29,8 @@ namespace ProgressTracker.Pages
          Projects = projectService
             .GetAll(UserId)
             .Where(p => p.Active)
-            .Select(p => new ProjectViewModel(p));
+            .Select(p => new ProjectViewModel(p))
+            .Where(p => p.Status.Equals(ProjectStatus.Completed));
       }
 
       public void OnGetDeleted()
