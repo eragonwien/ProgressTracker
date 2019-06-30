@@ -64,7 +64,7 @@ namespace ProgressTracker.Services
          {
             return;
          }
-         context.Pttask.Attach(task);
+         context.Attach(task);
          foreach (var column in columns)
          {
             context.Entry(task).Property(column).IsModified = true;

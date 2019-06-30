@@ -24,8 +24,12 @@ function loadToast() {
 }
 
 function onCheckboxChanged(checkbox) {
-   $(checkbox).closest('form').find('#submit-checkbox-change-button').trigger('click');
-   $(checkbox).closest('form').find('label span').toggleClass('line-through', $(checkbox).is(':checked'));
+   var data = {
+      id: $(checkbox).data('id'),
+      completed: $(checkbox).is(':checked')
+   };
+   ajax('POST', $(checkbox).data('url'), data);
+   $(checkbox).siblings('.checkbox-label').toggleClass('line-through', $(checkbox).is(':checked'));
 }
 
 function reloadPage() {

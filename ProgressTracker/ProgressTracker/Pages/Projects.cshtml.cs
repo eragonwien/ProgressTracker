@@ -17,12 +17,26 @@ namespace ProgressTracker.Pages
 
       public void OnGet()
       {
-         Projects = projectService.GetAll(UserId, true, false).Select(p => new ProjectViewModel(p));
+         Projects = projectService
+            .GetAll(UserId)
+            .Where(p => p.Active)
+            .Select(p => new ProjectViewModel(p));
       }
 
       public void OnGetClosed()
       {
-         Projects = projectService.GetAll(UserId, false, true).Select(p => new ProjectViewModel(p));
+         Projects = projectService
+            .GetAll(UserId)
+            .Where(p => p.Active)
+            .Select(p => new ProjectViewModel(p));
+      }
+
+      public void OnGetDeleted()
+      {
+         Projects = projectService
+            .GetAll(UserId)
+            .Where(p => !p.Active)
+            .Select(p => new ProjectViewModel(p));
       }
    }
 }

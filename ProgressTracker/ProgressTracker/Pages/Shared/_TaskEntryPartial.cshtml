@@ -8,20 +8,16 @@
    string modalId = string.Format("modal-p{0}-o{1}", Model.PtprojectId, Model.Id);
 }
 <div>
-   <form method="post">
-      <input type="hidden" asp-for="Id" />
-      <label>
-         <input type="checkbox" asp-for="Completed" onchange="onCheckboxChanged(this)" />
-         <span class="black-text @(Model.Completed ? "line-through" : "")">@Model.Description</span>
-      </label>
-      <input type="submit" asp-page="task" asp-page-handler="status" class="ajax-submit" id="submit-checkbox-change-button" hidden />
-      <a href="#@modalId" class="secondary-content modal-trigger black-text"><i class="material-icons">edit</i></a>
-   </form>
+   <label>
+      <input type="checkbox" @(Model.Completed ? "checked='checked'" : "") onchange="onCheckboxChanged(this)" data-url="@Url.Page("task", "status")" data-id="@Model.Id" />
+      <span class="checkbox-label black-text @(Model.Completed ? "line-through" : "")">@Model.Description</span>
+   </label>
+   <a href="#@modalId" class="secondary-content modal-trigger black-text"><i class="material-icons">edit</i></a>
 
-   <div id="@modalId" class="modal bottom-sheet">
+   <div id="@modalId" class="modal">
       <form method="post">
-         <input type="hidden" asp-for="Id" />
-         <input type="hidden" asp-for="PtprojectId" />
+         <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+         <input type="hidden" name="@nameof(Model.PtprojectId)" value="@Model.PtprojectId" />
          <div class="modal-content">
             <div class="input-field">
                <input asp-for="Description" class="validate" />
