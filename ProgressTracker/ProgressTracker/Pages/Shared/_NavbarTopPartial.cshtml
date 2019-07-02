@@ -1,6 +1,7 @@
-﻿@using ProgressTracker.Services
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using ProgressTracker.Models
-@using SNGCommon.Common
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
 @model ProgressTracker.Models.TopNavbarViewModel
 <nav role="navigation" aria-label="main navigation">
    <div class="nav-wrapper black">
@@ -34,7 +35,10 @@
          }
       </ul>
       <ul class="right show-on-medium-and-down hide-on-large-only">
-         <li><a class="dropdown-trigger" href="#!" data-target="navbar-right-dropdown"><i class="material-icons">more_vert</i></a></li>
+         @if (Model.Project != null && (!string.IsNullOrEmpty(Model.AddUrl) || !string.IsNullOrEmpty(Model.EditUrl) || !string.IsNullOrEmpty(Model.DeleteUrl)))
+         {
+            <li><a class="dropdown-trigger" href="#!" data-target="navbar-right-dropdown"><i class="material-icons">more_vert</i></a></li>
+         }
       </ul>
    </div>
 </nav>
@@ -60,15 +64,15 @@
 <ul id="navbar-right-dropdown" class="dropdown-content">
    @if (!string.IsNullOrEmpty(Model.AddUrl) && Model.Project != null)
    {
-      <li><a href="#@Model.AddUrl" class="modal-trigger black-text"><i class="material-icons">add</i></a></li>
+      <li><a href="#@Model.AddUrl" class="modal-trigger black-text">@localizer[Translation.New]</a></li>
    }
    @if (!string.IsNullOrEmpty(Model.EditUrl) && Model.Project != null)
    {
-      <li><a href="#@Model.EditUrl" class="modal-trigger black-text"><i class="material-icons">edit</i></a></li>
+      <li><a href="#@Model.EditUrl" class="modal-trigger black-text">@localizer[Translation.Edit]</a></li>
    }
    @if (!string.IsNullOrEmpty(Model.DeleteUrl) && Model.Project != null)
    {
-      <li><a href="#@Model.DeleteUrl" class="modal-trigger black-text"><i class="material-icons">delete</i></a></li>
+      <li><a href="#@Model.DeleteUrl" class="modal-trigger black-text">@localizer[Translation.Delete]</a></li>
    }
 </ul>
 

@@ -27,7 +27,6 @@
    </li>
    @if (authenticated)
    {
-      <li><div class="divider"></div></li>
       <li><a class="waves-effect" asp-page="projects"><i class="material-icons left">view_list</i>@localizer[Translation.ActiveProjects]</a></li>
       <li><a class="waves-effect" asp-page="projects" asp-page-handler="closed" asp-route-returnurl="@Context.Request.Path"><i class="material-icons left">done</i>@localizer[Translation.ClosedProjects]</a></li>
       <li><a class="waves-effect" asp-page="projects" asp-page-handler="deleted" asp-route-returnurl="@Context.Request.Path"><i class="material-icons left">delete</i>@localizer[Translation.DeletedProjects]</a></li>
