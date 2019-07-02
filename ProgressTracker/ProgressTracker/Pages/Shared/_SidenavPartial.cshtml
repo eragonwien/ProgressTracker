@@ -12,6 +12,7 @@
    int.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
    bool authenticated = Context.User.Identity.IsAuthenticated;
    var projects = projectService.GetAll(userId);
+   string currentUrl = Context.Request.Path;
 }
 <ul id="sidenav" class="sidenav sidenav-fixed">
    <li>
@@ -28,15 +29,15 @@
    @if (authenticated)
    {
       <li><a class="waves-effect" asp-page="projects"><i class="material-icons left">view_list</i>@localizer[Translation.ActiveProjects]</a></li>
-      <li><a class="waves-effect" asp-page="projects" asp-page-handler="closed" asp-route-returnurl="@Context.Request.Path"><i class="material-icons left">done</i>@localizer[Translation.ClosedProjects]</a></li>
-      <li><a class="waves-effect" asp-page="projects" asp-page-handler="deleted" asp-route-returnurl="@Context.Request.Path"><i class="material-icons left">delete</i>@localizer[Translation.DeletedProjects]</a></li>
+      <li><a class="waves-effect" asp-page="projects" asp-page-handler="closed" asp-route-returnurl="@currentUrl"><i class="material-icons left">done</i>@localizer[Translation.ClosedProjects]</a></li>
+      <li><a class="waves-effect" asp-page="projects" asp-page-handler="deleted" asp-route-returnurl="@currentUrl"><i class="material-icons left">delete</i>@localizer[Translation.DeletedProjects]</a></li>
    }
 
    <li><div class="divider"></div></li>
    @if (authenticated)
    {
       <li><a class="waves-effect waves-light" asp-page="logout"><i class="material-icons left">exit_to_app</i>@localizer[Translation.Logout]</a></li>
-      <li><a class="waves-effect" asp-page="setting"><i class="material-icons left">settings</i>@localizer[Translation.Settings]</a></li>
+      <li><a class="waves-effect" asp-page="settings" asp-route-returnurl="@currentUrl"><i class="material-icons left">settings</i>@localizer[Translation.Settings]</a></li>
    }
    else
    {

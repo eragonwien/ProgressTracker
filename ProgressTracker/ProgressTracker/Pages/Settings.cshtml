@@ -1,0 +1,36 @@
+﻿@page
+@model ProgressTracker.Pages.SettingsModel
+@using ProgressTracker.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
+@{
+   ViewData["Title"] = localizer.GetString(Translation.Settings);
+   TopNavbarViewModel navbarViewModel = new TopNavbarViewModel(ViewData["Title"].ToString(), User.Identity.IsAuthenticated, Model.ReturnUrl);
+}
+<partial name="Shared/_NavbarTopPartial" model="navbarViewModel" />
+<div class="collection">
+   <a href="#modal-change-language" class="collection-item modal-trigger waves-effect black-text">
+      @localizer[Translation.Language]
+      <span style="display:block; float: right;">@Model.Language.NativeName</span>
+   </a>
+</div>
+<div id="modal-change-language" class="modal">
+   <form method="post">
+      <div class="modal-content">
+         @foreach (CultureInfo supportedLanguage in Model.SupportedLanguages)
+         {
+            <p>
+               <label>
+                  <input type="radio" class="with-gap black-text" asp-for="Language" value="@supportedLanguage.Name" />
+                  <span>@supportedLanguage.NativeName</span>
+               </label>
+            </p>
+         }
+      </div>
+      <div class="modal-footer">
+         <button type="submit" class="waves-effect waves-light btn black white-text" asp-page-handler="language">@localizer[Translation.SaveChanges]</button>
+      </div>
+   </form>
+</div>
