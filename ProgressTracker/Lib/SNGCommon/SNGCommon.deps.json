@@ -1,17 +1,17 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "5eb6ce317abc8b72505f9df8a612683a16b6a60a"
+    "signature": "0139ec2521a73f14989086de08f85076b8f673b1"
   },
   "compilationOptions": {},
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "SNGCommon/1.0.0": {
+      "SNGCommon/1.1.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
-          "Microsoft.Extensions.Localization.Abstractions": "2.2.0",
-          "Microsoft.Extensions.Logging.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Localization.Abstractions": "3.0.0-preview6.19304.6",
+          "Microsoft.Extensions.Logging.Abstractions": "3.0.0-preview6.19304.6",
           "NETStandard.Library": "2.0.3"
         },
         "runtime": {
@@ -49,19 +49,19 @@
           }
         }
       },
-      "Microsoft.Extensions.Localization.Abstractions/2.2.0": {
+      "Microsoft.Extensions.Localization.Abstractions/3.0.0-preview6.19304.6": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Localization.Abstractions.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.18316"
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.19.30406"
           }
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/2.2.0": {
+      "Microsoft.Extensions.Logging.Abstractions/3.0.0-preview6.19304.6": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.18315"
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.19.30406"
           }
         }
       },
@@ -131,7 +131,7 @@
     }
   },
   "libraries": {
-    "SNGCommon/1.0.0": {
+    "SNGCommon/1.1.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -150,24 +150,24 @@
       "path": "microsoft.aspnetcore.http.features/2.2.0",
       "hashPath": "microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Localization.Abstractions/2.2.0": {
+    "Microsoft.Extensions.Localization.Abstractions/3.0.0-preview6.19304.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+hSkcuST/PvRHFfNUyVn/v0JreREgAfTVWaqNVoz9qrVw2pD1bw4Sq9B+TKl3qBT+7c2p+TAir54VtXcF9BzMg==",
-      "path": "microsoft.extensions.localization.abstractions/2.2.0",
-      "hashPath": "microsoft.extensions.localization.abstractions.2.2.0.nupkg.sha512"
+      "sha512": "sha512-g7N3YdHnEl/YU9pOQ1cElbMw62pseWj94CysGXwf+ZNxcxlQHwHIyHY7y7e5+6tFS4jgdleAIggc5xpzNVItiA==",
+      "path": "microsoft.extensions.localization.abstractions/3.0.0-preview6.19304.6",
+      "hashPath": "microsoft.extensions.localization.abstractions.3.0.0-preview6.19304.6.nupkg.sha512"
     },
-    "Microsoft.Extensions.Logging.Abstractions/2.2.0": {
+    "Microsoft.Extensions.Logging.Abstractions/3.0.0-preview6.19304.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-B2WqEox8o+4KUOpL7rZPyh6qYjik8tHi2tN8Z9jZkHzED8ElYgZa/h6K+xliB435SqUcWT290Fr2aa8BtZjn8A==",
-      "path": "microsoft.extensions.logging.abstractions/2.2.0",
-      "hashPath": "microsoft.extensions.logging.abstractions.2.2.0.nupkg.sha512"
+      "sha512": "sha512-+KC09OoZbOlboVbrtdu3YP8qHl7Xzk3ROOdgtOgEzT0wB21REyuBHzgwht5lPm97dMJ7XJhEN0hzPyHgIYBz9Q==",
+      "path": "microsoft.extensions.logging.abstractions/3.0.0-preview6.19304.6",
+      "hashPath": "microsoft.extensions.logging.abstractions.3.0.0-preview6.19304.6.nupkg.sha512"
     },
     "Microsoft.Extensions.Primitives/2.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-azyQtqbm4fSaDzZHD/J+V6oWMFaf2tWP4WEGIYePLCMw3+b2RQdj9ybgbQyjCshcitQKQ4lEDOZjmSlTTrHxUg==",
+      "sha512": "sha512-vpH+o7f8obVx65PiEtBXxTwL5RosK60fNIMy/y8WGE4/r4IvAqQGukOzMhxsp//Accvd7kmukyQTVkqVYdaDyA==",
       "path": "microsoft.extensions.primitives/2.2.0",
       "hashPath": "microsoft.extensions.primitives.2.2.0.nupkg.sha512"
     },
