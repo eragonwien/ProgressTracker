@@ -17,10 +17,6 @@
          <a class="collection-item avatar" asp-page="project" asp-route-id="@projectModel.Project.Id" asp-route-returnurl="@HttpContext.Request.Path">
             <i class="material-icons circle">folder</i>
             <span class="title black-text">@projectModel.Project.Name</span>
-            @if (projectModel.UnresolvedCount > 0)
-            {
-               <span class="new badge red">@projectModel.UnresolvedCount</span>
-            }
          </a>
       }
    </div>
