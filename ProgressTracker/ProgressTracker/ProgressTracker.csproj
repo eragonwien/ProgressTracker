@@ -10,12 +10,16 @@
 
   <ItemGroup>
     <Compile Remove="Contents\**" />
+    <Compile Remove="wwwroot\images\**" />
     <Compile Remove="wwwroot\lib\bulma\**" />
     <Content Remove="Contents\**" />
+    <Content Remove="wwwroot\images\**" />
     <Content Remove="wwwroot\lib\bulma\**" />
     <EmbeddedResource Remove="Contents\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
     <EmbeddedResource Remove="wwwroot\lib\bulma\**" />
     <None Remove="Contents\**" />
+    <None Remove="wwwroot\images\**" />
     <None Remove="wwwroot\lib\bulma\**" />
   </ItemGroup>
 
@@ -44,7 +48,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\jquery-ajax-unobtrucsive\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 

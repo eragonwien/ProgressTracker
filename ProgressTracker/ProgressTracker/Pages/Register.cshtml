@@ -15,7 +15,7 @@
          <div class="card-content">
             <p class="title">@localizer[Translation.Register]</p>
             <div class="input-field">
-               <input type="text" asp-for="Ptuser.Name" class="validate" placeholder="@nameof(Model.Ptuser.Name)">
+               <input type="text" asp-for="Ptuser.Name" class="validate focus-first" placeholder="@nameof(Model.Ptuser.Name)">
                <span asp-validation-for="Ptuser.Name" class="helper-text red-text"></span>
             </div>
             <div class="input-field">
