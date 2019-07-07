@@ -9,12 +9,13 @@ namespace ProgressTracker.Services
 {
    public interface IProjectService
    {
-      IEnumerable<Ptproject> GetAll(int userId, bool includeDeleted = false);
+      IEnumerable<Ptproject> GetAll(int userId);
       Task<Ptproject> GetOne(int id);
       void Create(Ptproject project);
       void Patch(Ptproject project, params string[] columns);
       void Update(Ptproject project);
       void Remove(int id);
+      void Restore(int id);
       bool Exists(int id);
       Task SaveChanges();
    }
@@ -77,11 +78,11 @@ namespace ProgressTracker.Services
          return context.Ptproject.Any(p => p.Id == id && p.Active);
       }
 
-      public IEnumerable<Ptproject> GetAll(int userId, bool includeDeleted)
+      public IEnumerable<Ptproject> GetAll(int userId)
       {
          return context.Ptproject
              .Include(p => p.Pttask)
-             .Where(p => (p.PtuserId == userId && (p.Active || includeDeleted)));
+             .Where(p => (p.PtuserId == userId));
       }
 
       public Task<Ptproject> GetOne(int id)
@@ -104,6 +105,16 @@ namespace ProgressTracker.Services
       public Task SaveChanges()
       {
          return context.SaveChangesAsync();
+      }
+
+      public void Restore(int id)
+      {
+         var removeProject = GetOne(id).Result;
+         if (removeProject != null)
+         {
+            removeProject.Active = true;
+            Patch(removeProject, nameof(Ptproject.Active));
+         }
       }
    }
 }

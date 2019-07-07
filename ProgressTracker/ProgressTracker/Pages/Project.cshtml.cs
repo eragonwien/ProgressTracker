@@ -45,7 +45,6 @@ namespace ProgressTracker.Pages
             projectService.Create(Project);
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = localizer[Translation.Completed];
          }
          catch (Exception ex)
          {
@@ -61,7 +60,6 @@ namespace ProgressTracker.Pages
             projectService.Patch(Project, nameof(Project.Name), nameof(Project.Description));
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = localizer[Translation.Completed];
          }
          catch (Exception ex)
          {
@@ -78,7 +76,21 @@ namespace ProgressTracker.Pages
             projectService.Remove(Project.Id);
             await projectService.SaveChanges();
             ActiveProjectId = 0;
-            Message = localizer[Translation.Completed];
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+         return Redirect("/");
+      }
+
+      public async Task<IActionResult> OnPostRestoreAsync()
+      {
+         try
+         {
+            projectService.Restore(Project.Id);
+            await projectService.SaveChanges();
+            ActiveProjectId = Project.Id;
          }
          catch (Exception ex)
          {
