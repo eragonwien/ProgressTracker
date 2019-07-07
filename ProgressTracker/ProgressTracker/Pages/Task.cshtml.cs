@@ -15,9 +15,9 @@ namespace ProgressTracker.Pages
    {
       private readonly ITaskService taskService;
       private readonly IProjectService projectService;
-      private readonly IStringLocalizer<TaskModel> localizer;
+      private readonly IStringLocalizer<Translation> localizer;
 
-      public TaskModel(ITaskService taskService, IProjectService projectService, IStringLocalizer<TaskModel> localizer)
+      public TaskModel(ITaskService taskService, IProjectService projectService, IStringLocalizer<Translation> localizer)
       {
          this.taskService = taskService;
          this.projectService = projectService;

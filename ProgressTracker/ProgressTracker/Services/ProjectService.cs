@@ -15,6 +15,7 @@ namespace ProgressTracker.Services
       void Patch(Ptproject project, params string[] columns);
       void Update(Ptproject project);
       void Remove(int id);
+      void Restore(int id);
       bool Exists(int id);
       Task SaveChanges();
    }
@@ -104,6 +105,16 @@ namespace ProgressTracker.Services
       public Task SaveChanges()
       {
          return context.SaveChangesAsync();
+      }
+
+      public void Restore(int id)
+      {
+         var removeProject = GetOne(id).Result;
+         if (removeProject != null)
+         {
+            removeProject.Active = true;
+            Patch(removeProject, nameof(Ptproject.Active));
+         }
       }
    }
 }

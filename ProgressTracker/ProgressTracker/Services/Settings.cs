@@ -16,7 +16,7 @@ namespace ProgressTracker.Services
       public const string AppSettingClientSecret = "ClientSecret";
       public const string AppSettingGoogleAuthenticationSettings = "GoogleAuthenticationSettings";
 
-      public const string Culture_EN = "en";
+      public const string Culture_EN = "en-US";
       public const string Culture_DE = "de";
       public const string LocalisationResourcePath = "Resources";
    }

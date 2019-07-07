@@ -10,12 +10,16 @@
 
   <ItemGroup>
     <Compile Remove="Contents\**" />
+    <Compile Remove="wwwroot\images\**" />
     <Compile Remove="wwwroot\lib\bulma\**" />
     <Content Remove="Contents\**" />
+    <Content Remove="wwwroot\images\**" />
     <Content Remove="wwwroot\lib\bulma\**" />
     <EmbeddedResource Remove="Contents\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
     <EmbeddedResource Remove="wwwroot\lib\bulma\**" />
     <None Remove="Contents\**" />
+    <None Remove="wwwroot\images\**" />
     <None Remove="wwwroot\lib\bulma\**" />
   </ItemGroup>
 
@@ -27,6 +31,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Moq" Version="4.12.0" />
     <PackageReference Include="NLog" Version="4.6.5" />
@@ -43,7 +48,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\jquery-ajax-unobtrucsive\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 

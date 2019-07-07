@@ -14,9 +14,14 @@
    <div class="collection">
       @foreach (ProjectViewModel projectModel in Model.Projects)
       {
+         string statusColour = projectModel.Progress == 0 ? "green" : "yellow";
          <a class="collection-item avatar" asp-page="project" asp-route-id="@projectModel.Project.Id" asp-route-returnurl="@HttpContext.Request.Path">
-            <i class="material-icons circle">folder</i>
+            <i class="material-icons circle @statusColour">folder</i>
             <span class="title black-text">@projectModel.Project.Name</span>
+            @if (projectModel.Project.Active && projectModel.UnresolvedCount > 0)
+            {
+               <span class="new badge red" data-badge-caption="@localizer[Translation.New]">@projectModel.UnresolvedCount</span>
+            }
          </a>
       }
    </div>

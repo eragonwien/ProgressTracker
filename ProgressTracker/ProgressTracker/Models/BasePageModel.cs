@@ -26,8 +26,7 @@ namespace ProgressTracker.Models
       public int ActiveProjectId { get; set; }
       [TempData]
       public string Message { get; set; }
-      [BindProperty]
-      public bool BackButtonEnabled { get; set; } = false;
+      public TopNavbarViewModel NavbarModel { get; set; }
 
       public int UserId
       {

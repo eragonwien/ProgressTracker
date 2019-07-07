@@ -8,15 +8,19 @@
 <form method="post">
    <input type="hidden" asp-for="Id" />
    <div class="modal-content">
-      <div class="input-field">
-         <input asp-for="Name" class="validate" />
-         <label asp-for="Name"></label>
-         <span asp-validation-for="Name" class="helper-text red-text"></span>
+      <div class="row">
+         <div class="input-field">
+            <input asp-for="Name" class="validate focus-first" />
+            <label asp-for="Name"></label>
+            <span asp-validation-for="Name" class="helper-text red-text"></span>
+         </div>
       </div>
-      <div class="input-field">
-         <input asp-for="Description" class="validate" />
-         <label asp-for="Description"></label>
-         <span asp-validation-for="Description" class="helper-text red-text"></span>
+      <div class="row">
+         <div class="input-field">
+            <input asp-for="Description" class="validate" />
+            <label asp-for="Description"></label>
+            <span asp-validation-for="Description" class="helper-text red-text"></span>
+         </div>
       </div>
    </div>
    <div class="modal-footer">

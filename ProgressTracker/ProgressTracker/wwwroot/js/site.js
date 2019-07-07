@@ -1,20 +1,23 @@
 ﻿$(document).ready(function () {
    initMaterialize();
-   //focusFirstField();
 });
 
 function initMaterialize() {
    $('.sidenav').sidenav();
    $('.collapsible').collapsible();
-   $('.modal').modal();
+   loadModal();
    $('.dropdown-trigger').dropdown();
    M.updateTextFields();
    loadToast();
 }
 
-function focusFirstField() {
-   var form = $('form').first();
-   form.focus();
+function loadModal() {
+   var elems = document.querySelectorAll('.modal');
+   M.Modal.init(elems, { onOpenEnd: onModalOpen });
+
+   function onModalOpen(modal, trigger) {
+      $(modal).find('form:first .input-field .focus-first').focus();
+   }
 }
 
 function loadToast() {

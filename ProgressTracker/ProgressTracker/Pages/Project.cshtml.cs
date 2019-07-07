@@ -14,7 +14,7 @@ namespace ProgressTracker.Pages
    public class ProjectModel : BasePageModel
    {
       private readonly IProjectService projectService;
-      private readonly IStringLocalizer<ProjectModel> localizer;
+      private readonly IStringLocalizer<Translation> localizer;
 
       [BindProperty(SupportsGet = true)]
       public int Id { get; set; }
@@ -22,7 +22,7 @@ namespace ProgressTracker.Pages
       [BindProperty]
       public Ptproject Project { get; set; }
 
-      public ProjectModel(IProjectService projectService, IStringLocalizer<ProjectModel> localizer)
+      public ProjectModel(IProjectService projectService, IStringLocalizer<Translation> localizer)
       {
          this.projectService = projectService;
          this.localizer = localizer;
@@ -45,7 +45,7 @@ namespace ProgressTracker.Pages
             projectService.Create(Project);
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = localizer[Translation.Completed];
+            Message = localizer[Translation.ProjectAdded, Project.Name];
          }
          catch (Exception ex)
          {
@@ -61,7 +61,7 @@ namespace ProgressTracker.Pages
             projectService.Patch(Project, nameof(Project.Name), nameof(Project.Description));
             await projectService.SaveChanges();
             ActiveProjectId = Project.Id;
-            Message = localizer[Translation.Completed];
+            Message = localizer[Translation.ChangeOfProjectSaved, Project.Name];
          }
          catch (Exception ex)
          {
@@ -78,7 +78,23 @@ namespace ProgressTracker.Pages
             projectService.Remove(Project.Id);
             await projectService.SaveChanges();
             ActiveProjectId = 0;
-            Message = localizer[Translation.Completed];
+            Message = localizer[Translation.ProjectDeleted, Project.Name];
+         }
+         catch (Exception ex)
+         {
+            Message = ex.Message;
+         }
+         return Redirect("/");
+      }
+
+      public async Task<IActionResult> OnPostRestoreAsync()
+      {
+         try
+         {
+            projectService.Restore(Project.Id);
+            await projectService.SaveChanges();
+            ActiveProjectId = Project.Id;
+            Message = localizer[Translation.ProjectRestored, Project.Name];
          }
          catch (Exception ex)
          {
