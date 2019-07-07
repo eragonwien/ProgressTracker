@@ -36,7 +36,7 @@ namespace ProgressTracker.Pages
       public void OnGetDeleted()
       {
          Projects = projectService
-            .GetAll(UserId)
+            .GetAll(UserId, includeDeleted: true)
             .Where(p => !p.Active)
             .Select(p => new ProjectViewModel(p));
       }

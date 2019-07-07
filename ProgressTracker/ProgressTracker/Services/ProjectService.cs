@@ -9,7 +9,7 @@ namespace ProgressTracker.Services
 {
    public interface IProjectService
    {
-      IEnumerable<Ptproject> GetAll(int userId);
+      IEnumerable<Ptproject> GetAll(int userId, bool includeDeleted = false);
       Task<Ptproject> GetOne(int id);
       void Create(Ptproject project);
       void Patch(Ptproject project, params string[] columns);
@@ -77,11 +77,11 @@ namespace ProgressTracker.Services
          return context.Ptproject.Any(p => p.Id == id && p.Active);
       }
 
-      public IEnumerable<Ptproject> GetAll(int userId)
+      public IEnumerable<Ptproject> GetAll(int userId, bool includeDeleted)
       {
          return context.Ptproject
              .Include(p => p.Pttask)
-             .Where(p => (p.PtuserId == userId));
+             .Where(p => (p.PtuserId == userId && (p.Active || includeDeleted)));
       }
 
       public Task<Ptproject> GetOne(int id)

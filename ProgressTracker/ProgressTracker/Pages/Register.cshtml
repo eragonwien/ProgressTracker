@@ -14,19 +14,24 @@
       <div class="card">
          <div class="card-content">
             <p class="title">@localizer[Translation.Register]</p>
-            <div class="input-field">
-               <input type="text" asp-for="Ptuser.Name" class="validate focus-first" placeholder="@nameof(Model.Ptuser.Name)">
-               <span asp-validation-for="Ptuser.Name" class="helper-text red-text"></span>
+            <div class="row">
+               <div class="input-field">
+                  <input type="text" asp-for="Ptuser.Name" class="validate focus-first" placeholder="@nameof(Model.Ptuser.Name)">
+                  <span asp-validation-for="Ptuser.Name" class="helper-text red-text"></span>
+               </div>
             </div>
-            <div class="input-field">
-               <input type="email" asp-for="Ptuser.Email" class="validate" placeholder="@nameof(Model.Ptuser.Email)">
-               <span asp-validation-for="Ptuser.Email" class="helper-text red-text"></span>
+            <div class="row">
+               <div class="input-field">
+                  <input type="email" asp-for="Ptuser.Email" class="validate" placeholder="@nameof(Model.Ptuser.Email)">
+                  <span asp-validation-for="Ptuser.Email" class="helper-text red-text"></span>
+               </div>
             </div>
-            <div class="input-field">
-               <input type="password" asp-for="Ptuser.Password" class="validate" placeholder="@nameof(Model.Ptuser.Password)">
-               <span asp-validation-for="Ptuser.Password" class="helper-text red-text"></span>
-            </div>
-            <button type="submit" class="btn waves-effect waves-light">@localizer[Translation.Register]</button>
+            <div class="row">
+               <div class="input-field">
+                  <input type="password" asp-for="Ptuser.Password" class="validate" placeholder="@nameof(Model.Ptuser.Password)">
+                  <span asp-validation-for="Ptuser.Password" class="helper-text red-text"></span>
+               </div>
+            </div>            <button type="submit" class="btn waves-effect waves-light">@localizer[Translation.Register]</button>
          </div>
       </div>
    </form>
