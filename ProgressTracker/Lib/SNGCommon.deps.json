@@ -21,8 +21,8 @@
           "de/SNGCommon.resources.dll": {
             "locale": "de"
           },
-          "en/SNGCommon.resources.dll": {
-            "locale": "en"
+          "en-US/SNGCommon.resources.dll": {
+            "locale": "en-US"
           }
         }
       },
