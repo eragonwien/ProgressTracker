@@ -8,6 +8,7 @@ namespace ProgressTracker.Models
       [Required]
       public int PtprojectId { get; set; }
       [Required]
+      [MaxLength(32)]
       public string Description { get; set; }
       public bool Completed { get; set; }
       public bool Active { get; set; }

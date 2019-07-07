@@ -15,7 +15,9 @@ namespace ProgressTracker.Models
       [Required]
       public int PtuserId { get; set; }
       [Required]
+      [MaxLength(32)]
       public string Name { get; set; }
+      [MaxLength(64)]
       public string Description { get; set; }
       public string Status { get; set; }
       public bool Active { get; set; }

@@ -11,7 +11,7 @@
    string email = identity?.FindFirst(ClaimTypes.Email)?.Value?.ToString();
    int.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
    bool authenticated = Context.User.Identity.IsAuthenticated;
-   var projects = projectService.GetAll(userId).Where(p => p.Active && p.Pttask.Any(t => t.Active && !t.Completed));
+   var projects = projectService.GetAll(userId).Where(p => p.Active && (p.Pttask.Any(t => t.Active && !t.Completed) || p.Pttask.Count == 0));
    string currentUrl = Context.Request.Path;
 }
 <ul id="sidenav" class="sidenav sidenav-fixed">
