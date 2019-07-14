@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProgressTracker.Models
+namespace ProgressTracker.MVC.Models
 {
     public partial class Ptproject
     {

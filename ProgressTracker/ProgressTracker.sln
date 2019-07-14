@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgressTracker", "Progress
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{3FC51B58-281C-4CC1-9259-6C88DD718D1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgressTracker.MVC", "ProgressTracker.MVC\ProgressTracker.MVC.csproj", "{57B26E31-2211-4AB7-859F-ECE01948C452}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3FC51B58-281C-4CC1-9259-6C88DD718D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FC51B58-281C-4CC1-9259-6C88DD718D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC51B58-281C-4CC1-9259-6C88DD718D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B26E31-2211-4AB7-859F-ECE01948C452}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B26E31-2211-4AB7-859F-ECE01948C452}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B26E31-2211-4AB7-859F-ECE01948C452}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B26E31-2211-4AB7-859F-ECE01948C452}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

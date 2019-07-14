@@ -1,40 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProgressTracker.Models;
-using ProgressTracker.Services;
-using SNGCommon.Middlewares;
-using SNGCommon;
+using ProgressTracker.MVC.Models;
+using ProgressTracker.MVC.Services;
+using System.Collections.Generic;
+using System.Globalization;
 
-namespace ProgressTracker
+namespace ProgressTracker.MVC
 {
    public class Startup
    {
-      public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+      public Startup(IConfiguration configuration)
       {
          Configuration = configuration;
-         HostingEnvironment = hostingEnvironment;
       }
 
-      public IConfiguration Configuration { get; private set; }
-      public IHostingEnvironment HostingEnvironment { get; private set; }
+      public IConfiguration Configuration { get; }
 
       // This method gets called by the runtime. Use this method to add services to the container.
       public void ConfigureServices(IServiceCollection services)
@@ -52,8 +39,8 @@ namespace ProgressTracker
             {
                options.SlidingExpiration = true;
                options.Cookie.HttpOnly = false;
-               options.LoginPath = "/Login";
-               options.LogoutPath = "/Logout";
+               options.LoginPath = "/Account/Login";
+               options.LogoutPath = "/Account/Logout";
             });
 
          List<CultureInfo> cultureInfos = new List<CultureInfo> { new CultureInfo(Settings.Culture_EN), new CultureInfo(Settings.Culture_DE) };
@@ -67,22 +54,12 @@ namespace ProgressTracker
          });
 
          services.AddAntiforgery(s => s.HeaderName = "XSRF-TOKEN");
+
          services
             .AddMvc()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddViewLocalization()
             .AddDataAnnotationsLocalization()
-            .AddRazorPagesOptions(options =>
-            {
-               options.AllowAreas = true;
-               options.Conventions.AddPageRoute("/Projects", "");
-               options.Conventions.AuthorizePage("/Index");
-               options.Conventions.AllowAnonymousToPage("/Login");
-               options.Conventions.AuthorizePage("/Login/LoginRedirect");
-               options.Conventions.AuthorizePage("/Project");
-               options.Conventions.AuthorizePage("/Task");
-               options.Conventions.AuthorizePage("/Tasks");
-            });
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
       }
 
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,8 +71,7 @@ namespace ProgressTracker
          }
          else
          {
-            app.UseLogException();
-            app.UseExceptionHandler("/Error");
+            app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
          }
 
@@ -103,7 +79,13 @@ namespace ProgressTracker
          app.UseHttpsRedirection();
          app.UseStaticFiles();
          app.UseAuthentication();
-         app.UseMvc();
+
+         app.UseMvc(routes =>
+         {
+            routes.MapRoute(
+                   name: "default",
+                   template: "{controller=Project}/{action=Index}/{id?}");
+         });
       }
    }
 }
