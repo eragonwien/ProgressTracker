@@ -12,5 +12,50 @@
    int.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
    bool authenticated = Context.User.Identity.IsAuthenticated;
    var projects = projectService.GetAll(userId).Where(p => p.Active && (p.Pttask.Any(t => t.Active && !t.Completed) || p.Pttask.Count == 0));
-   string currentUrl = Context.Request.Path;
 }
+
+<ul id="sidenav" class="sidenav sidenav-fixed">
+   <li>
+      <div class="user-view">
+         <div class="background white"></div>
+         <a href=""><span class="name black-text bold-text text-lg">@username</span></a>
+         <a href=""><span class="email black-text">@email</span></a>
+         @if (!authenticated)
+         {
+            <span class="black-text bold-text text-lg">Progress Tracker</span>
+         }
+      </div>
+   </li>
+   @if (authenticated)
+   {
+      <li><a class="waves-effect" asp-controller="project"><i class="material-icons left">view_list</i>@localizer[Translation.ActiveProjects]</a></li>
+      <li><a class="waves-effect" asp-controller="project" asp-action="closed"><i class="material-icons left">done</i>@localizer[Translation.ClosedProjects]</a></li>
+      <li><a class="waves-effect" asp-controller="project" asp-action="deleted"><i class="material-icons left">delete</i>@localizer[Translation.DeletedProjects]</a></li>
+   }
+
+   <li><div class="divider"></div></li>
+   @if (authenticated)
+   {
+      <li><a class="waves-effect waves-light" asp-controller="account" asp-action="logout"><i class="material-icons left">exit_to_app</i>@localizer[Translation.Logout]</a></li>
+      <li><a class="waves-effect" asp-controller="setting"><i class="material-icons left">settings</i>@localizer[Translation.Settings]</a></li>
+   }
+   else
+   {
+      <li><a class="waves-effect" asp-controller="account" asp-action="login"><i class="material-icons left">person</i>@localizer[Translation.Login]</a></li>
+      <li><a class="waves-effect" asp-controller="account" asp-action="register"><i class="material-icons left">add</i>@localizer[Translation.Register]</a></li>
+   }
+   <li><div class="divider"></div></li>
+   @if (authenticated)
+   {
+      <li><a class="waves-effect" asp-controller="project" asp-action="add"><i class="material-icons left">person</i>@localizer[Translation.CreateNewList]</a></li>
+   }
+   @if (projects.Count() > 0)
+   {
+      <li><div class="divider"></div></li>
+      <li><a class="subheader text-uppercase">@localizer[Translation.Projects]</a></li>
+      foreach (Ptproject project in projects)
+      {
+         <li><a class="waves-effect" asp-controller="project" asp-action="detail" asp-route-id="@project.Id">@project.Name</a></li>
+      }
+   }
+</ul>

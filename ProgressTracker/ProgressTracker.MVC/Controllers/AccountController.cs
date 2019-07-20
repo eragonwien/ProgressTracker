@@ -40,7 +40,7 @@ namespace ProgressTracker.MVC.Controllers
 
       [AllowAnonymous]
       [HttpPost]
-      public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+      public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl)
       {
          if (!ModelState.IsValid)
          {

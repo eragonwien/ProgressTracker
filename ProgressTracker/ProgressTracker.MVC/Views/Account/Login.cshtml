@@ -9,11 +9,27 @@
 }
 
 <h1>@localizer[Translation.Login]</h1>
-<div id="login-panel">
-   <form asp-controller="Account" asp-action="Login" method="post">
-      <input type="email" asp-for="Email" />
-      <input type="password" asp-for="Password" />
-      <input type="hidden" asp-for="Language" />
-      <button type="submit">@localizer[Translation.Login]</button>
+<div id="login" class="section">
+   <div asp-validation-summary="ModelOnly" class="red-text"></div>
+   <form method="post" asp-controller="account" asp-action="login">
+      <div class="card">
+         <div class="card-content">
+            <p class="title">@localizer[Translation.Login]</p>
+            <div class="row">
+               <div class="input-field">
+                  <input type="email" asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
+                  <span asp-validation-for="Email" class="helper-text red-text"></span>
+               </div>
+            </div>
+            <div class="row">
+               <div class="input-field">
+                  <input type="password" asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
+                  <span asp-validation-for="Password" class="helper-text red-text"></span>
+               </div>
+            </div>
+            <input type="hidden" asp-for="Language" />
+            <button type="submit" class="btn waves-effect waves-light">@localizer[Translation.Login]</button>
+         </div>
+      </div>
    </form>
 </div>

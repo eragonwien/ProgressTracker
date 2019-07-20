@@ -5,11 +5,16 @@ namespace ProgressTracker.MVC.Controllers
 {
    public class PTBaseController : Controller
    {
-      public int UserId { get; private set; }
+      public int UserId { get { return GetUserId(); } }
 
       public PTBaseController()
       {
-         UserId = User != null && User.Identity.IsAuthenticated && int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId) ? userId : -1;
+
+      }
+
+      private int GetUserId()
+      {
+         return User != null && User.Identity.IsAuthenticated && int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId) ? userId : -1;
       }
    }
 }
