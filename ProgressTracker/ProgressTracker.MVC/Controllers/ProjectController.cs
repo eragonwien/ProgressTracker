@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using ProgressTracker.MVC.Models;
 using ProgressTracker.MVC.Services;
 using SNGCommon.Resources;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProgressTracker.MVC.Controllers
 {
@@ -15,27 +17,29 @@ namespace ProgressTracker.MVC.Controllers
       private readonly IProjectService projectService;
       private readonly IStringLocalizer<Translation> localizer;
 
-      public ProjectController(IProjectService projectService, IStringLocalizer<Translation> localizer) : base()
+      public ProjectController(IProjectService projectService, IStringLocalizer<Translation> localizer, ILogger<PTBaseController> log) : base(log)
       {
          this.projectService = projectService;
          this.localizer = localizer;
       }
 
       // GET: Project
-      public IActionResult Index()
+      public IActionResult Index(bool closed = false, bool deleted = false)
       {
          var models = projectService.
             GetAll(UserId)
-            .Where(p => p.Active)
+            .Where(p => (!deleted && p.Active) || (deleted && !p.Active))
             .Select(p => new ProjectViewModel(p))
-            .Where(p => p.Status == ProjectStatus.InProgress || p.Status == ProjectStatus.Saved);
+            .Where(p => deleted || (!deleted && closed && p.Status == ProjectStatus.Completed) || (!deleted && !closed && (p.Status == ProjectStatus.InProgress || p.Status == ProjectStatus.Saved)));
          return View(models);
       }
 
       // GET: Project/Details/5
-      public ActionResult Details(int id)
+      public IActionResult Details(int id)
       {
-         return View();
+         var project = projectService.GetOne(id);
+         var model = new ProjectViewModel(project);
+         return View(model);
       }
 
       // GET: Project/Create

@@ -8,28 +8,26 @@
    ViewData["Title"] = "Login";
 }
 
-<h1>@localizer[Translation.Login]</h1>
-<div id="login" class="section">
+<div id="login" class="row">
    <div asp-validation-summary="ModelOnly" class="red-text"></div>
-   <form method="post" asp-controller="account" asp-action="login">
-      <div class="card">
-         <div class="card-content">
-            <p class="title">@localizer[Translation.Login]</p>
-            <div class="row">
-               <div class="input-field">
-                  <input type="email" asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
-                  <span asp-validation-for="Email" class="helper-text red-text"></span>
-               </div>
-            </div>
-            <div class="row">
-               <div class="input-field">
-                  <input type="password" asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
-                  <span asp-validation-for="Password" class="helper-text red-text"></span>
-               </div>
-            </div>
-            <input type="hidden" asp-for="Language" />
-            <button type="submit" class="btn waves-effect waves-light">@localizer[Translation.Login]</button>
+   <form method="post" asp-controller="account" asp-action="login" class="col s12">
+      <input type="hidden" asp-for="Language" />
+      <div class="row">
+         <div class="input-field col s12">
+            <input type="email" asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
+            <span asp-validation-for="Email" class="helper-text red-text"></span>
+            <label asp-for="Email">@localizer[Translation.Email]</label>
          </div>
+      </div>
+      <div class="row">
+         <div class="input-field col s12">
+            <input type="password" asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
+            <span asp-validation-for="Password" class="helper-text red-text"></span>
+            <label asp-for="Password">@nameof(Model.Password)</label>
+         </div>
+      </div>
+      <div class="col s12">
+         <button type="submit" class="btn waves-effect waves-light black white-text right">@localizer[Translation.Login]</button>
       </div>
    </form>
 </div>

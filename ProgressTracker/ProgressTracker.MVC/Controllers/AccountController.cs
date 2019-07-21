@@ -21,13 +21,11 @@ namespace ProgressTracker.MVC.Controllers
    public class AccountController : PTBaseController
    {
       private readonly IUserService userService;
-      private readonly ILogger<AccountController> log;
       private readonly IStringLocalizer<Translation> localizer;
 
-      public AccountController(IUserService userService, ILogger<AccountController> log, IStringLocalizer<Translation> localizer)
+      public AccountController(IUserService userService, IStringLocalizer<Translation> localizer, ILogger<PTBaseController> log) : base(log)
       {
          this.userService = userService;
-         this.log = log;
          this.localizer = localizer;
       }
 

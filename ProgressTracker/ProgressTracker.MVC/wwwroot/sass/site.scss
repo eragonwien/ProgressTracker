@@ -72,6 +72,7 @@
 }
 
 .line-through {
+   color: #808080;
    text-decoration: line-through;
 }
 
@@ -96,6 +97,22 @@
    font-size: 18px;
 }
 
-ul li a {
+ul * {
   color: inherit; 
+}
+
+.secondary-content {
+   color: inherit;
+}
+
+.mx-500 {
+   max-width: 500px;
+}
+
+.collection {
+   margin: auto;
+}
+
+#edit-task-panel {
+   margin: 100px auto;
 }

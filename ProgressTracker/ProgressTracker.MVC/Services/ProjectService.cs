@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using ProgressTracker.MVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ProgressTracker.MVC.Models;
 
 namespace ProgressTracker.MVC.Services
 {
    public interface IProjectService
    {
       IEnumerable<Ptproject> GetAll(int userId);
-      Task<Ptproject> GetOne(int id);
+      Ptproject GetOne(int id);
       void Create(Ptproject project);
       void Patch(Ptproject project, params string[] columns);
       void Update(Ptproject project);
@@ -85,16 +85,19 @@ namespace ProgressTracker.MVC.Services
              .Where(p => (p.PtuserId == userId));
       }
 
-      public Task<Ptproject> GetOne(int id)
+      public Ptproject GetOne(int id)
       {
          return context.Ptproject
-             .Include(p => p.Pttask)
-             .SingleOrDefaultAsync(p => p.Id == id);
+            .Where(p => p.Id == id)
+            .Select(p => new { p, Pttask = p.Pttask.Where(t => t.Active) })
+            .AsEnumerable()
+            .Select(r => r.p)
+            .SingleOrDefault();
       }
 
       public void Remove(int id)
       {
-         var removeProject = GetOne(id).Result;
+         var removeProject = GetOne(id);
          if (removeProject != null)
          {
             removeProject.Active = false;
@@ -109,7 +112,7 @@ namespace ProgressTracker.MVC.Services
 
       public void Restore(int id)
       {
-         var removeProject = GetOne(id).Result;
+         Ptproject removeProject = GetOne(id);
          if (removeProject != null)
          {
             removeProject.Active = true;

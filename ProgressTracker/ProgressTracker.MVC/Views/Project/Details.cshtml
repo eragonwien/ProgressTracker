@@ -1,0 +1,30 @@
+﻿@model ProgressTracker.MVC.Models.ProjectViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<Translation> localizer
+
+@{
+   ViewData["Title"] = Model.Project.Name;
+}
+
+@if (Model.Project.Pttask.Count() == 0)
+{
+   <partial name="_EmptyListPartial" />
+}
+else
+{
+   <ul class="collection">
+      @Html.AntiForgeryToken()
+      @foreach (Pttask ptask in Model.Project.Pttask)
+      {
+         <li class="collection-item black-text">
+            <label>
+               <input type="checkbox" @(ptask.Completed ? "checked='checked'" : string.Empty) onchange="onCheckboxChanged(this)" data-id="@ptask.Id" data-url="@Url.Action("Check", "Task", new { id = ptask.Id })" />
+               <span class="checkbox-label @(ptask.Completed ? "line-through" : string.Empty)">@ptask.Description</span>
+            </label>
+            <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" class="secondary-content"><i class="material-icons">edit</i></a>
+         </li>
+      }
+   </ul>
+}
+

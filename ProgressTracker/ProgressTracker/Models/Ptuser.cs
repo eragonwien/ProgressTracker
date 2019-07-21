@@ -5,12 +5,22 @@ namespace ProgressTracker.Models
 {
     public partial class Ptuser
     {
-        public Ptuser()
+      private string v1;
+      private bool v2;
+
+      public Ptuser()
         {
             Ptproject = new HashSet<Ptproject>();
         }
 
-        public int Id { get; set; }
+      public Ptuser(string email, string v1, bool v2)
+      {
+         Email = email;
+         this.v1 = v1;
+         this.v2 = v2;
+      }
+
+      public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
