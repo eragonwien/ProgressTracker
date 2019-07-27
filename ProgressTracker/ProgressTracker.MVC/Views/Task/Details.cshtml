@@ -29,9 +29,9 @@
             <form asp-action="Delete" method="post">
                <div asp-validation-summary="ModelOnly" class="red-text"></div>
                <input type="hidden" asp-for="Id" />
-               <input type="hidden" name="returnUrl" value="@Url.Action("Details", "Project", new { id = Model.PtprojectId })"
+               <input type="hidden" name="returnUrl" value="@Url.Action("Details", "Project", new { id = Model.PtprojectId })" />
                <div class="modal-content">
-                  <p>@Model.Description</p>
+                  <p>@localizer.GetString(Translation.DeleteTaskQuestion, Model.Description)</p>
                </div>
                <div class="modal-footer">
                   <button type="submit" class="modal-close waves-effect waves-light btn black">@localizer[Translation.Confirm]</button>

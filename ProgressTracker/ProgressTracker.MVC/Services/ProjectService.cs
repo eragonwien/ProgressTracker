@@ -87,12 +87,15 @@ namespace ProgressTracker.MVC.Services
 
       public Ptproject GetOne(int id)
       {
-         return context.Ptproject
+         var project = context.Ptproject
+            .Include(p => p.Pttask)
             .Where(p => p.Id == id)
-            .Select(p => new { p, Pttask = p.Pttask.Where(t => t.Active) })
-            .AsEnumerable()
-            .Select(r => r.p)
             .SingleOrDefault();
+         if (project != null)
+         {
+            project.Pttask = project.Pttask.Where(t => t.Active).ToList();
+         }
+         return project;
       }
 
       public void Remove(int id)

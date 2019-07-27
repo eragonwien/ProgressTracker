@@ -7,6 +7,7 @@ function initMaterialize() {
    $('.collapsible').collapsible();
    loadModal();
    $('.dropdown-trigger').dropdown();
+   $('select').formSelect();
    M.updateTextFields();
    loadToast();
 }

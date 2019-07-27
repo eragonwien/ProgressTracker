@@ -1,6 +1,11 @@
-﻿<div class="container center">
-   <p class="bold-text">Empty in Draft</p>
-   <p>Save a draft message and it will show up here</p>
-   <a href="https://material.io/design/communication/empty-states.html#content">example</a>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<Translation> localizer
+<div class="flex" style="height: 100%;">
+   <div id="empty-list-pageholder">
+      <h5 class="bold-text">@localizer[Translation.AFreshStart]</h5>
+      <a asp-controller="Task" asp-action="Add" class="waves-effect waves-light btn black" style="margin-top: 15px;">@localizer[Translation.AddNewTask]<i class="material-icons left">add</i></a>
+   </div>
 </div>
+
 

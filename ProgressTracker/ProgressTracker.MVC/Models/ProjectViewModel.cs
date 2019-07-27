@@ -34,8 +34,8 @@ namespace ProgressTracker.MVC.Models
 
       private void SetProgress()
       {
-         int total = Project.Pttask.Count;
-         int completed = Project.Pttask.Count(o => o.Completed);
+         int total = Project.Pttask.Count(t => t.Active);
+         int completed = Project.Pttask.Count(t => t.Active && t.Completed);
          Progress = total > 0 ? (decimal)completed / total : 0;
          UnresolvedCount = total - completed;
       }

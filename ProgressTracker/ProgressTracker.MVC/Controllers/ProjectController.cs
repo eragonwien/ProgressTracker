@@ -7,7 +7,6 @@ using ProgressTracker.MVC.Models;
 using ProgressTracker.MVC.Services;
 using SNGCommon.Resources;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProgressTracker.MVC.Controllers
 {
@@ -24,13 +23,14 @@ namespace ProgressTracker.MVC.Controllers
       }
 
       // GET: Project
-      public IActionResult Index(bool closed = false, bool deleted = false)
+      public IActionResult Index(string action, bool closed = false, bool deleted = false)
       {
          var models = projectService.
             GetAll(UserId)
             .Where(p => (!deleted && p.Active) || (deleted && !p.Active))
             .Select(p => new ProjectViewModel(p))
             .Where(p => deleted || (!deleted && closed && p.Status == ProjectStatus.Completed) || (!deleted && !closed && (p.Status == ProjectStatus.InProgress || p.Status == ProjectStatus.Saved)));
+         ViewBag.ShowEmptyListPlaceHolder = !closed && !deleted;
          return View(models);
       }
 

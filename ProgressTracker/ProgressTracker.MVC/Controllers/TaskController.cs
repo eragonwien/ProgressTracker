@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ProgressTracker.MVC.Models;
 using ProgressTracker.MVC.Services;
 using SNGCommon.Resources;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProgressTracker.MVC.Controllers
@@ -13,35 +15,45 @@ namespace ProgressTracker.MVC.Controllers
    public class TaskController : PTBaseController
    {
       private readonly ITaskService taskService;
+      private readonly IProjectService projectService;
       private readonly IStringLocalizer<Translation> localizer;
 
-      public TaskController(ITaskService taskService, IStringLocalizer<Translation> localizer, ILogger<PTBaseController> log) : base(log)
+      public TaskController(ITaskService taskService, IProjectService projectService, IStringLocalizer<Translation> localizer, ILogger<PTBaseController> log) : base(log)
       {
+         this.projectService = projectService;
          this.taskService = taskService;
          this.localizer = localizer;
       }
 
       // GET: Task/Add
-      public ActionResult Add()
+      public IActionResult Add()
       {
-         return View();
+         var model = new AddTaskViewModel
+         {
+            ProjectIdList = projectService.GetAll(UserId).Where(p => p.Active).Select(p => new SelectListItem(p.Name, p.Id.ToString())).ToList()
+         };
+         return View(model);
       }
 
       // POST: Task/Add
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public ActionResult Add(IFormCollection collection)
+      public async Task<ActionResult> Add([FromForm] AddTaskViewModel model)
       {
          try
          {
-            // TODO: Add insert logic here
-
-            return RedirectToAction(nameof(Details));
+            if (ModelState.IsValid && projectService.Exists(model.ProjectId))
+            {
+               taskService.Create(new Pttask { Description = model.Description, PtprojectId = model.ProjectId });
+               await taskService.SaveChanges();
+               return RedirectToAction("Details", "Project", new { id = model.ProjectId });
+            }
          }
-         catch
+         catch (Exception ex)
          {
-            return View();
+            ModelState.AddModelError("", ex.Message);
          }
+         return View(model);
       }
 
       // GET: Task/Details/5
