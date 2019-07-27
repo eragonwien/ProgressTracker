@@ -104,7 +104,7 @@ namespace ProgressTracker.MVC.Services
          if (removeProject != null)
          {
             removeProject.Active = false;
-            Patch(removeProject, nameof(Ptproject.Active));
+            Update(removeProject);
          }
       }
 
@@ -119,7 +119,7 @@ namespace ProgressTracker.MVC.Services
          if (removeProject != null)
          {
             removeProject.Active = true;
-            Patch(removeProject, nameof(Ptproject.Active));
+            Update(removeProject);
          }
       }
    }

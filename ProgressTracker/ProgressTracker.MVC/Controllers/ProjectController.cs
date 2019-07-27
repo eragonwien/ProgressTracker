@@ -6,7 +6,9 @@ using Microsoft.Extensions.Logging;
 using ProgressTracker.MVC.Models;
 using ProgressTracker.MVC.Services;
 using SNGCommon.Resources;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProgressTracker.MVC.Controllers
 {
@@ -31,6 +33,8 @@ namespace ProgressTracker.MVC.Controllers
             .Select(p => new ProjectViewModel(p))
             .Where(p => deleted || (!deleted && closed && p.Status == ProjectStatus.Completed) || (!deleted && !closed && (p.Status == ProjectStatus.InProgress || p.Status == ProjectStatus.Saved)));
          ViewBag.ShowEmptyListPlaceHolder = !closed && !deleted;
+         string title = closed ? localizer[Translation.ClosedProjects] : deleted ? localizer[Translation.DeletedProjects] : localizer[Translation.AllListing];
+         ViewBag.Title = title;
          return View(models);
       }
 
@@ -39,6 +43,16 @@ namespace ProgressTracker.MVC.Controllers
       {
          var project = projectService.GetOne(id);
          var model = new ProjectViewModel(project);
+         ViewBag.AddLink = Url.Action("Add", "Task", new { projectId = project.Id });
+         ViewBag.EditLink = Url.Action("Edit", "Project", new { id });
+         if (project.Active)
+         {
+            ViewBag.DeleteLink = Url.Action("Delete", "Project", new { id });
+         }
+         else
+         {
+            ViewBag.RestoreLink = Url.Action("Restore", "Project", new { id });
+         }
          return View(model);
       }
 
@@ -88,27 +102,38 @@ namespace ProgressTracker.MVC.Controllers
          }
       }
 
-      // GET: Project/Delete/5
-      public ActionResult Delete(int id)
-      {
-         return View();
-      }
-
       // POST: Project/Delete/5
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public ActionResult Delete(int id, IFormCollection collection)
+      public async Task<IActionResult> Delete(int id)
       {
          try
          {
-            // TODO: Add delete logic here
-
-            return RedirectToAction(nameof(Index));
+            projectService.Remove(id);
+            await projectService.SaveChanges();
          }
-         catch
+         catch (Exception ex)
          {
-            return View();
+            log.LogError("Fehler beim Löschen von Projekt {0}: {1}", id, ex.Message);
          }
+         return RedirectToAction(nameof(Index));
+      }
+
+      // POST: Project/Restore/5
+      [HttpPost]
+      [ValidateAntiForgeryToken]
+      public async Task<IActionResult> Restore(int id)
+      {
+         try
+         {
+            projectService.Restore(id);
+            await projectService.SaveChanges();
+         }
+         catch (Exception ex)
+         {
+            log.LogError("Fehler beim Reaktivierung von Projekt {0}: {1}", id, ex.Message);
+         }
+         return RedirectToAction(nameof(Index));
       }
    }
 }

@@ -9,7 +9,8 @@
 
 @if (Model.Project.Pttask.Count() == 0)
 {
-   <partial name="_EmptyListPartial" />
+   var emptyListModel = new EmptyListViewModel(localizer.GetString(Translation.AFreshStart), null, localizer.GetString(Translation.AddNewTask), "add", Url.Action("Add", "Task", new { projectId = Model.Project.Id }));
+   <partial name="_EmptyListPartial" model="emptyListModel" />
 }
 else
 {

@@ -26,12 +26,17 @@ namespace ProgressTracker.MVC.Controllers
       }
 
       // GET: Task/Add
-      public IActionResult Add()
+      public IActionResult Add(int projectId = 0)
       {
          var model = new AddTaskViewModel
          {
             ProjectIdList = projectService.GetAll(UserId).Where(p => p.Active).Select(p => new SelectListItem(p.Name, p.Id.ToString())).ToList()
          };
+         if (projectId > 0)
+         {
+            model.ProjectIdList.RemoveAll(i => i.Value != projectId.ToString());
+            model.ProjectId = projectId;
+         }
          return View(model);
       }
 

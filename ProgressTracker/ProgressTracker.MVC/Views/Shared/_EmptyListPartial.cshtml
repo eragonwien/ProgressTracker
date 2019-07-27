@@ -1,10 +1,12 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@model ProgressTracker.MVC.Models.EmptyListViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
 @using SNGCommon.Resources
 @inject IHtmlLocalizer<Translation> localizer
-<div class="flex" style="height: 100%;">
-   <div id="empty-list-pageholder">
-      <h5 class="bold-text">@localizer[Translation.AFreshStart]</h5>
-      <a asp-controller="Task" asp-action="Add" class="waves-effect waves-light btn black" style="margin-top: 15px;">@localizer[Translation.AddNewTask]<i class="material-icons left">add</i></a>
+<div class="flex-center" style="height: 100%;">
+   <div id="empty-list-pageholder" style="width: 250px; height: 250px">
+      <h5 class="bold-text">@Model.Title</h5>
+      <p>@Model.Subtitle</p>
+      <a href="@Model.ButtonLink" class="waves-effect waves-light btn black" style="margin-top: 15px;">@Model.ButtonText<i class="material-icons left">@Model.ButtonIcon</i></a>
    </div>
 </div>
 

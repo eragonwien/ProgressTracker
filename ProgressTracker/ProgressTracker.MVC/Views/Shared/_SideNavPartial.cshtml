@@ -12,10 +12,12 @@
    int.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
    bool authenticated = Context.User.Identity.IsAuthenticated;
    var allProjects = projectService.GetAll(userId).ToList();
-   var activeProjects = allProjects.Where(p => p.Active && (p.Pttask.Any(t => t.Active && !t.Completed) || p.Pttask.Count == 0)).ToList();
-   var closedProjects = allProjects.Where(p => p.Active && p.Pttask.All(t => !t.Active || t.Completed) && p.Pttask.Count > 0).ToList();
+   var activeProjects = allProjects.Where(p => p.Active && (p.Pttask.Any(t => t.Active && !t.Completed) || p.Pttask.Count(t => t.Active) == 0)).ToList();
+   var closedProjects = allProjects.Where(p => p.Active && p.Pttask.Any(t => t.Active) && p.Pttask.All(t => !t.Active || t.Completed) && p.Pttask.Count > 0).ToList();
+   var deletedProjects = allProjects.Where(p => !p.Active).ToList();
    string activeProjectsCount = activeProjects.Count > 0 ? activeProjects.Count.ToString() : string.Empty;
    string closedProjectsCount = closedProjects.Count > 0 ? closedProjects.Count.ToString() : string.Empty;
+   string deletedProjectCount = deletedProjects.Count > 0 ? deletedProjects.Count.ToString() : string.Empty;
 }
 
 <ul id="sidenav" class="sidenav sidenav-fixed">
@@ -32,7 +34,7 @@
    {
       <li><a class="waves-effect" asp-controller="project" asp-action="index"><i class="material-icons left">view_list</i>@localizer[Translation.All]<span class="badge">@activeProjectsCount</span></a></li>
       <li><a class="waves-effect" asp-controller="project" asp-action="index" asp-route-closed="true"><i class="material-icons left">done</i>@localizer[Translation.Done]<span class="badge">@closedProjectsCount</span></a></li>
-      <li><a class="waves-effect" asp-controller="project" asp-action="index" asp-route-deleted="true"><i class="material-icons left">delete</i>@localizer[Translation.Trash]</a></li>
+      <li><a class="waves-effect" asp-controller="project" asp-action="index" asp-route-deleted="true"><i class="material-icons left">delete</i>@localizer[Translation.Trash]<span class="badge">@deletedProjectCount</span></a></li>
    }
    <li><div class="divider"></div></li>
    @if (authenticated)
