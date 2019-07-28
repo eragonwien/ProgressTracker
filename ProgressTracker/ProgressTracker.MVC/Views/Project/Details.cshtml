@@ -14,18 +14,25 @@
 }
 else
 {
-   <ul class="collection">
-      @Html.AntiForgeryToken()
-      @foreach (Pttask ptask in Model.Project.Pttask)
-      {
-         <li class="collection-item black-text">
-            <label>
-               <input type="checkbox" @(ptask.Completed ? "checked='checked'" : string.Empty) onchange="onCheckboxChanged(this)" data-id="@ptask.Id" data-url="@Url.Action("Check", "Task", new { id = ptask.Id })" />
-               <span class="checkbox-label @(ptask.Completed ? "line-through" : string.Empty)">@ptask.Description</span>
-            </label>
-            <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" class="secondary-content"><i class="material-icons">edit</i></a>
-         </li>
-      }
-   </ul>
+   @Html.AntiForgeryToken()
+   <table id="collection-table" class="highlight">
+      <tbody>
+         @foreach (Pttask ptask in Model.Project.Pttask)
+         {
+            <tr class="black-text">
+               <td>
+                  <label>
+                     <input type="checkbox" @(ptask.Completed ? "checked='checked'" : string.Empty) onchange="onCheckboxChanged(this)" data-id="@ptask.Id" data-url="@Url.Action("Check", "Task", new { id = ptask.Id })" />
+                     <span class="checkbox-label @(ptask.Completed ? "line-through" : string.Empty)">@ptask.Description</span>
+                  </label>
+               </td>
+               <td>
+                  <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" class="secondary-content"><i class="material-icons">edit</i></a>
+               </td>
+            </tr>
+         }
+      </tbody>
+   </table>
+
 }
 

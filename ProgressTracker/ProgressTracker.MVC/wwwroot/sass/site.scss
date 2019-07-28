@@ -146,3 +146,15 @@ ul * {
    justify-content: center;
    text-align: center;
 }
+
+#main .table * {
+   color: inherit;
+}
+
+#collection-table {
+   td {
+      word-break: break-all;
+      padding-left: 20px;
+      padding-right: 20px;
+   }
+}

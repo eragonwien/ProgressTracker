@@ -57,7 +57,7 @@
       <li><a class="subheader text-uppercase">@localizer[Translation.AllListing]</a></li>
       foreach (Ptproject project in activeProjects)
       {
-         <li><a class="waves-effect" asp-controller="project" asp-action="detail" asp-route-id="@project.Id">@project.Name</a></li>
+         <li><a class="waves-effect" asp-controller="project" asp-action="details" asp-route-id="@project.Id">@project.Name</a></li>
       }
    }
 </ul>

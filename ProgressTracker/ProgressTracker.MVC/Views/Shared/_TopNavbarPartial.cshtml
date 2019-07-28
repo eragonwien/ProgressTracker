@@ -17,9 +17,13 @@
             {
                <a href="@returnUrl" class="hide-on-med-and-up" style="margin-right: 5px;"><i class="material-icons black-text">arrow_back</i></a>
             }
+            else
+            {
+               <a href="#" data-target="sidenav" class="sidenav-trigger black-text left"><i class="material-icons">menu</i></a>
+            }
             @ViewData["Title"]
          </div>
-         <ul id="nav-mobile" class="right hide-on-med-and-down">
+         <ul id="nav-links-right" class="right hide-on-med-and-down">
             @if (!string.IsNullOrEmpty(addLink))
             {
                <li><a href="@addLink"><i class="material-icons black-text">add</i></a></li>
