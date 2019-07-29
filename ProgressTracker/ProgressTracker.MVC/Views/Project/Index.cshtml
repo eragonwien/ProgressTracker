@@ -18,28 +18,19 @@ else
    <div class="collection">
       @foreach (ProjectViewModel project in Model)
       {
-         if (project.Project.Active)
+         string modalId = string.Format("restore-project-{0}-modal", project.Project.Id);
+         string actionLink = project.Project.Active ? Url.Action("Details", "Project", new { id = project.Project.Id }) : string.Format("#{0}", modalId);
+         <a href="@actionLink" class="collection-item avatar black-text @(!project.Project.Active ? "modal-trigger": "")">
+            <i class="material-icons circle @Helper.GetIconColour(project.Status)">@Helper.GetIconName(project.Status)</i>
+            <span class="title bold-text">@project.Project.Name</span>
+            <p>@project.Project.Description</p>
+            @if (project.UnresolvedCount > 0)
+            {
+               <span class="new badge red" data-badge-caption="@localizer[Translation.New]">@project.UnresolvedCount</span>
+            }
+         </a>
+         if (!project.Project.Active)
          {
-            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Project.Id" class="collection-item avatar black-text">
-               <i class="material-icons circle @Helper.GetIconColour(project.Status)">@Helper.GetIconName(project.Status)</i>
-               <span class="title">@project.Project.Name</span>
-               <p>@project.Project.Description</p>
-               @if (project.UnresolvedCount > 0)
-               {
-                  <span class="new badge red" data-badge-caption="@localizer[Translation.New]">@project.UnresolvedCount</span>
-               }
-            </a>
-         }
-         else
-         {
-            string modalId = string.Format("restore-project-{0}-modal", project.Project.Id);
-            <div class="collection-item avatar black-text">
-               <i class="material-icons circle grey">delete</i>
-               <span class="title">@project.Project.Name</span>
-               <p>@project.Project.Description</p>
-               <a href="@("#" + modalId)" class="secondary-content modal-trigger"><i class="material-icons">redo</i></a>
-            </div>
-
             <div id="@modalId" class="modal">
                <form asp-controller="Project" asp-action="Restore" asp-route-id="@project.Project.Id" method="post">
                   <div class="modal-content">
@@ -52,7 +43,6 @@ else
                </form>
             </div>
          }
-
       }
    </div>
 }

@@ -56,49 +56,52 @@ namespace ProgressTracker.MVC.Controllers
          return View(model);
       }
 
-      // GET: Project/Create
-      public ActionResult Create()
+      // GET: Project/Add
+      public ActionResult Add()
       {
-         return View();
+         var model = new Ptproject { PtuserId = UserId };
+         return View(model);
       }
 
-      // POST: Project/Create
+      // POST: Project/Add
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public ActionResult Create(IFormCollection collection)
+      public async Task<IActionResult> Add([FromForm] Ptproject project)
       {
          try
          {
-            // TODO: Add insert logic here
-
+            projectService.Create(project);
+            await projectService.SaveChanges();
             return RedirectToAction(nameof(Index));
          }
-         catch
+         catch (Exception ex)
          {
-            return View();
+            log.LogError("Fehler bei Hinzufügen von Project: {0}", ex.Message);
+            return View(project);
          }
       }
 
       // GET: Project/Edit/5
       public ActionResult Edit(int id)
       {
-         return View();
+         var model = projectService.GetOne(id);
+         return View(model);
       }
 
       // POST: Project/Edit/5
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public ActionResult Edit(int id, IFormCollection collection)
+      public async Task<IActionResult> Edit([FromForm] Ptproject project)
       {
          try
          {
-            // TODO: Add update logic here
-
+            projectService.Update(project);
+            await projectService.SaveChanges();
             return RedirectToAction(nameof(Index));
          }
          catch
          {
-            return View();
+            return View(project);
          }
       }
 

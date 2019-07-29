@@ -8,7 +8,6 @@
 @{
    var identity = Context.User.Identity as ClaimsIdentity;
    string username = identity?.Name;
-   string email = identity?.FindFirst(ClaimTypes.Email)?.Value?.ToString();
    int.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
    bool authenticated = Context.User.Identity.IsAuthenticated;
    var allProjects = projectService.GetAll(userId).ToList();
@@ -23,13 +22,10 @@
 <ul id="sidenav" class="sidenav sidenav-fixed">
    <li>
       <div class="user-view">
-         <div class="background"></div>
-         <span class="bold-text text-lg">Progress Tracker</span>
-         <span class="name bold-text text-lg">@username</span>
-         <span class="emai">@email</span>
+         <div class="background black"></div>
+         <span class="text-lg white-text">@localizer.GetString(Translation.HelloName, username)</span>
       </div>
    </li>
-   <li><div class="divider"></div></li>
    @if (authenticated)
    {
       <li><a class="waves-effect" asp-controller="project" asp-action="index"><i class="material-icons left">view_list</i>@localizer[Translation.All]<span class="badge">@activeProjectsCount</span></a></li>
