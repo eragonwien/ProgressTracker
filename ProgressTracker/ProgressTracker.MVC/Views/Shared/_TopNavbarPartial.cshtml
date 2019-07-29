@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<Translation> localizer
+@{
+   string returnUrl = ViewBag.ReturnUrl as string;
+   string addLink = ViewBag.AddLink as string;
+   string editLink = ViewBag.EditLink as string;
+   string deleteLink = ViewBag.DeleteLink as string;
+   string restoreLink = ViewBag.RestoreLink as string;
+
+}
+<nav id="navbar-top">
+   <div class="nav-wrapper white">
+      <div style="margin: auto 20px;">
+         <div class="brand-logo bold-text black-text left">
+            @if (!string.IsNullOrEmpty(returnUrl))
+            {
+               <a href="@returnUrl" class="hide-on-med-and-up" style="margin-right: 5px;"><i class="material-icons black-text">arrow_back</i></a>
+            }
+            else
+            {
+               <a href="#" data-target="sidenav" class="sidenav-trigger black-text left"><i class="material-icons">menu</i></a>
+            }
+            @ViewData["Title"]
+         </div>
+         <ul id="nav-links-right" class="right hide-on-med-and-down">
+            @if (!string.IsNullOrEmpty(addLink))
+            {
+               <li><a href="@addLink"><i class="material-icons black-text">add</i></a></li>
+            }
+            @if (!string.IsNullOrEmpty(editLink))
+            {
+               <li><a href="@editLink"><i class="material-icons black-text">edit</i></a></li>
+            }
+            @if (!string.IsNullOrEmpty(deleteLink))
+            {
+               <li>
+                  <a href="#delete-project-modal" class="modal-trigger"><i class="material-icons black-text">delete</i></a>
+               </li>
+
+            }
+            @if (!string.IsNullOrEmpty(restoreLink))
+            {
+               <li><a href="@restoreLink"><i class="material-icons black-text">redo</i></a></li>
+            }
+         </ul>
+         @if (!string.IsNullOrEmpty(deleteLink))
+         {
+            <div id="delete-project-modal" class="modal">
+               <form action="@deleteLink" method="post">
+                  @Html.AntiForgeryToken()
+                  <div class="modal-content black-text">
+                     <p>@localizer.GetString(Translation.DeleteProjectQuestion, string.Empty)</p>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="submit" class="btn waves-effect waves-light red">@localizer[Translation.Confirm]</button>
+                     <a href="#" class="modal-close waves-effect waves-green btn-flat">@localizer[Translation.Cancel]</a>
+                  </div>
+               </form>
+            </div>
+         }
+      </div>
+   </div>
+</nav>

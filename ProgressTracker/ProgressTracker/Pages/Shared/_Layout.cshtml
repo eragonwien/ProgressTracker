@@ -6,6 +6,7 @@
    <title>@ViewData["Title"] - ProgressTracker</title>
    <link rel="stylesheet" href="~/css/site.css" />
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <meta name="theme-color" content="#000000" />
 </head>
 <body>
    <header>
@@ -14,7 +15,7 @@
    <main role="main">
       @RenderBody()
    </main>
-   <partial name="Shared/_ToastPartial" />
-   <partial name="Shared/_ScriptsPartial" />
+   <partial name="_ToastPartial" />
+   <partial name="_ScriptsPartial" />
 </body>
 </html>

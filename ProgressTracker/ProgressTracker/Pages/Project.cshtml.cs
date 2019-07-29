@@ -31,6 +31,7 @@ namespace ProgressTracker.Pages
       public async Task OnGetAsync()
       {
          Project = await projectService.GetOne(Id);
+         Project.Pttask = Project.Pttask.OrderBy(t => t.Completed).ToList();
       }
 
       public void OnGetAddAsync()

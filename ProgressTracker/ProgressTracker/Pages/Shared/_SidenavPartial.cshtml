@@ -59,7 +59,7 @@
       <li><a class="subheader text-uppercase">@localizer[Translation.Projects]</a></li>
       foreach (var project in projects)
       {
-         <li><a class="waves-effect" asp-page="project" asp-route-id="@project.Id">@project.Name</a></li>
+         <li><a class="waves-effect" asp-page="project" asp-route-id="@project.Id" asp-route-returnurl="@currentUrl">@project.Name</a></li>
       }
    }
 </ul>

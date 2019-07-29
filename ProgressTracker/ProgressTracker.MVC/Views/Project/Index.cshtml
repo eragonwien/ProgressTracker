@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ProgressTracker.MVC.Models.ProjectViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@using ProgressTracker.MVC.Services
+@inject IHtmlLocalizer<Translation> localizer
+
+@{
+   ViewData["Title"] = ViewBag.Title as string;
+}
+
+@if (Model.Count() == 0 && Convert.ToBoolean(ViewBag.ShowEmptyListPlaceHolder))
+{
+   var emptyListModel = new EmptyListViewModel(null, null, localizer.GetString(Translation.CreateNewList), "add", Url.Action("Add", "Project"));
+   <partial name="_EmptyListPartial" model="emptyListModel" />
+}
+else
+{
+   <div class="collection">
+      @foreach (ProjectViewModel project in Model)
+      {
+         string modalId = string.Format("restore-project-{0}-modal", project.Project.Id);
+         string actionLink = project.Project.Active ? Url.Action("Details", "Project", new { id = project.Project.Id }) : string.Format("#{0}", modalId);
+         <a href="@actionLink" class="collection-item avatar black-text @(!project.Project.Active ? "modal-trigger": "")">
+            <i class="material-icons circle @Helper.GetIconColour(project.Status)">@Helper.GetIconName(project.Status)</i>
+            <span class="title bold-text">@project.Project.Name</span>
+            <p>@project.Project.Description</p>
+            @if (project.UnresolvedCount > 0)
+            {
+               <span class="new badge red" data-badge-caption="@localizer[Translation.New]">@project.UnresolvedCount</span>
+            }
+         </a>
+         if (!project.Project.Active)
+         {
+            <div id="@modalId" class="modal">
+               <form asp-controller="Project" asp-action="Restore" asp-route-id="@project.Project.Id" method="post">
+                  <div class="modal-content">
+                     <p>@localizer.GetString(Translation.RestoreProjectQuestion, project.Project.Name)</p>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="submit" class="btn waves-effect waves-light black white-text">@localizer[Translation.Confirm]</button>
+                     <a href="" class="modal-close waves-effect waves-light btn-flat">@localizer[Translation.Cancel]</a>
+                  </div>
+               </form>
+            </div>
+         }
+      }
+   </div>
+}
+
+
+

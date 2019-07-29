@@ -8,7 +8,6 @@ CREATE TABLE [PTUser] (
     [Password] nvarchar(max),
 	[Name] nvarchar(50),
     [Description] nvarchar(100),
-	[GoogleId] nvarchar(max),
     [Active] bit NOT NULL DEFAULT 0,
     CONSTRAINT [PK_PTUser] PRIMARY KEY ([Id])
 );

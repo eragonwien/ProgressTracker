@@ -1,45 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using ProgressTracker.Services;
-using SNGCommon.Resources;
 
 namespace ProgressTracker.Models
 {
-   public partial class Ptuser
-   {
-      public Ptuser()
-      {
-         Ptproject = new HashSet<Ptproject>();
-      }
+    public partial class Ptuser
+    {
+      private string v1;
+      private bool v2;
 
-      public Ptuser(string email, string name, bool active = false, string password = null, string description = null, string googleId = null)
+      public Ptuser()
+        {
+            Ptproject = new HashSet<Ptproject>();
+        }
+
+      public Ptuser(string email, string v1, bool v2)
       {
          Email = email;
-         Name = name;
-         Active = active;
-         Password = password;
-         Description = description;
-         GoogleId = googleId;
-         Ptproject = new HashSet<Ptproject>();
+         this.v1 = v1;
+         this.v2 = v2;
       }
 
       public int Id { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string GoogleId { get; set; }
+        public bool Active { get; set; }
 
-      [Required(ErrorMessage = Translation.ValidationEmptyEmail)]
-      [EmailAddress(ErrorMessage = Translation.ValidationInvalidEmail)]
-      public string Email { get; set; }
-
-      [Required(ErrorMessage = Translation.ValidationEmptyPassword)]
-      [DataType(DataType.Password)]
-      public string Password { get; set; }
-      [DataType(DataType.Text)]
-      public string Name { get; set; }
-      public string Description { get; set; }
-      public string GoogleId { get; set; }
-      public bool Active { get; set; }
-
-      public virtual ICollection<Ptproject> Ptproject { get; set; }
-   }
+        public virtual ICollection<Ptproject> Ptproject { get; set; }
+    }
 }

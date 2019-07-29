@@ -1,0 +1,33 @@
+﻿@model ProgressTracker.MVC.Models.LoginViewModel
+@using ProgressTracker.MVC.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<SNGCommon.Resources.Translation> localizer
+
+@{
+   ViewData["Title"] = "Login";
+}
+
+<div id="login" class="row">
+   <div asp-validation-summary="ModelOnly" class="red-text"></div>
+   <form method="post" asp-controller="account" asp-action="login" class="col s12">
+      <input type="hidden" asp-for="Language" />
+      <div class="row">
+         <div class="input-field col s12">
+            <input type="email" asp-for="Email" class="validate" placeholder="@nameof(Model.Email)">
+            <span asp-validation-for="Email" class="helper-text red-text"></span>
+            <label asp-for="Email">@localizer[Translation.Email]</label>
+         </div>
+      </div>
+      <div class="row">
+         <div class="input-field col s12">
+            <input type="password" asp-for="Password" class="validate" placeholder="@nameof(Model.Password)">
+            <span asp-validation-for="Password" class="helper-text red-text"></span>
+            <label asp-for="Password">@nameof(Model.Password)</label>
+         </div>
+      </div>
+      <div class="col s12">
+         <button type="submit" class="btn waves-effect waves-light black white-text right">@localizer[Translation.Login]</button>
+      </div>
+   </form>
+</div>

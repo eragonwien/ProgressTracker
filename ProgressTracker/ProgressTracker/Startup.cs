@@ -74,12 +74,14 @@ namespace ProgressTracker
             .AddDataAnnotationsLocalization()
             .AddRazorPagesOptions(options =>
             {
+               options.AllowAreas = true;
                options.Conventions.AddPageRoute("/Projects", "");
                options.Conventions.AuthorizePage("/Index");
                options.Conventions.AllowAnonymousToPage("/Login");
                options.Conventions.AuthorizePage("/Login/LoginRedirect");
                options.Conventions.AuthorizePage("/Project");
                options.Conventions.AuthorizePage("/Task");
+               options.Conventions.AuthorizePage("/Tasks");
             });
       }
 

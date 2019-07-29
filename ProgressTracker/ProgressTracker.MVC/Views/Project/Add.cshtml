@@ -1,0 +1,31 @@
+﻿@model ProgressTracker.MVC.Models.Ptproject
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@inject IHtmlLocalizer<Translation> localizer
+<div class="container">
+   <div id="add-project" class="row" style="margin-top: 20px;">
+      <form asp-controller="Project" asp-action="Add" class="col s12">
+         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         <input type="hidden" asp-for="PtuserId" />
+         <div class="row">
+            <div class="input-field col s12">
+               <label asp-for="Name" class="validate"></label>
+               <input asp-for="Name" class="form-control" />
+               <span asp-validation-for="Name" class="helper-text red-text"></span>
+            </div>
+         </div>
+         <div class="row">
+            <div class="input-field col s12">
+               <label asp-for="Description" class="validate"></label>
+               <input asp-for="Description" class="form-control" />
+               <span asp-validation-for="Description" class="helper-text red-text"></span>
+            </div>
+         </div>
+         <div class="col s12">
+            <button type="submit" class="btn waves-effect waves-light black white-text right">@localizer[Translation.CreateNewList]<i class="material-icons left">add</i></button>
+         </div>
+      </form>
+   </div>
+</div>
+
+
