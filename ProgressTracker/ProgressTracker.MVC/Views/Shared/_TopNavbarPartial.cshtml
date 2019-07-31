@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using SNGCommon.Resources
 @inject IHtmlLocalizer<Translation> localizer
+@using SNGCommon.Common
 @{
    string returnUrl = ViewBag.ReturnUrl as string;
    string addLink = ViewBag.AddLink as string;
@@ -11,54 +12,80 @@
 }
 <nav id="navbar-top">
    <div class="nav-wrapper white">
-      <div style="margin: auto 20px;">
-         <div class="brand-logo bold-text black-text left">
-            @if (!string.IsNullOrEmpty(returnUrl))
-            {
-               <a href="@returnUrl" class="hide-on-med-and-up" style="margin-right: 5px;"><i class="material-icons black-text">arrow_back</i></a>
-            }
-            else
-            {
-               <a href="#" data-target="sidenav" class="sidenav-trigger black-text left"><i class="material-icons">menu</i></a>
-            }
-            @ViewData["Title"]
-         </div>
-         <ul id="nav-links-right" class="right hide-on-med-and-down">
+      <div class="brand-logo bold-text black-text left">
+         @if (!string.IsNullOrEmpty(returnUrl))
+         {
+            <a href="@returnUrl" class="hide-on-med-and-up" style="margin-right: 5px;"><i class="material-icons black-text">arrow_back</i></a>
+         }
+         else
+         {
+            <a href="#" data-target="sidenav" class="sidenav-trigger black-text left"><i class="material-icons">menu</i></a>
+         }
+         <span class="title text-overflow-elipsis" style="max-width: 60vw;">@ViewData["Title"]</span>
+      </div>
+      <ul id="nav-links-right" class="right">
+         @if (!string.IsNullOrEmpty(addLink))
+         {
+            <li class="hide-on-small-and-down"><a href="@addLink"><i class="material-icons black-text">add</i></a></li>
+         }
+         @if (!string.IsNullOrEmpty(editLink))
+         {
+            <li class="hide-on-small-and-down"><a href="@editLink"><i class="material-icons black-text">edit</i></a></li>
+         }
+         @if (!string.IsNullOrEmpty(deleteLink))
+         {
+            <li class="hide-on-small-and-down">
+               <a href="#delete-project-modal" class="modal-trigger"><i class="material-icons black-text">delete</i></a>
+            </li>
+
+         }
+         @if (!string.IsNullOrEmpty(restoreLink))
+         {
+            <li class="hide-on-small-and-down"><a href="@restoreLink"><i class="material-icons black-text">redo</i></a></li>
+         }
+         @if (Common.HasValidString(addLink, editLink, deleteLink, restoreLink))
+         {
+            <li class="hide-on-med-and-up"><a class="dropdown-trigger" href="#!" data-target="nav-links-dropdown"><i class="material-icons black-text right">more_vert</i></a></li>
+         }
+      </ul>
+      @if (Common.HasValidString(addLink, editLink, deleteLink, restoreLink))
+      {
+         <ul id="nav-links-dropdown" class="dropdown-content">
             @if (!string.IsNullOrEmpty(addLink))
             {
-               <li><a href="@addLink"><i class="material-icons black-text">add</i></a></li>
+               <li><a href="@addLink" class="black-text">@localizer[Translation.Add]</a></li>
             }
             @if (!string.IsNullOrEmpty(editLink))
             {
-               <li><a href="@editLink"><i class="material-icons black-text">edit</i></a></li>
+               <li><a href="@editLink" class="black-text">@localizer[Translation.Edit]</a></li>
             }
             @if (!string.IsNullOrEmpty(deleteLink))
             {
                <li>
-                  <a href="#delete-project-modal" class="modal-trigger"><i class="material-icons black-text">delete</i></a>
+                  <a href="#delete-project-modal" class="modal-trigger black-text">@localizer[Translation.Delete]</a>
                </li>
-
             }
             @if (!string.IsNullOrEmpty(restoreLink))
             {
-               <li><a href="@restoreLink"><i class="material-icons black-text">redo</i></a></li>
+               <li><a href="@restoreLink" class="black-text">@localizer[Translation.Restore]</a></li>
             }
          </ul>
-         @if (!string.IsNullOrEmpty(deleteLink))
-         {
-            <div id="delete-project-modal" class="modal">
-               <form action="@deleteLink" method="post">
-                  @Html.AntiForgeryToken()
-                  <div class="modal-content black-text">
-                     <p>@localizer.GetString(Translation.DeleteProjectQuestion, string.Empty)</p>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="submit" class="btn waves-effect waves-light red">@localizer[Translation.Confirm]</button>
-                     <a href="#" class="modal-close waves-effect waves-green btn-flat">@localizer[Translation.Cancel]</a>
-                  </div>
-               </form>
-            </div>
-         }
-      </div>
+      }
+
+      @if (!string.IsNullOrEmpty(deleteLink))
+      {
+         <div id="delete-project-modal" class="modal">
+            <form action="@deleteLink" method="post">
+               @Html.AntiForgeryToken()
+               <div class="modal-content black-text">
+                  <p>@localizer.GetString(Translation.DeleteProjectQuestion, string.Empty)</p>
+               </div>
+               <div class="modal-footer">
+                  <button type="submit" class="btn waves-effect waves-light red">@localizer[Translation.Confirm]</button>
+                  <a href="#" class="modal-close waves-effect waves-green btn-flat">@localizer[Translation.Cancel]</a>
+               </div>
+            </form>
+         </div>
+      }
    </div>
 </nav>

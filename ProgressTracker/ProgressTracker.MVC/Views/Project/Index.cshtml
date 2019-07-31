@@ -15,15 +15,15 @@
 }
 else
 {
-   <div class="collection">
+   <div id="project-list" class="collection">
       @foreach (ProjectViewModel project in Model)
       {
          string modalId = string.Format("restore-project-{0}-modal", project.Project.Id);
          string actionLink = project.Project.Active ? Url.Action("Details", "Project", new { id = project.Project.Id }) : string.Format("#{0}", modalId);
          <a href="@actionLink" class="collection-item avatar black-text @(!project.Project.Active ? "modal-trigger": "")">
             <i class="material-icons circle @Helper.GetIconColour(project.Status)">@Helper.GetIconName(project.Status)</i>
-            <span class="title bold-text">@project.Project.Name</span>
-            <p>@project.Project.Description</p>
+            <span class="title bold-text text-overflow-elipsis" style="max-width: 50vw;">@project.Project.Name</span>
+            <p class="text-overflow-elipsis" style="max-width: 50vw">@project.Project.Description</p>
             @if (project.UnresolvedCount > 0)
             {
                <span class="new badge red" data-badge-caption="@localizer[Translation.New]">@project.UnresolvedCount</span>

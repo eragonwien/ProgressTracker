@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace ProgressTracker.MVC.Models
 {
@@ -14,6 +15,7 @@ namespace ProgressTracker.MVC.Models
          Project = project;
          SetProgress();
          SetStatus();
+         ReOrderTaskList();
       }
 
       private void SetStatus()
@@ -38,6 +40,11 @@ namespace ProgressTracker.MVC.Models
          int completed = Project.Pttask.Count(t => t.Active && t.Completed);
          Progress = total > 0 ? (decimal)completed / total : 0;
          UnresolvedCount = total - completed;
+      }
+
+      private void ReOrderTaskList()
+      {
+         Project.Pttask = Project.Pttask.OrderBy(t => t.Completed).ToList();
       }
    }
 }

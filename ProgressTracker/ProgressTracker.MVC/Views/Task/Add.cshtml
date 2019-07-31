@@ -2,20 +2,19 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using SNGCommon.Resources
 @inject IHtmlLocalizer<Translation> localizer
-<div class="container">
-   <div id="add-task" class="row" style="margin-top: 20px;">
+@{ 
+   ViewData["Title"] = localizer[Translation.Add];
+}
+<div class="container flex-center">
+   <div id="add-task" class="row" style="margin-top: 20px;width: 100%;">
       <form asp-action="Add" class="col s12">
          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         <input type="hidden" asp-for="ProjectId" />
          <div class="row">
             <div class="input-field col s12">
                <label asp-for="Description" class="validate"></label>
                <input asp-for="Description" class="form-control" />
                <span asp-validation-for="Description" class="helper-text red-text"></span>
-            </div>
-         </div>
-         <div class="row">
-            <div class="input-field col s12">
-               <select asp-for="ProjectId" asp-items="@Model.ProjectIdList" class="black-text"></select>
             </div>
          </div>
          <div class="col s12">
