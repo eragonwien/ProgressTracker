@@ -15,7 +15,7 @@
       <div class="brand-logo bold-text black-text left">
          @if (!string.IsNullOrEmpty(returnUrl))
          {
-            <a href="@returnUrl" class="hide-on-med-and-up" style="margin-right: 5px;"><i class="material-icons black-text">arrow_back</i></a>
+            <a href="@returnUrl" class="hide-on-med-and-up black-text left" style="margin-right: 5px;"><i class="material-icons black-text">arrow_back</i></a>
          }
          else
          {
@@ -50,7 +50,7 @@
       </ul>
       @if (Common.HasValidString(addLink, editLink, deleteLink, restoreLink))
       {
-         <ul id="nav-links-dropdown" class="dropdown-content">
+         <ul id="nav-links-dropdown" class="dropdown-content" style="width: auto;">
             @if (!string.IsNullOrEmpty(addLink))
             {
                <li><a href="@addLink" class="black-text">@localizer[Translation.Add]</a></li>

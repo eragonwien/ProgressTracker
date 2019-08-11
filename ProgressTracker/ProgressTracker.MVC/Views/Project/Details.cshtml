@@ -26,7 +26,7 @@ else
                </label>
             </td>
             <td>
-               <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" class="secondary-content"><i class="material-icons">edit</i></a>
+               <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" asp-route-returnUrl="@Context.Request.Path" class="secondary-content"><i class="material-icons">edit</i></a>
             </td>
          </tr>
       }

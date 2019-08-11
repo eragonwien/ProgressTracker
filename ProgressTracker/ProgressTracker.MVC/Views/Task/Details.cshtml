@@ -5,6 +5,7 @@
 
 @{
    ViewData["Title"] = localizer[Translation.Edit];
+   string returnUrl = ViewBag.ReturnUrl as string;
 }
 <div id="edit-task-panel" class="container">
    <div class="row">
@@ -12,6 +13,7 @@
          <div asp-validation-summary="ModelOnly" class="red-text"></div>
          <input type="hidden" asp-for="Id" />
          <input type="hidden" asp-for="PtprojectId" />
+         <input type="hidden" name="returnUrl" value="@returnUrl" />
          <div class="row">
             <div class="input-field col s12">
                <input type="text" asp-for="Description" class="validate" placeholder="@nameof(Model.Description)">

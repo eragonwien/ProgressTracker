@@ -13,7 +13,7 @@
    var emptyListModel = new EmptyListViewModel(null, null, localizer.GetString(Translation.CreateNewList), "add", Url.Action("Add", "Project"));
    <partial name="_EmptyListPartial" model="emptyListModel" />
 }
-else
+else if (Model.Count() > 0)
 {
    <div id="project-list" class="collection">
       @foreach (ProjectViewModel project in Model)

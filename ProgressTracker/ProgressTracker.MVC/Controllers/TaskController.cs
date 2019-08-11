@@ -26,7 +26,7 @@ namespace ProgressTracker.MVC.Controllers
       }
 
       // GET: Task/Add
-      public IActionResult Add(int projectId = 0)
+      public IActionResult Add(int projectId = 0, string returnUrl = null)
       {
          var model = new AddTaskViewModel
          {
@@ -37,13 +37,14 @@ namespace ProgressTracker.MVC.Controllers
             model.ProjectIdList.RemoveAll(i => i.Value != projectId.ToString());
             model.ProjectId = projectId;
          }
+         SetReturnUrl(returnUrl);
          return View(model);
       }
 
       // POST: Task/Add
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<ActionResult> Add([FromForm] AddTaskViewModel model)
+      public async Task<ActionResult> Add([FromForm] AddTaskViewModel model, [FromForm] string returnUrl)
       {
          try
          {
@@ -58,24 +59,26 @@ namespace ProgressTracker.MVC.Controllers
          {
             ModelState.AddModelError("", ex.Message);
          }
+         SetReturnUrl(returnUrl);
          return View(model);
       }
 
       // GET: Task/Details/5
-      public async Task<IActionResult> Details(int id, string returnUrl = null)
+      public async Task<IActionResult> Details(int id, string returnUrl)
       {
          var ptask = await taskService.GetOne(id);
          if (ptask == null)
          {
             return RedirectLocal(returnUrl);
          }
+         SetReturnUrl(returnUrl);
          return View(ptask);
       }
 
       // POST: Task/Edit/5
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Edit([FromForm][Bind("Id", "Description", "PtprojectId")] Pttask pttask)
+      public async Task<IActionResult> Edit([FromForm][Bind("Id", "Description", "PtprojectId")] Pttask pttask, [FromForm] string returnUrl)
       {
          if (ModelState.IsValid)
          {
@@ -83,14 +86,14 @@ namespace ProgressTracker.MVC.Controllers
             {
                taskService.Patch(pttask, nameof(Pttask.Description));
                await taskService.SaveChanges();
-               return RedirectToAction("Details", "Project", new { id = pttask.PtprojectId });
+               return RedirectToAction("Details", "Project", new { id = pttask.PtprojectId, returnUrl });
             }
             catch (Exception ex)
             {
                ModelState.AddModelError("", ex.Message);
             }
          }
-         return await Details(pttask.Id);
+         return await Details(pttask.Id, returnUrl);
       }
 
       // POST: Task/Check/5
@@ -110,7 +113,7 @@ namespace ProgressTracker.MVC.Controllers
       // POST: Task/Delete/5
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Delete(int id, string returnUrl = null)
+      public async Task<IActionResult> Delete(int id, string returnUrl)
       {
          try
          {
@@ -120,7 +123,7 @@ namespace ProgressTracker.MVC.Controllers
          catch (Exception ex)
          {
             log.LogError("Fehler beim Löschen von Task {0}: {1}", id, ex.Message);
-            return RedirectToAction("Details", "Task", new { id });
+            return RedirectToAction("Details", "Task", new { id, returnUrl });
          }
          return RedirectLocal(returnUrl);
       }

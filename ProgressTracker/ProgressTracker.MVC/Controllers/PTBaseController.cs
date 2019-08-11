@@ -24,5 +24,10 @@ namespace ProgressTracker.MVC.Controllers
       {
          return Url.IsLocalUrl(url) ? Redirect(url) : Redirect(Url.Content("~/"));
       }
+
+      public void SetReturnUrl(string returnUrl = null)
+      {
+         ViewBag.ReturnUrl = Url.IsLocalUrl(returnUrl) ? returnUrl : "/";
+      }
    }
 }
