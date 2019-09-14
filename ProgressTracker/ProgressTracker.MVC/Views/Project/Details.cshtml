@@ -22,11 +22,11 @@ else
             <td>
                <label>
                   <input type="checkbox" @(ptask.Completed ? "checked='checked'" : string.Empty) onchange="onCheckboxChanged(this)" data-id="@ptask.Id" data-url="@Url.Action("Check", "Task", new { id = ptask.Id })" />
-                  <span class="checkbox-label @(ptask.Completed ? "line-through" : string.Empty)">@ptask.Description</span>
+                  <span class="checkbox-label @(ptask.Completed ? "line-through" : string.Empty) black-text">@ptask.Description</span>
                </label>
             </td>
             <td>
-               <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" class="secondary-content"><i class="material-icons">edit</i></a>
+               <a asp-controller="Task" asp-action="Details" asp-route-id="@ptask.Id" asp-route-returnUrl="@Context.Request.Path" class="secondary-content"><i class="material-icons">edit</i></a>
             </td>
          </tr>
       }

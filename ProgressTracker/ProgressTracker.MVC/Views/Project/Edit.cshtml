@@ -5,6 +5,7 @@
 
 @{
    ViewData["Title"] = localizer[Translation.Edit];
+   string returnUrl = ViewBag.ReturnUrl as string;
 }
 <div id="edit-task-panel" class="container">
    <div class="row">
@@ -14,6 +15,7 @@
          <input type="hidden" asp-for="PtuserId" />
          <input type="hidden" asp-for="Status" />
          <input type="hidden" asp-for="Active" />
+         <input type="hidden" name="returnUrl" value="@returnUrl" />
          <div class="row">
             <div class="input-field col s12">
                <input type="text" asp-for="Name" class="validate" placeholder="@nameof(Model.Name)">
@@ -29,9 +31,11 @@
             </div>
          </div>
          <div class="row">
-            <div class="col s12">
-               <button type="submit" class="btn waves-effect waves-light black white-text">@localizer[Translation.SaveChanges]<i class="material-icons left">save</i></button>
-               <a class="waves-effect waves-light btn modal-trigger red" href="#modal-delete-project">@localizer[Translation.Delete]<i class="material-icons left">delete</i></a>
+            <div class="col s6">
+               <button type="submit" class="btn btn-fullwidth waves-effect waves-light black white-text">@localizer[Translation.SaveChanges]</button>
+            </div>
+            <div class="col s6">
+               <a class="btn btn-fullwidth waves-light modal-trigger red" href="#modal-delete-project">@localizer[Translation.Delete]</a>
             </div>
          </div>
       </form>
@@ -45,8 +49,7 @@
                   <p>@localizer.GetString(Translation.DeleteProjectQuestion, Model.Name)</p>
                </div>
                <div class="modal-footer">
-                  <button type="submit" class="modal-close waves-effect waves-light btn black">@localizer[Translation.Confirm]</button>
-                  <button type="button" class="modal-close waves-effect waves-light btn-flat">@localizer[Translation.Cancel]</button>
+                  <button type="submit" class="modal-close btn btn-fullwidth waves-effect waves-light red">@localizer[Translation.Confirm]</button>
                </div>
             </form>
          </div>

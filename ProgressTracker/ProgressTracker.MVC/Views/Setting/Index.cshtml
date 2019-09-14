@@ -1,0 +1,28 @@
+﻿@model ProgressTracker.MVC.Models.SettingListViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SNGCommon.Resources
+@using ProgressTracker.MVC.Services
+@inject IHtmlLocalizer<Translation> localizer
+@{
+   ViewData["Title"] = localizer[Translation.Settings];
+}
+<div class="container">
+   <div id="settings-form" class="row" style="margin-top: 20px;">
+      <form asp-action="Edit" class="col s12">
+         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         <div class="row">
+            <div class="input-field col s12">
+               <select asp-for="Language" asp-items="@Model.AvailableLanguages" class="black-text"></select>
+            </div>
+         </div>
+         <div class="col s6 px-5">
+            <button type="submit" class="btn btn-fullwidth waves-effect waves-light black white-text">@localizer[Translation.SaveChanges]</button>
+         </div>
+         <div class="col s6 px-5">
+            <a href="/" class="btn btn-fullwidth btn-flat waves-effect waves-light black-text">@localizer[Translation.Cancel]</a>
+         </div>
+      </form>
+   </div>
+</div>
+
+

@@ -43,8 +43,9 @@ namespace ProgressTracker.MVC.Controllers
       {
          var project = projectService.GetOne(id);
          var model = new ProjectViewModel(project);
-         ViewBag.AddLink = Url.Action("Add", "Task", new { projectId = project.Id });
-         ViewBag.EditLink = Url.Action("Edit", "Project", new { id });
+         string returnUrl = Url.Action("Details", "Project", new { id });
+         ViewBag.AddLink = Url.Action("Add", "Task", new { projectId = project.Id, returnUrl });
+         ViewBag.EditLink = Url.Action("Edit", "Project", new { id, returnUrl });
          if (project.Active)
          {
             ViewBag.DeleteLink = Url.Action("Delete", "Project", new { id });
@@ -53,6 +54,7 @@ namespace ProgressTracker.MVC.Controllers
          {
             ViewBag.RestoreLink = Url.Action("Restore", "Project", new { id });
          }
+         SetReturnUrl();
          return View(model);
       }
 
@@ -60,6 +62,7 @@ namespace ProgressTracker.MVC.Controllers
       public ActionResult Add()
       {
          var model = new Ptproject { PtuserId = UserId };
+         SetReturnUrl();
          return View(model);
       }
 
@@ -76,31 +79,35 @@ namespace ProgressTracker.MVC.Controllers
          }
          catch (Exception ex)
          {
-            log.LogError("Fehler bei Hinzufügen von Project: {0}", ex.Message);
+            log.LogError("Fehler bei Hinzufügen von Projekt: {0}", ex.Message);
+            SetReturnUrl();
             return View(project);
          }
       }
 
       // GET: Project/Edit/5
-      public ActionResult Edit(int id)
+      public ActionResult Edit(int id, string returnUrl)
       {
          var model = projectService.GetOne(id);
+         SetReturnUrl(returnUrl);
          return View(model);
       }
 
       // POST: Project/Edit/5
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Edit([FromForm] Ptproject project)
+      public async Task<IActionResult> Edit([FromForm] Ptproject project, [FromForm] string returnUrl)
       {
          try
          {
             projectService.Update(project);
             await projectService.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectLocal(returnUrl);
          }
-         catch
+         catch (Exception ex)
          {
+            log.LogError("Fehler bei Bearbeitung von Projekt: {0}", ex.Message);
+            SetReturnUrl(returnUrl);
             return View(project);
          }
       }
