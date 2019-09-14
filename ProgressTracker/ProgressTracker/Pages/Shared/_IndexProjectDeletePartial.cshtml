@@ -15,7 +15,7 @@
    </div>
    <div class="modal-footer">
       <button type="submit" asp-page="project" asp-page-handler="@(Model.Active ? "delete" : "restore")" asp-route-returnurl="@Context.Request.Path" class="btn black waves-effect waves-light">
-         <i class="material-icons left">save</i>
+         
          <span class="white-text">@localizer[Translation.Confirm]</span>
       </button>
    </div>

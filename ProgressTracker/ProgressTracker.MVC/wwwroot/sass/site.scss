@@ -183,3 +183,13 @@ ul * {
    text-overflow: ellipsis;
    display: block;
 }
+
+.btn-fullwidth {
+   width: 100%;
+   max-width: 500px;
+}
+
+#main .px-5 {
+   padding-left: 5px;
+   padding-right: 5px;
+}

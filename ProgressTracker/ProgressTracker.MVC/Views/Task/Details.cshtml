@@ -20,9 +20,11 @@
                <label asp-for="Description">@nameof(Model.Description)</label>
                <span asp-validation-for="Description" class="helper-text red-text"></span>
             </div>
-            <div class="col s12">
-               <button type="submit" class="btn waves-effect waves-light black white-text">@localizer[Translation.SaveChanges]<i class="material-icons left">save</i></button>
-               <a class="waves-effect waves-light btn modal-trigger red" href="#modal-delete-task">@localizer[Translation.Delete]<i class="material-icons left">delete</i></a>
+            <div class="col s6 px-5">
+               <button type="submit" class="btn btn-fullwidth waves-effect waves-light black white-text">@localizer[Translation.SaveChanges]</button>
+            </div>
+            <div class="col s6 px-5">
+               <a class="waves-effect waves-light btn btn-fullwidth modal-trigger red" href="#modal-delete-task">@localizer[Translation.Delete]</a>
             </div>
          </div>
       </form>
@@ -36,8 +38,7 @@
                   <p>@localizer.GetString(Translation.DeleteTaskQuestion, Model.Description)</p>
                </div>
                <div class="modal-footer">
-                  <button type="submit" class="modal-close waves-effect waves-light btn black">@localizer[Translation.Confirm]</button>
-                  <button type="button" class="modal-close waves-effect waves-light btn-flat">@localizer[Translation.Cancel]</button>
+                  <button type="submit" class="modal-close btn btn-fullwidth waves-effect waves-light red">@localizer[Translation.Confirm]</button>
                </div>
             </form>
          </div>
